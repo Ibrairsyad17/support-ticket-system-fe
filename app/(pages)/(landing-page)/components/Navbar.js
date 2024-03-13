@@ -49,25 +49,25 @@ export default function Navbar() {
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-red-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
           >
             Beranda
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-rose-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
           >
             Integrasi
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-red-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
           >
             Fitur
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-rose-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
           >
             Hubungi Kami
           </Link>
@@ -107,25 +107,25 @@ export default function Navbar() {
               <div className="space-y-2 py-6">
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-red-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
                 >
                   Beranda
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-rose-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
                 >
                   Integrasi
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-red-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
                 >
                   Fitur
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-rose-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
                 >
                   Hubungi Kami
                 </Link>
