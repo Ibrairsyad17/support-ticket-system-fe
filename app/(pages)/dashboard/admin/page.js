@@ -13,6 +13,7 @@ import MostKeyword from "@/app/(pages)/dashboard/components/MostKeyword";
 import { listStats } from "@/app/(pages)/dashboard/components/Stats/ListDashboardStats";
 import { socialMediaStats } from "@/app/(pages)/dashboard/components/Stats/SocialMediaStats";
 import { ticketingStats } from "@/app/(pages)/dashboard/components/Stats/TicketingStats";
+import TeamsDataCharts from "@/app/(pages)/dashboard/components/DataCharts/TeamsDataCharts";
 
 function DashboardPage() {
   return (
@@ -97,12 +98,14 @@ function DashboardPage() {
           <Stats listStats={ticketingStats} className="col-span-4" />
         </div>
 
-        <Card className="border-0 shadow-md shadow-gray-100">
+        <Card className="border-0 shadow-none">
           <CardHeader>
             <CardTitle className="text-xl">Kelola Tim</CardTitle>
             <CardDescription>List pengerjaan tiket oleh tim.</CardDescription>
           </CardHeader>
-          <CardContent className="pl-2"></CardContent>
+          <CardContent className="pl-2">
+            <TeamsDataCharts />
+          </CardContent>
         </Card>
       </div>
     </>
