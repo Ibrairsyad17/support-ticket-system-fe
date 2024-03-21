@@ -16,6 +16,8 @@ import KeywordPills from "@/app/(pages)/dashboard/admin/keywords/components/Keyw
 import { Button } from "@/components/ui/button";
 import Search from "@/app/(pages)/dashboard/admin/keywords/components/SeachInput";
 import { AddCategoryDialog } from "@/app/(pages)/dashboard/admin/keywords/components/AddCategoryDialog";
+import { AddKeywordDialog } from "./components/AddKeywordDialog";
+import RemoveCategoryDialog from "./components/RemoveCategoryDialog";
 
 const KeywordPage = () => {
   return (
@@ -57,13 +59,8 @@ const KeywordPage = () => {
               </div>
             </CardContent>
             <CardFooter className="grid sm:grid-cols-2 gap-3">
-              <Button>
-                <PlusIcon className="mr-2 h-4 w-4" /> Tambah keyword
-              </Button>
-              <Button variant="outline" className="text-red-500">
-                <TrashIcon className="mr-2 h-4 w-4" />
-                Hapus kategori
-              </Button>
+              <AddKeywordDialog />
+              <RemoveCategoryDialog />
             </CardFooter>
           </Card>
         </div>

@@ -14,6 +14,7 @@ import { listStats } from "@/app/(pages)/dashboard/components/Stats/ListDashboar
 import { socialMediaStats } from "@/app/(pages)/dashboard/components/Stats/SocialMediaStats";
 import { ticketingStats } from "@/app/(pages)/dashboard/components/Stats/TicketingStats";
 import TeamsDataCharts from "@/app/(pages)/dashboard/components/DataCharts/TeamsDataCharts";
+import ComplaintsDataChart from "../components/DataCharts/ComplaintsDataChart";
 
 function DashboardPage() {
   return (
@@ -42,7 +43,9 @@ function DashboardPage() {
             <CardHeader>
               <CardTitle className="text-xl">Data Keluhan</CardTitle>
             </CardHeader>
-            <CardContent className="pl-2"></CardContent>
+            <CardContent className="pl-2">
+              <ComplaintsDataChart />
+            </CardContent>
           </Card>
 
           {/* Keluhan Terbaru */}
