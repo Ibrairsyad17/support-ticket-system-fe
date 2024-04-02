@@ -5,6 +5,7 @@ import { Dialog, Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ArrowButton from "./ArrowButton";
+import Image from "next/image";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,14 +28,16 @@ export default function Navbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
+            <Image
+              src="/logo-helptix.svg"
+              alt={`Helptix Logo`}
+              width="0"
+              height="0"
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
-              alt=""
             />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -49,31 +52,33 @@ export default function Navbar() {
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Beranda
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Integrasi
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Fitur
           </Link>
           <Link
             href="#"
-            className="text-sm font-semibold leading-9 duration-300 transition hover:text-green-600 navbarLinks text-gray-900"
+            className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Hubungi Kami
           </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <ArrowButton href={`/login`}>Log in</ArrowButton>
+          <ArrowButton variant="outline" href={`/login`}>
+            Masuk
+          </ArrowButton>
         </div>
       </nav>
       <Dialog
@@ -107,25 +112,25 @@ export default function Navbar() {
               <div className="space-y-2 py-6">
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-emerald-500 navbarLinks text-gray-900"
                 >
                   Beranda
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-emerald-500 navbarLinks text-gray-900"
                 >
                   Integrasi
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-emerald-500 navbarLinks text-gray-900"
                 >
                   Fitur
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-green-600 navbarLinks text-gray-900"
+                  className="text-sm font-semibold leading-9 -mx-3 block rounded-lg px-3 py-2 hover:text-emerald-500 navbarLinks text-gray-900"
                 >
                   Hubungi Kami
                 </Link>

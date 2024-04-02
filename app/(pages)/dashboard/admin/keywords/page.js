@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  PlusIcon,
-  TrashIcon,
-  MixerHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import {
   Card,
   CardContent,
@@ -18,6 +14,11 @@ import Search from "@/app/(pages)/dashboard/admin/keywords/components/SeachInput
 import { AddCategoryDialog } from "@/app/(pages)/dashboard/admin/keywords/components/AddCategoryDialog";
 import { AddKeywordDialog } from "./components/AddKeywordDialog";
 import RemoveCategoryDialog from "./components/RemoveCategoryDialog";
+
+export const metadata = {
+  title: "Daftar Kata Kunci | Helptix",
+  description: "Daftar Kata Kunci",
+};
 
 const KeywordPage = () => {
   return (
