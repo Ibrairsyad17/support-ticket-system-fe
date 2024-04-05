@@ -3,7 +3,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/app/(pages)/dashboard/admin/list-complaints/components/Tabs";
+} from "@/app/(pages)/dashboard/components/Tabs";
 import DataTable from "@/app/(pages)/dashboard/admin/list-complaints/components/TableComplaints";
 
 const TabsContents = () => {
