@@ -4,7 +4,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/(pages)/dashboard/components/Tabs";
-import DataTable from "@/app/(pages)/dashboard/admin/list-complaints/components/TableComplaints";
+import React from "react";
+import { DataTable } from "@/app/(pages)/dashboard/admin/list-complaints/components/DataTable";
+import {
+  columns,
+  complaints,
+} from "@/app/(pages)/dashboard/admin/list-complaints/components/Columns";
 
 const TabsContents = () => {
   return (
@@ -24,7 +29,7 @@ const TabsContents = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="all">
-        <DataTable></DataTable>
+        <DataTable data={complaints} columns={columns}></DataTable>
       </TabsContent>
     </Tabs>
   );

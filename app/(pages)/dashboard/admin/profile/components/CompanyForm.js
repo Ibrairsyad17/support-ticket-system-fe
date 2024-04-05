@@ -2,7 +2,7 @@ import React from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Input } from "@/components/ui/input";
 
-const UserForm = () => {
+const CompanyForm = () => {
   return (
     <div className="pb-8">
       <h2 className="text-md font-semibold text-gray-900 mt-3.5">
@@ -52,4 +52,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default CompanyForm;

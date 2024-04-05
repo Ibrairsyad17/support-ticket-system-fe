@@ -2,12 +2,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
-import TabsContent from "@/app/(pages)/dashboard/admin/list-complaints/TabsContent";
+import TabsContent from "@/app/(pages)/dashboard/admin/list-complaints/components/TabsContent";
 export const metadata = {
   title: "Daftar Keluhan | Helptix",
   description: "Daftar Keluhan Pengguna",
 };
-const ListComplaintsPage = () => {
+
+const ListComplaintsPage = async () => {
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-5">
