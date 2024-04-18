@@ -1,6 +1,9 @@
 import { Inter } from "next/font/google";
 import "../../../globals.css";
-import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import Navbar from "@/app/(pages)/(landing-page)/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -12,41 +15,42 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="container relative  h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-          <Link
-            href="/"
-            className={"absolute right-4 top-4 md:right-8 md:top-8"}
-          ></Link>
-          <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex ">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80')]" />
-            <div className="relative z-20 flex items-center text-lg font-medium">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-6 w-6"
+        <main>
+          <Navbar></Navbar>
+          <div className="container relative flex-col items-start justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className="relative h-screen bg-gray-100 hidden flex-col px-28 pt-10 lg:flex ">
+              <h1
+                style={{ lineHeight: 1.4 }}
+                className="max-w-xl mb-4 text-4xl tracking-wide font-bold md:text-4xl"
               >
-                <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-              </svg>
-              Fixit
+                Penyelesaian Nyata{" "}
+                <Badge className="lg:rounded-xl lg:px-4 lg:py-2 bg-emerald-50 shadow-none hover:bg-emerald-50">
+                  <ArrowUpRightIcon className="h-6 text-emerald-500 border-none" />
+                </Badge>{" "}
+                <br />
+                <span>Untuk</span> Berbagai Keluhan dalam{" "}
+                <span className="text-emerald-500">Satu Platform</span>
+              </h1>
+              <p className="max-w-xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-lg">
+                Selesaikan kendala dalam satu tempat penyelesaian yang nyata dan
+                efisien.
+              </p>
+              <div className="flex justify-center items-center">
+                <Image
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  priority
+                  style={{ width: "100%", height: "auto" }}
+                  src="/lp-1.svg"
+                  className="mx-auto my-5"
+                  alt="mockup"
+                />
+              </div>
             </div>
-            <div className="relative z-20 mt-auto">
-              <blockquote className="space-y-2">
-                <p className="text-lg">
-                  &ldquo;This library has saved me countless hours of work and
-                  helped me deliver stunning designs to my clients faster than
-                  ever before.&rdquo;
-                </p>
-                <footer className="text-sm">Sofia Davis</footer>
-              </blockquote>
-            </div>
+            {children}
           </div>
-          {children}
-        </div>
+        </main>
       </body>
     </html>
   );

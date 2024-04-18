@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const Sidebar = ({ listLink }) => {
   return (
@@ -30,7 +31,7 @@ const Sidebar = ({ listLink }) => {
               />
             </li>
             <li
-              className="text-sm font-semibold text-gray-800 truncate"
+              className={`text-sm font-semibold text-gray-800 truncate`}
               aria-current="page"
             >
               Dashboard
@@ -44,13 +45,20 @@ const Sidebar = ({ listLink }) => {
         className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-40 w-64 bg-white border-e border-gray-200 py-7 overflow-y-auto lg:flex lg:flex-col lg:justify-between lg:align-center lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 "
       >
         <div>
-          <div className="px-7 pt-2">
+          <div className="px-7 pt-2 mb-2">
             <a
               className="flex-none text-xl text-green-500 font-semibold "
               href="#"
               aria-label="Brand"
             >
-              Helptix
+              <Image
+                width={500}
+                height={500}
+                priority
+                src="/logo-helptix.svg"
+                alt="Logo Helptix"
+                className="h-10 w-auto"
+              />
             </a>
           </div>
 
@@ -59,7 +67,7 @@ const Sidebar = ({ listLink }) => {
               {listLink.map((item, index) => (
                 <li key={index}>
                   <Link
-                    className="flex items-center gap-x-4 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100"
+                    className={`flex items-center gap-x-4 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100`}
                     href={item.route}
                   >
                     <item.icon className={`w-5 h-5`} />

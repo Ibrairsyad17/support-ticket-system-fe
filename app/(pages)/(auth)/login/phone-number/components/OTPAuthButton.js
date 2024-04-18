@@ -15,7 +15,7 @@ function OTPAuthButton() {
     }, 3000);
   }
   return (
-    <Button disabled={isLoading}>
+    <Button disabled={isLoading} className="py-6">
       {isLoading ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"

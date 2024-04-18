@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const FeatureContent = ({ data }) => {
   return (
@@ -8,10 +9,12 @@ const FeatureContent = ({ data }) => {
         <div className="lg:col-span-5">
           <div className="grid grid-cols-6 gap-2 mt-16 lg:mt-0 sm:gap-6 place-items-center">
             <div className="col-span-6">
-              <img
+              <Image
                 className="rounded-xl"
                 src={data.image}
                 alt="Image Description"
+                width={500}
+                height={300}
               />
             </div>
           </div>

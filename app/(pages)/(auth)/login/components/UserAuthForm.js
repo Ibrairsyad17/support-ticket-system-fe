@@ -9,7 +9,7 @@ import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 
-export function UserAuthForm({ className, ...props }) {
+export function UserAuthForm({ className }) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   async function onSubmit(event) {
@@ -37,7 +37,7 @@ export function UserAuthForm({ className, ...props }) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              className="my-1"
+              className="my-1 py-5"
             />
             <Label className="mb-1 mt-2 ml-1" htmlFor="pass">
               Password
@@ -48,10 +48,10 @@ export function UserAuthForm({ className, ...props }) {
               type="password"
               autoCorrect="off"
               disabled={isLoading}
-              className="my-1"
+              className="my-1 py-5"
             />
           </div>
-          <Button disabled={isLoading} className="mt-2">
+          <Button disabled={isLoading} className="mt-2 py-5">
             {isLoading && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -102,8 +102,14 @@ export function UserAuthForm({ className, ...props }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <Button variant="outline" asChild type="button" disabled={isLoading}>
-          <Link href={`/login/phone-number`}>
+        <Button
+          variant="outline"
+          asChild
+          type="button"
+          disabled={isLoading}
+          className="py-5"
+        >
+          <Link href={`/`}>
             {isLoading ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +137,7 @@ export function UserAuthForm({ className, ...props }) {
           variant="outline"
           type="button"
           disabled={isLoading}
-          className="mt-2"
+          className="mt-2 py-5"
         >
           <Link href={`/login/phone-number`}>
             {isLoading ? (

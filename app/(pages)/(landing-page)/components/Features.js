@@ -6,8 +6,7 @@ const featuresDetails = [
   {
     id: "ticket",
     title: "Optimalkan Penanganan Keluhan Lebih Terstruktur dengan Fitur Tiket",
-    image:
-      "https://images.unsplash.com/photo-1593871097805-09627f52f4bb?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/lp-2.svg",
     features: [
       "Kolaborasi tim menjadi lebih mudah dalam menemukan solusi.",
       "Kustomisasi formulir tiket",
@@ -17,8 +16,7 @@ const featuresDetails = [
   {
     id: "platform",
     title: "Efisiensi Bisnis Anda dengan Integrasi Platform yang Terpadu.",
-    image:
-      "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/lp-3.svg",
     features: [
       "Integrasi platform WhatsApp, X(Twitter) dan Instagram",
       "Hubungkan dengan Fitur Link Akun, Tanpa Perlu Membuka Satu Persatu",
@@ -27,8 +25,7 @@ const featuresDetails = [
   {
     id: "inbox",
     title: "Komunikasi Lebih Lancar untuk Bertukar Pesan",
-    image:
-      "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/lp-4.svg",
     features: [
       "Komunikasi lebih terorganisir dengan pengkategorian pesan",
       "Kenali pelanggan dengan informasi data pelanggan yang tertera",
@@ -37,8 +34,7 @@ const featuresDetails = [
   {
     id: "dynamic",
     title: "Pengelolaan Data dengan Visualisasi Interaktif dan Real-Time",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29tbXVuaWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    image: "/lp-5.svg",
     features: [
       "Ketahui data dan informasi lebih dalam terkait tiketmu",
       "Grafik Dinamis untuk Visualisasi Data yang Lebih Menyeluruh",
@@ -49,8 +45,7 @@ const featuresDetails = [
     id: "easy",
     title:
       "Pencarian Data Keluhan Lebih Mudah dengan Pengkategorian Kata Kunci",
-    image:
-      "https://images.unsplash.com/photo-1490127252417-7c393f993ee4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/lp-6.svg",
     features: [
       "Mudah mencari dengan pengkategorian yang berisi kata kunci yang Anda inputkan",
     ],
@@ -59,13 +54,13 @@ const featuresDetails = [
 
 function Features() {
   return (
-    <section className="bg-white my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto w-10/12 place-items-center overflow-hidden">
-      <div className="max-w-screen-xl px-4 pt-8 mx-auto lg:px-6">
-        <div className=" lg:max-w-5xl mx-auto text-center">
-          <h2 className="text-2xl font-bold md:text-3xl md:leading-tight ">
+    <section className="bg-white lg:my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto lg:w-10/12 w-11/12 place-items-center overflow-hidden">
+      <div className="max-w-[85rem] px-4 pt-8 mx-auto lg:px-6">
+        <div className="lg:text-center lg:max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold md:text-3xl md:leading-tight ">
             Layanan Terlengkap Untuk Mengatasi Keluhan Pelanggan Anda
           </h2>
-          <p className="mt-1 text-lg text-gray-600 mb-3">
+          <p className="mt-3.5 text-lg text-gray-600 mb-3">
             Selesaikan berbagai keluhan dalam satu tempat penyelesaian yang
             nyata dan efisien.
           </p>

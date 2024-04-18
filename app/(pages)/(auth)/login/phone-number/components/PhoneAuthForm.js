@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 import * as React from "react";
 
-export function PhoneAuthForm({ className, ...props }) {
+export function PhoneAuthForm({ className }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   async function onSubmit(event) {
@@ -37,6 +37,7 @@ export function PhoneAuthForm({ className, ...props }) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              className="py-5 mb-2"
             />
           </div>
           <Button disabled={isLoading}>
@@ -52,7 +53,7 @@ export function PhoneAuthForm({ className, ...props }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="
-        mr-2 h-4 w-4 animate-spin"
+        mr-2 h-4 w-4 animate-spin py-5"
               >
                 <path d="M21 12a9 9 0 1 1-6.219-8.56" />
               </svg>
@@ -72,7 +73,13 @@ export function PhoneAuthForm({ className, ...props }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <Button asChild variant="outline" type="button" disabled={isLoading}>
+        <Button
+          asChild
+          variant="outline"
+          type="button"
+          disabled={isLoading}
+          className=" py-5"
+        >
           <Link href={`/login`}>
             {isLoading ? (
               <svg
@@ -100,7 +107,7 @@ export function PhoneAuthForm({ className, ...props }) {
           asChild
           variant="outline"
           type="button"
-          className="mt-3"
+          className="mt-3 py-5"
           disabled={isLoading}
         >
           <Link href={`/login`}>

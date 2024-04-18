@@ -6,13 +6,13 @@ function UseOTP() {
   return (
     <>
       <div className="lg:p-8 ">
-        <div className="mx-auto flex w-full flex-col justify-center mt-20 lg:mt-0 space-y-6 sm:w-[450px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Log in to your account
+        <div className="mx-auto flex w-full flex-col justify-center mt-20 space-y-6 sm:w-11/12">
+          <div className="flex flex-col space-y-2">
+            <h1 className="text-2xl lg:text-3xl font-semibold tracking-tight">
+              Log in
             </h1>
-            <p className="text-sm text-muted-foreground">
-              Enter your phone number below to log in your account
+            <p className="text-sm lg:text-md text-muted-foreground">
+              Masukan nomor HP Anda untuk melanjutkan.
             </p>
           </div>
           <PhoneAuthForm />

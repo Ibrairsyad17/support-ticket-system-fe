@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const RequestDemoForm = () => {
   return (
     <div className="relative">
-      <div className="flex flex-col rounded-xl p-4 sm:p-6 lg:p-10">
+      <div className="flex flex-col rounded-xl p-4 sm:p-6 lg:px-10 lg:py-2">
         <h2 className="text-xl font-semibold text-gray-800">
           Lengkapi data anda
         </h2>
@@ -125,18 +125,12 @@ const RequestDemoForm = () => {
             </div>
           </div>
 
-          <div className="mt-6 grid">
+          <div className="my-6 grid">
             <Button type="submit" className="w-full py-3 px-4 ">
               Send inquiry
             </Button>
           </div>
         </form>
-
-        <div className="mt-3 text-center">
-          <p className="text-sm text-gray-500">
-            We{"'"}ll get back to you in 1-2 business days.
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -24,11 +24,11 @@ export default function Navbar() {
       }`}
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-[85rem] items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <Image
               src="/logo-helptix.svg"
@@ -94,7 +94,7 @@ export default function Navbar() {
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=red"
                 alt=""
               />
             </a>

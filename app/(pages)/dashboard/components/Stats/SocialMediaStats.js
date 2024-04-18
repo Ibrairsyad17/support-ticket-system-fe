@@ -11,7 +11,7 @@ export const socialMediaStats = [
   },
   {
     id: 2,
-    title: "X (Twitter)",
+    title: "X",
     value: 6783,
     icon: X,
     backgroundColor: "bg-gradient-to-br from-indigo-100 to-indigo-200",
