@@ -4,14 +4,14 @@ import Link from "next/link";
 
 const RecentComplaints = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 lg:h-[16rem] flex flex-col justify-between">
       <div className="flex items-center">
         <div className="bg-rose-500 p-2 rounded-full">
           <Instagram sx={{ color: "white", fontSize: 24 }} />
         </div>
         <div className="ml-4">
           <Link
-            href="/"
+            href="/public"
             className="text-sm font-medium leading-none hover:underline"
           >
             Kayla

@@ -2,50 +2,20 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTableActions from "@/app/(pages)/dashboard/admin/list-complaints/components/DataTableActions";
+import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import { WhatsApp, X } from "@mui/icons-material";
 
-export const complaints = [
-  {
-    id: 1,
-    name: "Mark Verstappen",
-    platform: "Instagram",
-    keyword: "Bug",
-    description: "There's some bug in the system dude!",
-    time: new Date(),
-  },
-  {
-    id: 2,
-    name: "Virgil van Dijk",
-    platform: "X",
-    keyword: "Lag",
-    description: "There's some lag in the system dude!",
-    time: new Date(),
-  },
-  {
-    id: 3,
-    name: "Phil Foden",
-    platform: "X",
-    keyword: "Crash",
-    description: "The app forced close when i use it",
-    time: new Date(),
-  },
-  {
-    id: 4,
-    name: "Lebron James",
-    platform: "WhatsApp",
-    keyword: "Bug",
-    description: "Man, there's some bugs in your app",
-    time: new Date(),
-  },
-  {
-    id: 5,
-    name: "Robert Pattinson",
-    platform: "Instagram",
-    keyword: "Lag",
-    description: "Your app lag man",
-    time: new Date(),
-  },
-];
-
+// export const complaints = [
+//   {
+//     id: 1,
+//     name: "Mark Verstappen",
+//     platform: "Instagram",
+//     keyword: "Bug",
+//     description: "There's some bug in the system dude!",
+//     date: "2023-07-25",
+//   },
 export const columns = [
   {
     id: "select",
@@ -72,29 +42,65 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessKey: "name",
-    header: "Nama",
-    cell: ({ row }) => <div className=" ">{row.getValue("name")}</div>,
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nama <ArrowsUpDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="px-4 w-[200px]">{row.getValue("name")}</div>
+    ),
   },
   {
-    accessKey: "platform",
+    accessorKey: "platform",
     header: "Platform",
-    cell: ({ row }) => <div>{row.getValue("platform")}</div>,
+    cell: ({ row }) => (
+      <div className="flex items-center w-[150px]">
+        {row.getValue("platform") === "Instagram" ? (
+          <InstagramLogoIcon className="h-4 w-4 mr-2 text-rose-600" />
+        ) : (
+          ""
+        )}
+        {row.getValue("platform") === "X" ? (
+          <X className="h-4 w-4 mr-2 text-blue-600" />
+        ) : (
+          ""
+        )}
+        {row.getValue("platform") === "WhatsApp" ? (
+          <WhatsApp className="h-4 w-4 mr-2 text-green-600" />
+        ) : (
+          ""
+        )}
+        {row.getValue("platform")}
+      </div>
+    ),
   },
   {
-    accessKey: "keyword",
+    accessorKey: "keyword",
     header: "Keyword",
     cell: ({ row }) => <div>{row.getValue("keyword")}</div>,
   },
   {
-    accessKey: "description",
+    accessorKey: "description",
     header: "Detail Keluhan",
-    cell: ({ row }) => <div>{row.getValue("description")}</div>,
+    cell: ({ row }) => (
+      <div className="flex">
+        <span className="max-w-[300px] lg:max-w-xs overflow-hidden truncate">
+          {row.getValue("description")}
+        </span>
+      </div>
+    ),
   },
   {
-    accessKey: "time",
+    accessorKey: "date",
     header: "Waktu",
-    cell: ({ row }) => <div>{row.getValue("time")}</div>,
+    cell: ({ row }) => <div>{row.getValue("date")}</div>,
   },
   {
     id: "actions",

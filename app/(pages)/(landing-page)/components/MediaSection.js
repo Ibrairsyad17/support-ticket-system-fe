@@ -30,7 +30,7 @@ function MediaSection() {
             sizes="100vw"
             priority
             style={{ width: "95%", height: "auto" }}
-            src="/lp-7.svg"
+            src="/assets/img/lp-7.svg"
             alt="mockup"
           />
         </div>

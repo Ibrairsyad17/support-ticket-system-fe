@@ -17,7 +17,7 @@ function Footer() {
           <Link href="#" className="">
             <span className="sr-only">Your Company</span>
             <Image
-              src="/logo-helptix.svg"
+              src="/assets/img/logo-helptix.svg"
               alt={`Helptix Logo`}
               width="0"
               height="0"

@@ -24,7 +24,7 @@ const HeroSection = () => {
               className="size-2/3"
               width={500}
               height={500}
-              src="/icon-lp-1.svg"
+              src="/assets/img/icon-lp-1.svg"
               alt="Image Description"
             />
             <div className="flex flex-wrap">
@@ -45,7 +45,7 @@ const HeroSection = () => {
               className="size-2/3"
               width={500}
               height={500}
-              src="/icon-lp-2.svg"
+              src="/assets/img/icon-lp-2.svg"
               alt="Image Description"
             />
             <div className="flex flex-wrap">

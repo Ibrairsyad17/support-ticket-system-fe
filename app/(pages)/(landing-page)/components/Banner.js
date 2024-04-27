@@ -37,7 +37,7 @@ const Banner = () => {
                       width={500}
                       height={500}
                       className=""
-                      src="/lp-8.svg"
+                      src="/assets/img/lp-8.svg"
                       alt="Image Description"
                     />
                   </div>

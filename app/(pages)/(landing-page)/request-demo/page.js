@@ -27,7 +27,7 @@ const RequestDemoPage = () => {
             sizes="100vw"
             priority
             style={{ width: "65%", height: "auto" }}
-            src="/lp-8.svg"
+            src="/assets/img/lp-8.svg"
             alt="mockup"
             className={`self-center`}
           />

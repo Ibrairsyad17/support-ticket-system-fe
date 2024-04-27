@@ -6,7 +6,7 @@ const featuresDetails = [
   {
     id: "ticket",
     title: "Optimalkan Penanganan Keluhan Lebih Terstruktur dengan Fitur Tiket",
-    image: "/lp-2.svg",
+    image: "/assets/img/lp-2.svg",
     features: [
       "Kolaborasi tim menjadi lebih mudah dalam menemukan solusi.",
       "Kustomisasi formulir tiket",
@@ -16,7 +16,7 @@ const featuresDetails = [
   {
     id: "platform",
     title: "Efisiensi Bisnis Anda dengan Integrasi Platform yang Terpadu.",
-    image: "/lp-3.svg",
+    image: "/assets/img/lp-3.svg",
     features: [
       "Integrasi platform WhatsApp, X(Twitter) dan Instagram",
       "Hubungkan dengan Fitur Link Akun, Tanpa Perlu Membuka Satu Persatu",
@@ -25,7 +25,7 @@ const featuresDetails = [
   {
     id: "inbox",
     title: "Komunikasi Lebih Lancar untuk Bertukar Pesan",
-    image: "/lp-4.svg",
+    image: "/assets/img/lp-4.svg",
     features: [
       "Komunikasi lebih terorganisir dengan pengkategorian pesan",
       "Kenali pelanggan dengan informasi data pelanggan yang tertera",
@@ -34,7 +34,7 @@ const featuresDetails = [
   {
     id: "dynamic",
     title: "Pengelolaan Data dengan Visualisasi Interaktif dan Real-Time",
-    image: "/lp-5.svg",
+    image: "/assets/img/lp-5.svg",
     features: [
       "Ketahui data dan informasi lebih dalam terkait tiketmu",
       "Grafik Dinamis untuk Visualisasi Data yang Lebih Menyeluruh",
@@ -45,7 +45,7 @@ const featuresDetails = [
     id: "easy",
     title:
       "Pencarian Data Keluhan Lebih Mudah dengan Pengkategorian Kata Kunci",
-    image: "/lp-6.svg",
+    image: "/assets/img/lp-6.svg",
     features: [
       "Mudah mencari dengan pengkategorian yang berisi kata kunci yang Anda inputkan",
     ],

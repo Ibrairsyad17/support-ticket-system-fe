@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
                   sizes="100vw"
                   priority
                   style={{ width: "100%", height: "auto" }}
-                  src="/lp-1.svg"
+                  src="/assets/img/lp-1.svg"
                   className="mx-auto my-5"
                   alt="mockup"
                 />

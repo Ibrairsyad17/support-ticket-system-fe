@@ -8,13 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import RecentComplaints from "@/app/(pages)/dashboard/components/RecentComplaints";
-import MostKeyword from "@/app/(pages)/dashboard/components/MostKeyword";
+import RecentComplaints from "@/app/(pages)/dashboard/admin/components/RecentComplaints";
+import MostKeyword from "@/app/(pages)/dashboard/admin/components/MostKeyword";
 import { listStats } from "@/app/(pages)/dashboard/components/Stats/ListDashboardStats";
 import { socialMediaStats } from "@/app/(pages)/dashboard/components/Stats/SocialMediaStats";
 import { ticketingStats } from "@/app/(pages)/dashboard/components/Stats/TicketingStats";
-import TeamsDataCharts from "@/app/(pages)/dashboard/components/DataCharts/TeamsDataCharts";
-
+import ComplaintsChartsAdmin from "@/app/(pages)/dashboard/admin/components/ComplaintsChartsAdmin";
+import TeamsDataStats from "@/app/(pages)/dashboard/admin/components/TeamsDataStats";
 function DashboardPage() {
   return (
     <>
@@ -42,7 +42,7 @@ function DashboardPage() {
             <CardHeader>
               <CardTitle className="text-xl">Data Keluhan</CardTitle>
             </CardHeader>
-            <CardContent className="pl-2"></CardContent>
+            <ComplaintsChartsAdmin />
           </Card>
 
           {/* Keluhan Terbaru */}
@@ -89,7 +89,7 @@ function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 p-6 bg-gray-100 rounded-xl">
           <div className="flex flex-col space-y-2.5 justify-center col-span-1">
             <h3 className="font-semibold leading-none tracking-tight text-xl">
-              Ticketing
+              Tiket
             </h3>
             <p className="text-sm text-muted-foreground">
               List tiket yang telah dibuat.
@@ -104,7 +104,7 @@ function DashboardPage() {
             <CardDescription>List pengerjaan tiket oleh tim.</CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <TeamsDataCharts />
+            <TeamsDataStats />
           </CardContent>
         </Card>
       </div>

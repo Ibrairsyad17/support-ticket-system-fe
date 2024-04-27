@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import {
+  ArrowRightStartOnRectangleIcon,
+  Bars3Icon,
+} from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
@@ -55,7 +58,7 @@ const Sidebar = ({ listLink }) => {
                 width={500}
                 height={500}
                 priority
-                src="/logo-helptix.svg"
+                src="/assets/img/logo-helptix.svg"
                 alt="Logo Helptix"
                 className="h-10 w-auto"
               />
@@ -80,9 +83,15 @@ const Sidebar = ({ listLink }) => {
         </div>
 
         <div>
-          <p className="text-xs text-green-500 text-center">
-            &#169; Copyright Helptix 2024
-          </p>
+          <div className="px-7">
+            <Link
+              className={`flex items-center gap-x-4 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100`}
+              href=""
+            >
+              <ArrowRightStartOnRectangleIcon className={`w-5 h-5`} />
+              Log Out
+            </Link>
+          </div>
         </div>
       </div>
     </div>

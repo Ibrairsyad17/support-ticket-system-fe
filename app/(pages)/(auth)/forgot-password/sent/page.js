@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -26,7 +24,7 @@ export default function SentPage() {
                 <div className="grid gap-y-4">
                   <div>
                     <Image
-                      src={`/auth/customer-support.svg`}
+                      src={`/assets/img/auth/customer-support.svg`}
                       width={0}
                       height={0}
                       priority

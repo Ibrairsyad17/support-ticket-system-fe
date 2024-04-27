@@ -31,7 +31,7 @@ export default function Navbar() {
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <Image
-              src="/logo-helptix.svg"
+              src="/assets/img/logo-helptix.svg"
               alt={`Helptix Logo`}
               width="0"
               height="0"
@@ -92,7 +92,9 @@ export default function Navbar() {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              <Image
+                width={500}
+                height={500}
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=red"
                 alt=""

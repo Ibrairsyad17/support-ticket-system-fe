@@ -6,10 +6,8 @@ import {
 } from "@/app/(pages)/dashboard/components/Tabs";
 import React from "react";
 import { DataTable } from "@/app/(pages)/dashboard/admin/list-complaints/components/DataTable";
-import {
-  columns,
-  complaints,
-} from "@/app/(pages)/dashboard/admin/list-complaints/components/Columns";
+import { columns } from "@/app/(pages)/dashboard/admin/list-complaints/components/Columns";
+import complaints from "@/MOCK_DATA.json";
 
 const TabsContents = () => {
   return (
