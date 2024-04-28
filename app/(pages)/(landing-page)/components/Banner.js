@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const Banner = () => {
   return (
-    <section className="w-11/12 transition duration-300 antialiased mx-auto overflow-hidden">
+    <section className="max-w-[85rem] transition duration-300 antialiased mx-auto overflow-hidden">
       <div className="px-4 mx-auto">
         <Card className="px-6 border-none shadow-none bg-gradient-to-l from-emerald-100 to-emerald-300 mb-20">
           <CardContent className="px-6 py-0">

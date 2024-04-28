@@ -10,7 +10,7 @@ const Header = () => {
         aria-label="Global"
       >
         <div className="md:col-span-3">
-          <Link href={"/dashboard/admin/sync-account"}>
+          <Link href={"/(dashboard)/admin/sync-account"}>
             <ChevronLeft className="w-7 h-7 text-gray-800" />
           </Link>
         </div>
