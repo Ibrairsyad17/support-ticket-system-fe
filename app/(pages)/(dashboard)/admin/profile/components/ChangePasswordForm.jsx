@@ -1,5 +1,4 @@
 import React from "react";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Input } from "@/components/ui/input";
 
 const ChangePasswordForm = () => {

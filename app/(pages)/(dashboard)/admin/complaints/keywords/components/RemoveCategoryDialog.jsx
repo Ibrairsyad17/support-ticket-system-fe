@@ -25,9 +25,9 @@ export function RemoveCategoryDialog() {
         <AlertDialogHeader>
           <AlertDialogTitle>Apakah anda benar-benar yakin?</AlertDialogTitle>
           <AlertDialogDescription>
-            Menghapus kategori "Aplikasi" akan menghapus semua data kata kunci
-            dan Anda tidak akan menerima data terkait lagi. Apakah Anda yakin
-            ingin melaniutkan?
+            Menghapus kategori Aplikasi akan menghapus semua data kata kunci dan
+            Anda tidak akan menerima data terkait lagi. Apakah Anda yakin ingin
+            melaniutkan?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

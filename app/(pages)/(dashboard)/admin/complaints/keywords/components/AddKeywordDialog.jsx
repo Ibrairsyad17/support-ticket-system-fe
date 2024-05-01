@@ -28,7 +28,7 @@ export function AddKeywordDialog() {
             Tambah kata kunci pada kategori.
           </DialogDescription>
         </DialogHeader>
-        <div class="grid grid-cols-1 gap-y-2">
+        <div className="grid grid-cols-1 gap-y-2">
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
               <Label htmlFor="link" className="sr-only">
@@ -40,7 +40,7 @@ export function AddKeywordDialog() {
               <span className="">Tambah</span>
             </Button>
           </div>
-          <h3 class="text-md font-medium mt-3">List kata kunci aplikasi</h3>
+          <h3 className="text-md font-medium mt-3">List kata kunci aplikasi</h3>
           <KeywordList />
         </div>
       </DialogContent>
