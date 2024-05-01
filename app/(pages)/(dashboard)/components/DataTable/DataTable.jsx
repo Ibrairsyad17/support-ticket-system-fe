@@ -19,10 +19,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DataTableToolbar from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/DataTableToolbar";
+import DataTableToolbar from "@/app/(pages)/(dashboard)/components/DataTable/DataTableToolbar";
 import * as React from "react";
 
-export const DataTable = ({ columns, data }) => {
+export const DataTable = ({ columns, data, filteredBy }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
 
@@ -48,7 +48,7 @@ export const DataTable = ({ columns, data }) => {
 
   return (
     <>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} filteredBy={filteredBy} />
       <div className="rounded-md border mt-3.5 mb-10">
         <Table>
           <TableHeader>

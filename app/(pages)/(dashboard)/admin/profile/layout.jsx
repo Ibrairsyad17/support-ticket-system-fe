@@ -1,10 +1,10 @@
 import React from "react";
-import SidebarProfiles from "@/app/(pages)/(dashboard)/admin/profile/components/SidebarProfiles";
+import SidebarProfiles from "@/app/(pages)/(dashboard)/components/Sidebars/SidebarProfiles";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata = {
   title: "Profil | Helptix",
-  description: "Dashboard Admin",
+  description: "Profil Admin",
 };
 
 const sidebarNavItems = [

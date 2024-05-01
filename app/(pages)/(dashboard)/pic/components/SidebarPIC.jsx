@@ -1,29 +1,20 @@
 "use client";
-
-import React from "react";
-import Link from "next/link";
 import {
-  ArrowPathIcon,
   ArrowRightStartOnRectangleIcon,
-  DocumentTextIcon,
   HomeIcon,
-  InboxIcon,
   TicketIcon,
   UserIcon,
-  UsersIcon,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconActive,
   TicketIcon as TicketIconActive,
   UserIcon as UserIconActive,
-  UsersIcon as UsersIconActive,
-  ArrowPathIcon as ArrowPathIconActive,
-  InboxIcon as InboxIconActive,
-  DocumentTextIcon as DocumentTextIconActive,
 } from "@heroicons/react/24/solid";
+import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import SidebarContent from "@/app/(pages)/(dashboard)/components/Sidebars/SidebarContent";
+import React from "react";
+import { usePathname } from "next/navigation";
 import NavbarSidebar from "@/app/(pages)/(dashboard)/components/Sidebars/NavbarSidebar";
 
 const listLink = [
@@ -32,64 +23,25 @@ const listLink = [
     icon: HomeIcon,
     active: HomeIconActive,
     type: "link",
-    href: "/admin/dashboard",
-  },
-  {
-    title: "Data Keluhan",
-    icon: DocumentTextIcon,
-    active: DocumentTextIconActive,
-    type: "multi-link",
-    links: [
-      { title: "Kata Kunci", href: "/admin/complaints/keywords" },
-      { title: "Data Keluhan", href: "/admin/complaints/list-complaints" },
-    ],
-    href: "/admin/complaint",
-  },
-  {
-    title: "Pesan",
-    icon: InboxIcon,
-    active: InboxIconActive,
-    type: "multi-link",
-    links: [
-      { title: "Pesan Masuk", href: "/admin/message/inbox" },
-      { title: "Menunggu", href: "/admin/messagge/progress" },
-      { title: "Selesai", href: "/admin/message/done" },
-    ],
-    href: "/admin/inbox",
+    href: "/pic/dashboard",
   },
   {
     title: "Tiket",
     icon: TicketIcon,
     active: TicketIconActive,
     type: "link",
-    href: "/admin/tickets",
-  },
-  {
-    title: "Kelola Tim",
-    icon: UsersIcon,
-    active: UsersIconActive,
-    type: "link",
-    href: "/admin/team",
-  },
-  {
-    title: "Hubungkan Akun",
-    icon: ArrowPathIcon,
-    active: ArrowPathIconActive,
-    type: "link",
-    href: "/admin/sync-account",
+    href: "/pic/tickets",
   },
   {
     title: "Profil",
     icon: UserIcon,
     active: UserIconActive,
     type: "link",
-    href: "/admin/profile",
+    href: "/pic/profile",
   },
 ];
-
-const SidebarAdmin = () => {
+const SidebarPIC = () => {
   const pathname = usePathname();
-
   return (
     <div>
       <NavbarSidebar listLink={listLink} />
@@ -136,4 +88,4 @@ const SidebarAdmin = () => {
   );
 };
 
-export default SidebarAdmin;
+export default SidebarPIC;

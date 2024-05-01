@@ -77,6 +77,10 @@
     transform: scaleX(1);
   }
 
+  .sheet-pic{
+    width: 80%;
+  }
+
   .navbarLinks::before {
     content: "";
     position: absolute;

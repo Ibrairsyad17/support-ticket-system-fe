@@ -3,16 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
-function DataTableToolbar({ table }) {
+function DataTableToolbar({ table, filteredBy }) {
   return (
     <div className="flex items-center justify-between px-2 mt-3.5">
       <div className="flex space-x-3.5 justify-between items-center">
         <div className="lg:w-[350px] flex items-center -ml-2">
           <Input
             placeholder="Cari data keluhan..."
-            value={table.getColumn("description")?.getFilterValue() ?? ""}
+            value={table.getColumn(filteredBy)?.getFilterValue() ?? ""}
             onChange={(event) =>
-              table.getColumn("description")?.setFilterValue(event.target.value)
+              table.getColumn(filteredBy)?.setFilterValue(event.target.value)
             }
             className="w-full"
           />

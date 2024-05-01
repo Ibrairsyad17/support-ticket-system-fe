@@ -1,9 +1,22 @@
 import React from "react";
-import TabsContent from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/TabsContent";
+import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
+import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
+import { columns } from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/Columns";
+import data from "@/MOCK_DATA.json";
 export const metadata = {
   title: "Daftar Keluhan | Helptix",
   description: "Daftar Keluhan Pengguna",
 };
+
+const items = [
+  {
+    value: "all",
+    label: "Semua",
+    DataTable: (
+      <DataTable data={data} columns={columns} filteredBy="description" />
+    ),
+  },
+];
 
 const ListComplaintsPage = async () => {
   return (
@@ -24,7 +37,7 @@ const ListComplaintsPage = async () => {
             </div>
           </header>
         </div>
-        <TabsContent></TabsContent>
+        <TabsContents defaultValue="all" values={items} />
       </div>
     </>
   );

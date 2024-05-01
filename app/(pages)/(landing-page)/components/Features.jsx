@@ -4,7 +4,7 @@ import FeatureContent from "@/app/(pages)/(landing-page)/components/FeatureConte
 
 const featuresDetails = [
   {
-    id: "ticket",
+    id: "tickets",
     title: "Optimalkan Penanganan Keluhan Lebih Terstruktur dengan Fitur Tiket",
     image: "/assets/img/lp-2.svg",
     features: [
