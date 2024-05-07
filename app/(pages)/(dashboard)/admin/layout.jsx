@@ -1,6 +1,6 @@
 import React from "react";
 import "../../../globals.css";
-import { Inter } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import SidebarAdmin from "@/app/(pages)/(dashboard)/admin/components/SidebarAdmin";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
   description: "Dashboard Admin",
 };
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter_Tight({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

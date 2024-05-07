@@ -6,27 +6,23 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 import { Instagram, WhatsApp, X } from "@mui/icons-material";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import {
   priorities,
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
-import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
 import CommentInput from "@/app/(pages)/(dashboard)/components/Comment/CommentInput";
 
-const TableActions = ({ id }) => {
+const TicketDetails = ({ id }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <EyeOpenIcon className="h-5 w-5" />
-        </Button>
+        <span className="underline ">Lihat Detail</span>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-lg overflow-y-scroll">
+      <SheetContent className="sm:max-w-lg overflow-y-scroll rounded-ss-lg">
         <SheetHeader>
           <SheetTitle>Tiket {id}</SheetTitle>
           <div className="flex flex-col space-y-3.5 text-sm">
@@ -120,4 +116,4 @@ const TableActions = ({ id }) => {
   );
 };
 
-export default TableActions;
+export default TicketDetails;

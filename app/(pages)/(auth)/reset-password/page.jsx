@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
@@ -22,30 +21,6 @@ function PassResetPage() {
           <div className="mt-5">
             <form>
               <div className="grid gap-y-4">
-                <div>
-                  <Label htmlFor="email" className="block text-sm mb-2 ">
-                    Alamat email
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none placeholder:text-gray-400"
-                      required
-                      aria-describedby="email-error"
-                      placeholder="Masukkan email"
-                    />
-                  </div>
-                  <p
-                    className="hidden text-xs text-red-600 mt-2"
-                    id="email-error"
-                  >
-                    Please include a valid email address so we can get back to
-                    you
-                  </p>
-                </div>
-
                 <div>
                   <Label htmlFor="password" className="block text-sm mb-2 ">
                     Kata sandi baru
@@ -93,17 +68,6 @@ function PassResetPage() {
                   >
                     Password does not match the password
                   </p>
-                </div>
-
-                <div className="flex items-center">
-                  <div className="flex">
-                    <Checkbox id="terms" />
-                  </div>
-                  <div className="ms-3">
-                    <Label htmlFor="remember-me" className="text-sm ">
-                      Biarkan saya tetap log in
-                    </Label>
-                  </div>
                 </div>
 
                 <Button type="submit" className="w-full py-3 px-4 ">

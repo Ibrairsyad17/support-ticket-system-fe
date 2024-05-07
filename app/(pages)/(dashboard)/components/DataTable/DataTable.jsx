@@ -22,7 +22,7 @@ import {
 import DataTableToolbar from "@/app/(pages)/(dashboard)/components/DataTable/DataTableToolbar";
 import * as React from "react";
 
-export const DataTable = ({ columns, data, filteredBy }) => {
+export const DataTable = ({ columns, data, filteredBy, type = "normal" }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
 
@@ -51,24 +51,28 @@ export const DataTable = ({ columns, data, filteredBy }) => {
       <DataTableToolbar table={table} filteredBy={filteredBy} />
       <div className="rounded-md border mt-3.5 mb-10">
         <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
+          {type === "headerless" ? (
+            <></>
+          ) : (
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+          )}
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (

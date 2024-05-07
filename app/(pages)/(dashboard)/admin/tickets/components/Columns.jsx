@@ -9,7 +9,7 @@ import {
   statuses,
   pics,
 } from "@/app/(pages)/(dashboard)/components/data/data";
-import TableActions from "@/app/(pages)/(dashboard)/pic/tickets/components/TableActions";
+import TableActions from "@/app/(pages)/(dashboard)/admin/tickets/components/TableActions";
 
 export const columns = [
   {

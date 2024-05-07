@@ -6,19 +6,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { Instagram, WhatsApp, X } from "@mui/icons-material";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import {
+  pics,
   priorities,
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
-import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
 import CommentInput from "@/app/(pages)/(dashboard)/components/Comment/CommentInput";
 
-const TableActions = ({ id }) => {
+const DetailTicketSheet = ({ id }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -26,7 +26,7 @@ const TableActions = ({ id }) => {
           <EyeOpenIcon className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-lg overflow-y-scroll">
+      <SheetContent className="lg:max-w-lg overflow-y-scroll">
         <SheetHeader>
           <SheetTitle>Tiket {id}</SheetTitle>
           <div className="flex flex-col space-y-3.5 text-sm">
@@ -77,16 +77,12 @@ const TableActions = ({ id }) => {
                 attroite.
               </p>
             </div>
-            <div className="flex justify-between items-center py-1.5 border-b">
-              <p className="text-gray-600">Ditugaskan ke:</p>
-              <div className="flex space-x-2 items-center">
-                <Avatar className="h-4 w-4">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="" />
-                  <AvatarFallback className="bg-gray-200 text-gray-400">
-                    P
-                  </AvatarFallback>
-                </Avatar>
-                <span>Bagas Kuncoro</span>
+            <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
+              <p className="text-gray-600 lg:col-span-2 text-left">
+                Ditugaskan Ke:
+              </p>
+              <div className="col-span-2">
+                <Selects items={pics} val="Bagas Kuncoro" type="avatar" />
               </div>
             </div>
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
@@ -120,4 +116,4 @@ const TableActions = ({ id }) => {
   );
 };
 
-export default TableActions;
+export default DetailTicketSheet;

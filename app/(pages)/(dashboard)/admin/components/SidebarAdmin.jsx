@@ -43,7 +43,7 @@ const listLink = [
       { title: "Kata Kunci", href: "/admin/complaints/keywords" },
       { title: "Data Keluhan", href: "/admin/complaints/list-complaints" },
     ],
-    href: "/admin/complaint",
+    href: "/admin/complaints",
   },
   {
     title: "Pesan",
@@ -52,10 +52,10 @@ const listLink = [
     type: "multi-link",
     links: [
       { title: "Pesan Masuk", href: "/admin/message/inbox" },
-      { title: "Menunggu", href: "/admin/messagge/progress" },
+      { title: "Menunggu", href: "/admin/message/progress" },
       { title: "Selesai", href: "/admin/message/done" },
     ],
-    href: "/admin/inbox",
+    href: "/admin/message",
   },
   {
     title: "Tiket",
@@ -69,7 +69,7 @@ const listLink = [
     icon: UsersIcon,
     active: UsersIconActive,
     type: "link",
-    href: "/admin/team",
+    href: "/admin/teams",
   },
   {
     title: "Hubungkan Akun",

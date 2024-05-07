@@ -67,11 +67,11 @@ function Features() {
         </div>
       </div>
       <Tabs
-        defaultValue="ticket"
+        defaultValue="tickets"
         className="w-full place-items-center lg:flex lg:flex-col justify-center"
       >
         <TabsList className="bg-white lg:gap-x-14 flex flex-wrap">
-          <TabsTrigger className="rounded-full px-5 my-2" value="ticket">
+          <TabsTrigger className="rounded-full px-5 my-2" value="tickets">
             Tiket Conversational
           </TabsTrigger>
           <TabsTrigger className="rounded-full px-5 my-2" value="platform">

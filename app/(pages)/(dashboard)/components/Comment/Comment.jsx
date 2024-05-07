@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Comment = () => {
   return (
-    <div className="border rounded-lg flex flex-col space-y-2 p-3.5">
+    <div className="border rounded-lg flex flex-col space-y-2 p-3.5 w-full">
       <div className="flex space-x-2.5 items-center text-xs">
         <Avatar className="h-4 w-4">
           <AvatarImage src="https://github.com/shadcn.png" alt="" />

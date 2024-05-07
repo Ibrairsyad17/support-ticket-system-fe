@@ -1,40 +1,32 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { TrashIcon } from "@radix-ui/react-icons";
 
-const KeywordList = () => {
+const TemplateList = () => {
   return (
     <div className="">
       <ul className="w-full flex flex-col divide-y divide-gray-100">
         <li className="inline-flex items-center gap-x-2 py-3 text-sm font-base bg-white text-gray-600 -mt-px">
           <div className="flex justify-between w-full items-center">
-            Profile
-            <Button
-              size="xs"
-              className="items-center rounded-full px-2.5 py-1 hover:bg-red-600 text-xs font-medium bg-red-500 text-white"
-            >
-              Hapus
+            Apa masalah atau keluhan Anda?
+            <Button size="sm" variant="ghost">
+              <TrashIcon className="h-4 w-4 text-red-500" />
             </Button>
           </div>
         </li>
         <li className="inline-flex items-center gap-x-2 py-3 text-sm font-base bg-white text-gray-600 -mt-px">
           <div className="flex justify-between w-full items-center">
-            Settings
-            <Button
-              size="xs"
-              className="items-center rounded-full px-2.5 py-1 hover:bg-red-600 text-xs font-medium bg-red-500 text-white"
-            >
-              Hapus
+            Kapan Anda mengalami masalah ini?
+            <Button size="sm" variant="ghost">
+              <TrashIcon className="h-4 w-4 text-red-500" />
             </Button>
           </div>
         </li>
         <li className="inline-flex items-center gap-x-2 pt-3 text-sm font-base bg-white text-gray-600 -mt-px">
           <div className="flex justify-between w-full items-center">
-            Newsletter
-            <Button
-              size="xs"
-              className="items-center rounded-full px-2.5 py-1 hover:bg-red-600 text-xs font-medium bg-red-500 text-white"
-            >
-              Hapus
+            Bagaimana kami dapat membantu Anda?
+            <Button size="sm" variant="ghost">
+              <TrashIcon className="h-4 w-4 text-red-500" />
             </Button>
           </div>
         </li>
@@ -43,4 +35,4 @@ const KeywordList = () => {
   );
 };
 
-export default KeywordList;
+export default TemplateList;

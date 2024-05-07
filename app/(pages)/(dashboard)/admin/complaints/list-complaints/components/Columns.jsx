@@ -27,7 +27,7 @@ export const columns = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="translate-y-[2px] ml-2"
+        className="translate-y-[2px]"
       />
     ),
     cell: ({ row }) => (
