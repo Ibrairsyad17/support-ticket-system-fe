@@ -83,7 +83,7 @@ export function UserAuthForm({ className }) {
             </div>
 
             <Link
-              href="/forgot-password"
+              href="/"
               className="font-medium text-sm text-amber-500 hover:underline"
             >
               Lupa password?
