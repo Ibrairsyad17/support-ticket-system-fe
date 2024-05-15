@@ -25,6 +25,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import SidebarContent from "@/app/(pages)/(dashboard)/components/Sidebars/SidebarContent";
 import NavbarSidebar from "@/app/(pages)/(dashboard)/components/Sidebars/NavbarSidebar";
+import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
 
 const listLink = [
   {
@@ -89,7 +91,6 @@ const listLink = [
 
 const SidebarAdmin = () => {
   const pathname = usePathname();
-
   return (
     <div>
       <NavbarSidebar listLink={listLink} />
@@ -122,13 +123,14 @@ const SidebarAdmin = () => {
 
         <div>
           <div className="px-7">
-            <Link
-              className={`flex items-center gap-x-4 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100`}
-              href=""
+            <Button
+              className={`flex w-full justify-start items-center gap-x-4 text-sm text-slate-700 `}
+              onClick={() => signOut({ callbackUrl: "/" })}
+              variant="ghost"
             >
               <ArrowRightStartOnRectangleIcon className={`w-5 h-5`} />
-              Log Out
-            </Link>
+              <span>Keluar</span>
+            </Button>
           </div>
         </div>
       </div>

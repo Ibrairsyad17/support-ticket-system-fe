@@ -13,11 +13,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
 
-const DataTableActions = () => {
+const DataTableActions = ({ id }) => {
   return (
     <div className="flex justify-end space-x-3">
       <Button asChild variant="ghost" size="icon">
-        <Link href="/public">
+        <Link href={`/chats/${id}`}>
           <EyeOpenIcon className="h-5 w-5" />
         </Link>
       </Button>

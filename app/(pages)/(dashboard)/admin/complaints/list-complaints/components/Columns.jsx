@@ -103,10 +103,11 @@ export const columns = [
     cell: ({ row }) => <div>{row.getValue("date")}</div>,
   },
   {
-    id: "actions",
+    accessorKey: "id",
+    header: "",
     cell: ({ row }) => (
       <div className="w-auto">
-        <DataTableActions />
+        <DataTableActions id={row.getValue("id")} />
       </div>
     ),
   },

@@ -8,22 +8,41 @@ import GoogleIcon from "@mui/icons-material/Google";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { useRef } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export function UserAuthForm({ className }) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const email = useRef("");
+  const password = useRef("");
+  const push = useRouter();
 
-  async function onSubmit(event) {
-    event.preventDefault();
+  async function onSubmit() {
     setIsLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        redirect: true,
+        callbackUrl: "/admin/dashboard",
+        email: email.current,
+        password: password.current,
+      });
 
-    setTimeout(() => {
+      if (result.error) {
+        toast.error(result.error);
+      }
+
       setIsLoading(false);
-    }, 3000);
+    } catch (error) {
+      toast.error(error.message);
+    }
+    setIsLoading(false);
   }
 
   return (
     <div className="grid gap-6">
-      <form onSubmit={onSubmit}>
+      <form>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="mb-1 ml-1" htmlFor="email">
@@ -38,6 +57,9 @@ export function UserAuthForm({ className }) {
               autoCorrect="off"
               disabled={isLoading}
               className="my-1 py-5"
+              onChange={(e) => {
+                email.current = e.target.value;
+              }}
             />
             <Label className="mb-1 mt-2 ml-1" htmlFor="pass">
               Password
@@ -49,9 +71,12 @@ export function UserAuthForm({ className }) {
               autoCorrect="off"
               disabled={isLoading}
               className="my-1 py-5"
+              onChange={(e) => {
+                password.current = e.target.value;
+              }}
             />
           </div>
-          <Button disabled={isLoading} className="mt-2 py-5">
+          <Button disabled={isLoading} onClick={onSubmit} className="mt-2 py-5">
             {isLoading && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +108,7 @@ export function UserAuthForm({ className }) {
             </div>
 
             <Link
-              href="/"
+              href="/forgot-password"
               className="font-medium text-sm text-amber-500 hover:underline"
             >
               Lupa password?

@@ -7,15 +7,6 @@ import {
 
 export const listStats = [
   {
-    id: 1,
-    title: "Jumlah keyword",
-    value: 13,
-    icon: KeyIcon,
-    backgroundColor: "bg-gradient-to-br from-red-100 to-red-200",
-    textColor: "text-red-500",
-    shadowColor: "shadow-red-300",
-  },
-  {
     id: 2,
     title: "Keluhan dibalas",
     value: 6783,

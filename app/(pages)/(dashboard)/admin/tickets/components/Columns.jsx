@@ -40,7 +40,7 @@ export const columns = [
     accessorKey: "id",
     header: <div className="px-4 text-xs lg:text-sm">Kode Tiket</div>,
     cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">{row.getValue("id")}</div>
+      <div className="px-4 text-xs lg:text-sm">TK-{row.getValue("id")}</div>
     ),
   },
   {

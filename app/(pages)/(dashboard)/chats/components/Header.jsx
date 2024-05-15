@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <div className="w-full flex p-5 border-b justify-between items-center">
       <div className="">
-        <Link href={"/admin/sync-account"}>
+        <Link href={"/admin/complaints/list-complaints"}>
           <ChevronLeft className="w-6 h-6 text-gray-800" />
         </Link>
       </div>

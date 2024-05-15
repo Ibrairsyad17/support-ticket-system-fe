@@ -16,6 +16,8 @@ import SidebarContent from "@/app/(pages)/(dashboard)/components/Sidebars/Sideba
 import React from "react";
 import { usePathname } from "next/navigation";
 import NavbarSidebar from "@/app/(pages)/(dashboard)/components/Sidebars/NavbarSidebar";
+import { signOut } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const listLink = [
   {
@@ -74,13 +76,14 @@ const SidebarPIC = () => {
 
         <div>
           <div className="px-7">
-            <Link
-              className={`flex items-center gap-x-4 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100`}
-              href=""
+            <Button
+              className={`flex w-full justify-start items-center gap-x-4 text-sm text-slate-700 `}
+              onClick={() => signOut({ callbackUrl: "/" })}
+              variant="ghost"
             >
               <ArrowRightStartOnRectangleIcon className={`w-5 h-5`} />
-              Log Out
-            </Link>
+              <span>Keluar</span>
+            </Button>
           </div>
         </div>
       </div>

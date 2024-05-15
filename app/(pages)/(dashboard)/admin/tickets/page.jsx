@@ -35,7 +35,7 @@ const items = [
   },
 ];
 
-const TicketsAdminPage = () => {
+const TicketsAdminPage = async () => {
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-5">

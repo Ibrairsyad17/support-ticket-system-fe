@@ -1,20 +1,19 @@
+"use client";
 import React from "react";
 import "../../../globals.css";
 import { Inter_Tight } from "next/font/google";
 import SidebarAdmin from "@/app/(pages)/(dashboard)/admin/components/SidebarAdmin";
-
-export const metadata = {
-  title: "Dashboard | Helptix",
-  description: "Dashboard Admin",
-};
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter_Tight({ subsets: ["latin"] });
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, session }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SidebarAdmin />
-        {children}
+        <SessionProvider session={session}>
+          <SidebarAdmin />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

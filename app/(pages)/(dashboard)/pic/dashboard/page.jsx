@@ -13,6 +13,11 @@ import Stats from "@/app/(pages)/(dashboard)/components/Stats/Stats";
 import { ticketingStats } from "@/app/(pages)/(dashboard)/components/Stats/TicketingStats";
 import ComplaintsChartsPIC from "@/app/(pages)/(dashboard)/pic/components/ComplaintsChartsPIC";
 
+export const metadata = {
+  title: "Dashboard PIC | Helptix",
+  description: "Dashboard PIC",
+};
+
 const DashboardPICPage = () => {
   return (
     <>
