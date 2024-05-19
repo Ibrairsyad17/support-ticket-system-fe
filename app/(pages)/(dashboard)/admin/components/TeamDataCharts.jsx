@@ -2,18 +2,58 @@
 import React, { PureComponent } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-const colors = ["#a855f7", "#c084fc", "#d8b4fe"];
+const colors = ["#a855f7", "#c084fc", "#d8b4fe", "#9333ea"];
+const teamPIC1Data = [
+  { name: "Tiket ditugaskan", value: 10 },
+  { name: "Tiket dikerjakan", value: 5 },
+  { name: "Tiket direview", value: 1 },
+];
+
 export default class TeamDataCharts extends PureComponent {
-  constructor(data) {
-    super(data);
-    this.dataCharts = data;
-  }
   render() {
-    const { data } = this.dataCharts;
+    const title = this.props.title;
+    const teamPICData = this.props.data;
+
+    const filteredData = teamPICData.filter(
+      (item) => item.accounts.pic_roles.role === title,
+    );
+
+    const sum = filteredData.reduce((acc, ticket) => {
+      const status = ticket.status;
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    });
+
+    const dataCharts = Object.values(
+      filteredData.reduce((acc, { status }) => {
+        acc[status] = acc[status]
+          ? { ...acc[status], value: acc[status].value + 1 }
+          : { name: status, value: 1 };
+        return acc;
+      }, {}),
+    );
+
+    const changeStatusNameArray = dataCharts.map((item) => {
+      if (item.name === "ASSIGNED") {
+        item.name = "Tiket ditugaskan";
+      } else if (item.name === "IN_PROGRESS") {
+        item.name = "Tiket dikerjakan";
+      } else if (item.name === "CHECKED") {
+        item.name = "Tiket direview";
+      } else if (item.name === "DONE") {
+        item.name = "Tiket selesai";
+      }
+      return item;
+    });
+
+    const filteredDataStatus = changeStatusNameArray.filter(
+      (arr) => arr.name !== "Tiket selesai",
+    );
+
     return (
       <div className="flex flex-col space-y-2.5 border py-2 px-1 rounded-lg text-center">
         <h3 className="font-semibold leading-none mt-4 tracking-tight text-xl">
-          Tim PIC 1
+          Tim PIC {title}
         </h3>
         <p className="text-sm text-muted-foreground">
           <span className="font-semibold">16 </span> anggota tim.
@@ -22,14 +62,14 @@ export default class TeamDataCharts extends PureComponent {
           <PieChart>
             <Tooltip />
             <Pie
-              data={data}
+              data={filteredDataStatus}
               cx="50%"
               cy="50%"
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"
             >
-              {data.map((entry, index) => {
+              {filteredDataStatus.map((entry, index) => {
                 let color = "";
                 switch (entry.name) {
                   case "Tiket ditugaskan":
@@ -40,6 +80,9 @@ export default class TeamDataCharts extends PureComponent {
                     break;
                   case "Tiket direview":
                     color = colors[2];
+                    break;
+                  case "Tiket selesai":
+                    color = colors[3];
                     break;
                   default:
                     color = "purple";

@@ -33,8 +33,6 @@ const ComplaintsChartsAdmin = ({ data }) => {
     };
   });
 
-  console.log(complaintsData);
-
   return (
     <ResponsiveContainer
       width="100%"

@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 
-const RemovePicDialog = () => {
+const RemovePicDialog = ({ data }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -28,7 +28,7 @@ const RemovePicDialog = () => {
           </AlertDialogTitle>
           <AlertDialogDescription>
             Anda akan menghapus data PIC{" "}
-            <span className="font-semibold">Agung Budi</span>. Tindakan ini
+            <span className="font-semibold">{data.name}</span>. Tindakan ini
             tidak dapat dibatalkan. Apakah Anda yakin ingin menghapus data PIC
             ini?
           </AlertDialogDescription>

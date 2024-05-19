@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 
 function DataTableToolbar({ table, filteredBy }) {
   return (
-    <div className="flex items-center justify-between px-2 mt-3.5">
+    <div className="flex items-center justify-between px-2 mt-1 mb-5">
       <div className="flex space-x-3.5 justify-between items-center">
         <div className="lg:w-[350px] flex items-center -ml-2">
           <Input

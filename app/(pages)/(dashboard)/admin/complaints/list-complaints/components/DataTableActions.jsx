@@ -16,16 +16,16 @@ import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
 const DataTableActions = ({ id }) => {
   return (
     <div className="flex justify-end space-x-3">
-      <Button asChild variant="ghost" size="icon">
+      <Button asChild variant="outline" size="icon">
         <Link href={`/chats/${id}`}>
-          <EyeOpenIcon className="h-5 w-5" />
+          <EyeOpenIcon className="h-5 w-5 text-violet-500" />
         </Link>
       </Button>
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <TrashIcon className="h-5 w-5" />
+          <Button variant="outline" size="icon">
+            <TrashIcon className="h-5 w-5 text-red-600" />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>

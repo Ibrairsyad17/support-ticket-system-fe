@@ -7,10 +7,11 @@ const StatsCard = ({
   backgroundColor,
   shadowColor = "shadow-gray-100",
   value,
+  shadowBox = true,
 }) => {
   return (
     <div
-      className={`flex flex-col bg-white shadow-md ${backgroundColor} shadow-gray-100 rounded-xl`}
+      className={`flex flex-col bg-white ${shadowBox && "shadow-md"} ${backgroundColor} shadow-gray-100 rounded-xl`}
     >
       <div className="p-4 md:p-5 flex gap-x-4">
         <div

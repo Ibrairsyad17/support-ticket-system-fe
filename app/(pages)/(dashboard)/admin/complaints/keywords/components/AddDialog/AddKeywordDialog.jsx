@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -11,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusIcon } from "@radix-ui/react-icons";
 import React from "react";
-import KeywordList from "./KeywordList";
+import KeywordList from "../KeywordsList/KeywordList";
 
-export function AddKeywordDialog() {
+export function AddKeywordDialog({ data }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -41,8 +43,15 @@ export function AddKeywordDialog() {
             </Button>
           </div>
           <h3 className="text-md font-medium mt-3">List kata kunci aplikasi</h3>
-          <KeywordList />
+          <KeywordList data={data} type="button" />
         </div>
+        <DialogFooter className="w-full">
+          <DialogClose asChild>
+            <Button type="button" className="w-full">
+              Tutup
+            </Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

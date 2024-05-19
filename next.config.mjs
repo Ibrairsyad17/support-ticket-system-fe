@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com", "github.com"],
+    domains: ["images.unsplash.com", "github.com", "picsum.photos"],
   },
   env:{
     BASE_URL:process.env.BASE_URL,

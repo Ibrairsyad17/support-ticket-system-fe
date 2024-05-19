@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const EditPicDialog = () => {
+const EditPicDialog = ({ data }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,9 +32,9 @@ const EditPicDialog = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Tambah Data PIC</DialogTitle>
+          <DialogTitle className="text-xl">Edit Data PIC</DialogTitle>
           <DialogDescription className="text-sm">
-            Tambahkan data PIC untuk setiap proyek atau departemen.
+            Ubah informasi mengenai {data?.name}
           </DialogDescription>
         </DialogHeader>
         <form>
@@ -45,7 +45,7 @@ const EditPicDialog = () => {
                 type="text"
                 id="name"
                 className="mt-2"
-                placeholder="Masukkan nama"
+                value={data?.name}
               />
             </div>
             <div className="flex-1">
@@ -54,7 +54,7 @@ const EditPicDialog = () => {
                 type="text"
                 id="email"
                 className="mt-2"
-                placeholder="Masukkan email"
+                value={data?.email}
               />
             </div>
             <div className="flex-1">
@@ -63,14 +63,14 @@ const EditPicDialog = () => {
                 type="text"
                 id="phone-number"
                 className="mt-2"
-                placeholder="Masukkan nomor telepon"
+                value={data?.phone_number}
               />
             </div>
             <div className="flex-1">
               <Label htmlFor="phone-number">Pilih Jenis PIC</Label>
               <Select>
                 <SelectTrigger className="mt-2">
-                  <SelectValue placeholder="Pilih Jenis PIC" />
+                  <SelectValue placeholder={data?.pic_roles.role} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -88,7 +88,7 @@ const EditPicDialog = () => {
 
           <div className="grid lg:grid-cols-2 gap-2 mt-5">
             <Button type="submit" className="px-3">
-              Tambah
+              Edit
             </Button>
             <DialogClose asChild>
               <Button type="button" variant="outline" className="px-3">

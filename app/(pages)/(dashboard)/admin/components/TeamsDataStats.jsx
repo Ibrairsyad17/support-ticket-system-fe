@@ -1,16 +1,38 @@
+"use client";
 import React from "react";
 import TeamDataCharts from "@/app/(pages)/(dashboard)/admin/components/TeamDataCharts";
-const teamPIC1Data = [
-  { name: "Tiket ditugaskan", value: 10 },
-  { name: "Tiket dikerjakan", value: 5 },
-  { name: "Tiket direview", value: 1 },
-];
+import { useSession } from "next-auth/react";
+import { getTicketsAllPicRole } from "@/app/api/repository/ticketRepository";
 
 const TeamsDataStats = () => {
+  const { data: session } = useSession();
+  const [tickets, setTickets] = React.useState([]);
+  const [category, setCategory] = React.useState([]);
+
+  const fetchTicketsCategory = async () => {
+    const response = await getTicketsAllPicRole(session?.token.data.token);
+    const getTickets = response.data.data.assignments;
+    if (getTickets.length !== 0) {
+      const getCategory = getTickets
+        .map((ticket) => ticket.accounts?.pic_roles.role)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      console.log(getCategory);
+      console.log(getTickets);
+      setTickets(getTickets);
+      setCategory(getCategory);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) fetchTicketsCategory();
+  }, [session?.token.data.token]);
+
   return (
     <div className="grid grid-cols-1 gap-y-5">
       <div className="grid lg:grid-cols-4 gap-x-5">
-        <TeamDataCharts data={teamPIC1Data} />
+        {category.map((category, index) => (
+          <TeamDataCharts data={tickets} title={category} key={index} />
+        ))}
       </div>
       <div className="flex">
         <div className="inline-flex items-center ml-4">

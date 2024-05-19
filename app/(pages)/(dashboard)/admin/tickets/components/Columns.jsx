@@ -10,6 +10,7 @@ import {
   pics,
 } from "@/app/(pages)/(dashboard)/components/data/data";
 import TableActions from "@/app/(pages)/(dashboard)/admin/tickets/components/TableActions";
+import SelectPic from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
 
 export const columns = [
   {
@@ -37,14 +38,14 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "ticket_id",
     header: <div className="px-4 text-xs lg:text-sm">Kode Tiket</div>,
     cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">TK-{row.getValue("id")}</div>
+      <div className="px-4 text-xs lg:text-sm">{row.getValue("ticket_id")}</div>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "conversation_messages",
     header: ({ column }) => {
       return (
         <Button
@@ -56,25 +57,35 @@ export const columns = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => {
+      const messages = row.getValue("conversation_messages");
+      return (
+        <div className="px-4 text-xs lg:text-sm">
+          {messages.conversations.customers.nama_lengkap}
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "description",
+    accessorKey: "assignment_name",
     header: <div className="px-4 text-xs lg:text-sm">Nama Keluhan</div>,
     cell: ({ row }) => (
       <div className="px-4 max-w-[300px] lg:max-w-xs overflow-hidden truncate text-xs lg:text-sm">
-        {row.getValue("description")}
+        {row.getValue("assignment_name")}
       </div>
     ),
   },
   {
-    accessorKey: "assigned",
+    accessorKey: "conversation_messages",
     header: <div className="px-4">Ditugaskan</div>,
     cell: ({ row }) => {
-      const assigned = row.getValue("assigned");
-      return <Selects items={pics} val={assigned.name} type="avatar" />;
+      const assigned = row.getValue("conversation_messages");
+      return (
+        <SelectPic
+          image={assigned.conversations.accounts.photo_profile}
+          name={assigned.conversations.accounts.name}
+        />
+      );
     },
   },
   {
@@ -100,7 +111,7 @@ export const columns = [
   {
     id: "actions",
     cell: ({ row }) => {
-      return <TableActions id={row.getValue("id")} />;
+      return <TableActions data={row.original} />;
     },
   },
 ];

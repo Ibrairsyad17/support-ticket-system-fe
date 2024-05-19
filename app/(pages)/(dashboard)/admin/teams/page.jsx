@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
 import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
@@ -5,35 +6,42 @@ import { columns } from "@/app/(pages)/(dashboard)/admin/teams/components/Column
 import { Button } from "@/components/ui/button";
 import { FilePlusIcon } from "@radix-ui/react-icons";
 import AddPICDialog from "@/app/(pages)/(dashboard)/admin/teams/components/AddPICDialog";
-
-const data = [
-  {
-    id: 1,
-    name: "Jajang Nurjaman",
-    email: "jjnrj10@gmail.com",
-    phone: "08123456789",
-    role: "PIC Marketing",
-    status: "Aktif",
-  },
-  {
-    id: 2,
-    name: "Dede Iskandar",
-    email: "ddiskandar13@gmail.com",
-    phone: "08123456789",
-    role: "PIC Web Developer",
-    status: "Belum Diaktivasi",
-  },
-];
-
-const items = [
-  {
-    value: "all",
-    label: "Semua",
-    DataTable: <DataTable data={data} columns={columns} filteredBy="name" />,
-  },
-];
+import { useSession } from "next-auth/react";
+import { getUsersPIC } from "@/app/api/repository/usersRepository";
 
 const TeamsPage = () => {
+  const { data: session } = useSession();
+  const [pics, setPics] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const fetchPics = async () => {
+    const res = await getUsersPIC(session?.token.data.token, "PIC");
+    if (res) {
+      setPics(res.data.data.accounts);
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      fetchPics();
+    }
+  }, [session?.token.data.token]);
+
+  const items = [
+    {
+      value: "all",
+      label: "Semua",
+      DataTable: (
+        <DataTable
+          data={pics}
+          columns={columns}
+          filteredBy="name"
+          loading={isLoading}
+        />
+      ),
+    },
+  ];
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-3">

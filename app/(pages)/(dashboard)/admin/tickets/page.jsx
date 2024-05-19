@@ -3,6 +3,8 @@ import React from "react";
 import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
 import { columns } from "@/app/(pages)/(dashboard)/admin/tickets/components/Columns";
 import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
+import { useSession } from "next-auth/react";
+import { getTicketsAll } from "@/app/api/repository/ticketRepository";
 
 const data = [
   {
@@ -25,17 +27,37 @@ const data = [
   },
 ];
 
-const items = [
-  {
-    value: "all",
-    label: "Semua",
-    DataTable: (
-      <DataTable data={data} columns={columns} filteredBy="description" />
-    ),
-  },
-];
+const TicketsAdminPage = () => {
+  const { data: session } = useSession();
+  const [tickets, setTickets] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-const TicketsAdminPage = async () => {
+  const fetchTickets = async () => {
+    const response = await getTicketsAll(session?.token.data.token);
+    if (response) {
+      setTickets(response.data.data.assignments);
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) fetchTickets();
+  }, [session?.token.data.token]);
+
+  const items = [
+    {
+      value: "all",
+      label: "Semua",
+      DataTable: (
+        <DataTable
+          data={tickets}
+          columns={columns}
+          filteredBy="assignment_name"
+          loading={isLoading}
+        />
+      ),
+    },
+  ];
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-5">

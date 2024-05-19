@@ -7,41 +7,41 @@ import {
 
 export const statuses = [
   {
-    value: "ditugaskan",
+    value: "ASSIGNED",
     label: "Ditugaskan",
     icon: ArrowUpIcon,
   },
   {
-    value: "dikerjakan",
+    value: "IN_PROGRESS",
     label: "Dikerjakan",
     icon: StopwatchIcon,
   },
   {
-    value: "diperiksa",
+    value: "CHECKED",
     label: "Diperiksa",
     icon: ReaderIcon,
   },
   {
-    value: "selesai",
+    value: "DONE",
     label: "Selesai",
     icon: CheckCircledIcon,
   },
 ];
 export const priorities = [
   {
-    value: "high",
+    value: "HIGH",
     label: "Tinggi",
     icon: "red",
   },
   {
-    value: "normal",
+    value: "MEDIUM",
     label: "Normal",
     icon: "amber",
   },
   {
-    value: "low",
+    value: "LOW",
     label: "Rendah",
-    icon: "blue",
+    icon: "green",
   },
 ];
 

@@ -55,38 +55,43 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "phone",
+    accessorKey: "phone_number",
     header: <div className="px-4 text-xs lg:text-sm">Nomor Telepon</div>,
     cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">{row.getValue("phone")}</div>
-    ),
-  },
-  {
-    accessorKey: "role",
-    header: <div className="px-4 text-xs lg:text-sm">Role</div>,
-    cell: ({ row }) => (
-      <div className="px-4 text-xs">
-        <span className="lg:bg-violet-200 rounded-full lg:px-3.5 lg:py-1 text-violet-800">
-          {row.getValue("role")}
-        </span>
+      <div className="px-4 text-xs lg:text-sm">
+        {row.getValue("phone_number")}
       </div>
     ),
   },
   {
-    accessorKey: "status",
+    accessorKey: "pic_roles",
+    header: <div className="px-4 text-xs lg:text-sm">Role</div>,
+    cell: ({ row }) => {
+      const picRoles = row.getValue("pic_roles");
+      return (
+        <div className="px-4 text-xs">
+          <span className="lg:bg-violet-200 rounded-full lg:px-3.5 lg:py-1 text-violet-800">
+            {picRoles.role}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "otp_enabled",
     header: <div className="px-4 text-xs lg:text-sm">Status</div>,
     cell: ({ row }) => (
       <div className="px-4 text-xs">
-        {row.getValue("status") === "Aktif" && (
+        {row.getValue("otp_enabled") === false && (
           <div className="inline-flex space-x-2 items-center lg:bg-red-100 rounded-full px-2 py-1">
             <CheckIcon className="h-3.5 w-3.5 text-red-600" />
-            <span className="text-red-600">{row.getValue("status")}</span>
+            <span className="text-red-600">Belum diaktivasi</span>
           </div>
         )}
-        {row.getValue("status") === "Belum Diaktivasi" && (
+        {row.getValue("otp_enabled") === true && (
           <div className="inline-flex space-x-2 items-center lg:bg-amber-100 rounded-full px-2 py-1">
             <CrossCircledIcon className="h-3.5 w-3.5 text-amber-600" />
-            <span className="text-amber-600">{row.getValue("status")}</span>
+            <span className="text-amber-600">Aktif</span>
           </div>
         )}
       </div>
@@ -95,6 +100,6 @@ export const columns = [
   {
     id: "actions",
     header: <div className="px-4 text-xs lg:text-sm">Aksi</div>,
-    cell: ({ row }) => <TableActions />,
+    cell: ({ row }) => <TableActions data={row.original} />,
   },
 ];
