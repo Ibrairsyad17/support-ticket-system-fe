@@ -6,7 +6,7 @@ const ChangePassword = () => {
   return (
     <>
       <h2 className="text-md font-semibold text-gray-900 mb-1">
-        Ubah Biodata Perusahaan
+        Ubah Kata Sandi
       </h2>
       <form>
         <ChangePasswordForm></ChangePasswordForm>

@@ -37,14 +37,14 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "ticket_id",
     header: <div className="px-4 text-xs lg:text-sm">Kode Tiket</div>,
     cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">{row.getValue("id")}</div>
+      <div className="px-4 text-xs lg:text-sm">{row.getValue("ticket_id")}</div>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "conversation_messages",
     header: ({ column }) => {
       return (
         <Button
@@ -56,34 +56,44 @@ export const columns = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="px-4 text-xs lg:text-sm">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => {
+      const messages = row.getValue("conversation_messages");
+      return (
+        <div className="px-4 text-xs lg:text-sm">
+          {messages.conversations.customers.nama_lengkap}
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "description",
+    accessorKey: "assignment_name",
     header: <div className="px-4 text-xs lg:text-sm">Nama Keluhan</div>,
     cell: ({ row }) => (
       <div className="px-4 max-w-[300px] lg:max-w-xs overflow-hidden truncate text-xs lg:text-sm">
-        {row.getValue("description")}
+        {row.getValue("assignment_name")}
       </div>
     ),
   },
   {
-    accessorKey: "assigned",
+    accessorKey: "conversation_messages",
     header: <div className="px-4">Ditugaskan</div>,
     cell: ({ row }) => {
-      const assigned = row.getValue("assigned");
+      const assigned = row.getValue("conversation_messages");
       return (
         <div className="px-4 max-w-[300px] lg:max-w-xs overflow-hidden truncate">
           <div className="flex space-x-2 items-center">
             <Avatar className="lg:h-6 lg:w-6 h-5 w-5">
-              <AvatarImage src={assigned.image} alt="" />
+              <AvatarImage
+                src={assigned.conversations.accounts.photo_profile}
+                alt=""
+              />
               <AvatarFallback className="bg-gray-200 text-gray-400">
                 P
               </AvatarFallback>
             </Avatar>
-            <span className="text-xs lg:text-sm">{assigned.name}</span>
+            <span className="text-xs lg:text-sm">
+              {assigned.conversations.accounts.name}
+            </span>
           </div>
         </div>
       );
@@ -112,7 +122,7 @@ export const columns = [
   {
     id: "actions",
     cell: ({ row }) => {
-      return <TableActions id={row.getValue("id")} />;
+      return <TableActions data={row.original} />;
     },
   },
 ];

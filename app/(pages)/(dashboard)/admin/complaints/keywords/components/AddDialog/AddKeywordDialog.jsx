@@ -14,8 +14,16 @@ import { Label } from "@/components/ui/label";
 import { PlusIcon } from "@radix-ui/react-icons";
 import React from "react";
 import KeywordList from "../KeywordsList/KeywordList";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { addKeyword } from "@/app/redux/slices/keywordSlice";
 
-export function AddKeywordDialog({ data }) {
+export function AddKeywordDialog({ data, id }) {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+
+  const [name, setName] = React.useState("");
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,7 +35,7 @@ export function AddKeywordDialog({ data }) {
         <DialogHeader>
           <DialogTitle className="text-xl">Tambah kata kunci</DialogTitle>
           <DialogDescription className="text-sm">
-            Tambah kata kunci pada kategori.
+            Tambah kata kunci pada kategori {data.name}.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 gap-y-2">
@@ -36,9 +44,25 @@ export function AddKeywordDialog({ data }) {
               <Label htmlFor="link" className="sr-only">
                 Link
               </Label>
-              <Input type="text" placeholder="Tulis kata kunci" />
+              <Input
+                type="text"
+                placeholder="Tulis kata kunci"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
-            <Button type="submit" className="px-3">
+            <Button
+              onClick={() => {
+                dispatch(
+                  addKeyword({
+                    data: { name, category_id: id },
+                    token: session?.token.data.token,
+                  }),
+                );
+                setName("");
+              }}
+              className="px-3"
+            >
               <span className="">Tambah</span>
             </Button>
           </div>

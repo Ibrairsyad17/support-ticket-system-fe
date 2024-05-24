@@ -1,11 +1,10 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import RemoveKeywordDialog from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/RemoveDialog/RemoveKeywordDialog";
 
 const KeywordList = ({ type = "icon", data }) => {
   return (
     <div className="">
-      <ul className="w-full flex flex-col divide-y divide-gray-100 h-72 overflow-y-scroll divide-gray-200">
+      <ul className="w-full flex flex-col divide-y h-72 overflow-y-scroll divide-gray-200">
         {data.map((keyword) => (
           <li
             key={keyword.id}
@@ -13,7 +12,7 @@ const KeywordList = ({ type = "icon", data }) => {
           >
             <div className="flex justify-between w-full items-center">
               {keyword.name}
-              <RemoveKeywordDialog type={type} />
+              <RemoveKeywordDialog type={type} id={keyword.id} />
             </div>
           </li>
         ))}

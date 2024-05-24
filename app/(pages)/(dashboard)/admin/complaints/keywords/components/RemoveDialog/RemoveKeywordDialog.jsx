@@ -11,10 +11,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { TrashIcon } from "@radix-ui/react-icons";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { deleteKeyword } from "@/app/redux/slices/keywordSlice";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
 
-const RemoveKeywordDialog = ({ type = "icon" }) => {
+const RemoveKeywordDialog = ({ type = "icon", id }) => {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -46,8 +51,21 @@ const RemoveKeywordDialog = ({ type = "icon" }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-600 hover:bg-red-700">
-            Ya, hapus kata kunci
+          <AlertDialogAction asChild className="bg-red-600 hover:bg-red-700">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  deleteKeyword({
+                    id: id,
+                    token: session?.token.data.token,
+                  }),
+                );
+                toast.success("Kata kunci berhasil dihapus");
+              }}
+            >
+              Ya, hapus kata kunci
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

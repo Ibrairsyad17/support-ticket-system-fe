@@ -1,43 +1,72 @@
+"use client";
 import React from "react";
 import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
 import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
 import { columns } from "@/app/(pages)/(dashboard)/pic/tickets/components/Columns";
-
-export const metadata = {
-  title: "Daftar Tiket | Helptix",
-  description: "Daftar Tiket Pengguna",
-};
-
-const data = [
-  {
-    id: "TK-4556",
-    name: "Heung Min Son",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    assigned: { name: "Bagas Kuncoro", image: "https://github.com/shadcn.png" },
-    status: "Ditugaskan",
-    priority: "Normal",
-  },
-  {
-    id: "TK-4557",
-    name: "Park Ji Sung",
-    description:
-      "Dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    assigned: { name: "Bagas Kuncoro", image: "https://github.com/shadcn.png" },
-    status: "Ditugaskan",
-    priority: "Tinggi",
-  },
-];
-
-const items = [
-  {
-    value: "all",
-    label: "Semua",
-    DataTable: <DataTable data={data} columns={columns} filteredBy="name" />,
-  },
-];
+import { useSession } from "next-auth/react";
+import { getTicketsByPIC } from "@/app/api/repository/ticketRepository";
+import { getUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
 
 const TicketsPICPage = () => {
+  const { data: session } = useSession();
+  const [tickets, setTickets] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userInfo, setUserInfo] = React.useState({
+    id: "",
+    username: "",
+    name: "",
+    email: "",
+    phone_number: "",
+    photo_profile: "",
+    role: "",
+    otp_enabled: "",
+    company_id: "",
+    pic_role_id: "",
+    created_at: "",
+    updated_at: "",
+    deleted_at: "",
+  });
+
+  const fetchUserInfo = async () => {
+    const res = await getUserInfo(session?.token.data.token);
+    if (res) {
+      setUserInfo(res.data.data);
+      setIsLoading(false);
+    }
+  };
+
+  const fetchTicketsByPIC = async (id) => {
+    const res = await getTicketsByPIC(session?.token.data.token, id);
+    if (res) {
+      setTickets(res.data.data.assignments);
+      console.log(res.data.data.assignments);
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    if (session?.token.data.token) {
+      fetchUserInfo();
+    }
+  }, [session?.token.data.token]);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    if (session?.token.data.token) {
+      fetchTicketsByPIC(userInfo.id);
+    }
+  }, [userInfo.id]);
+
+  const items = [
+    {
+      value: "all",
+      label: "Semua",
+      DataTable: (
+        <DataTable data={tickets} columns={columns} filteredBy="name" />
+      ),
+    },
+  ];
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">

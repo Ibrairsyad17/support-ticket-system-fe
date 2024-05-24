@@ -1,6 +1,8 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -11,8 +13,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusIcon } from "@radix-ui/react-icons";
 import React from "react";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { createCategory } from "@/app/redux/slices/keywordSlice";
 
 export function AddCategoryDialog() {
+  const { data: session } = useSession();
+  const [name, setName] = React.useState("");
+  const dispatch = useDispatch();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -35,11 +43,30 @@ export function AddCategoryDialog() {
             <Label htmlFor="link" className="sr-only">
               Link
             </Label>
-            <Input type="text" placeholder="Tulis nama kategori" />
+            <Input
+              type="text"
+              placeholder="Tulis nama kategori"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
-          <Button type="submit" className="px-3">
-            <span className="">Tambah</span>
-          </Button>
+          <DialogClose asChild>
+            <Button
+              type="submit"
+              className="px-3"
+              onClick={() => {
+                dispatch(
+                  createCategory({
+                    data: { name },
+                    token: session?.token.data.token,
+                  }),
+                );
+                setName("");
+              }}
+            >
+              <span className="">Tambah</span>
+            </Button>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>

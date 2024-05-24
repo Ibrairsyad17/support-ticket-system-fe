@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FilePlusIcon } from "@radix-ui/react-icons";
 import AddPICDialog from "@/app/(pages)/(dashboard)/admin/teams/components/AddPICDialog";
 import { useSession } from "next-auth/react";
-import { getUsersPIC } from "@/app/api/repository/usersRepository";
+import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 
 const TeamsPage = () => {
   const { data: session } = useSession();

@@ -1,8 +1,11 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
-import { WhatsApp, X } from "@mui/icons-material";
+import { WhatsApp } from "@mui/icons-material";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { TwitterIcon } from "lucide-react";
+import TimeAgo from "react-timeago";
+import React from "react";
 
 export const columns = [
   {
@@ -20,25 +23,25 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "platform",
+    accessorKey: "customers",
     header: "",
     cell: ({ row }) => (
       <div className="flex">
-        {row.getValue("platform") === "Instagram" ? (
+        {row.getValue("customers").platform === "INSTAGRAM" ? (
           <div className="bg-rose-600 h-6 w-6 flex items-center justify-center rounded-full">
             <InstagramLogoIcon className="h-3.5 w-3.5 text-white" />
           </div>
         ) : (
           ""
         )}
-        {row.getValue("platform") === "X" ? (
+        {row.getValue("customers").platform === "TWITTER" ? (
           <div className="bg-gray-900 h-6 w-6 flex items-center justify-center rounded-full">
-            <X className="h-3.5 w-3.5 text-white" />
+            <TwitterIcon className="h-3.5 w-3.5 text-white" />
           </div>
         ) : (
           ""
         )}
-        {row.getValue("platform") === "WhatsApp" ? (
+        {row.getValue("customers").platform === "WHATSAPP" ? (
           <div className="bg-green-600 h-6 w-6 flex items-center justify-center rounded-full">
             <WhatsApp className="h-3.5 w-3.5 text-white" />
           </div>
@@ -49,26 +52,42 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "customers",
     header: "",
     cell: ({ row }) => (
       <div className="font-semibold">
-        <Link href="/">{row.getValue("name")}</Link>
+        {row.getValue("customers").platform === "INSTAGRAM" && (
+          <Link href="/">{row.getValue("customers").instagram_username}</Link>
+        )}
+        {row.getValue("customers").platform === "TWITTER" && (
+          <Link href="/">{row.getValue("customers").twitter_username}</Link>
+        )}
+        {row.getValue("customers").platform === "WHATSAPP" && (
+          <Link href="/">{row.getValue("customers").whatsapp_username}</Link>
+        )}
       </div>
     ),
   },
   {
-    accessorKey: "description",
+    accessorKey: "conversation_messages",
     header: "",
     cell: ({ row }) => (
       <div className="max-w-[300px] lg:max-w-lg overflow-hidden truncate">
-        <Link href="/">{row.getValue("description")}</Link>
+        <Link href="/" className="hover:underline">
+          {row.getValue("conversation_messages").reverse()[0].message}
+        </Link>
       </div>
     ),
   },
   {
-    accessorKey: "time",
+    accessorKey: "conversation_messages",
     header: "",
-    cell: ({ row }) => <div className="px-4">{row.getValue("time")}</div>,
+    cell: ({ row }) => (
+      <div className="px-4">
+        <TimeAgo
+          date={row.getValue("conversation_messages").reverse()[0].updated_at}
+        />
+      </div>
+    ),
   },
 ];

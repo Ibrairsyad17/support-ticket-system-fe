@@ -2,34 +2,34 @@
 import React from "react";
 import { AddCategoryDialog } from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/AddDialog/AddCategoryDialog";
 import Search from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/SeachInput";
-import { Button } from "@/components/ui/button";
-import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { useSession } from "next-auth/react";
-import { getCategoriesAndKeywords } from "@/app/api/repository/categoriesRepository";
 import CategoryCard from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/CategoryCard/CategoryCard";
 import CategoryCardSkeleton from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/CategoryCard/CategoryCardSkeleton";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCategories,
+  getError,
+  getStatus,
+  selectAllKeywords,
+} from "@/app/redux/slices/keywordSlice";
 
 const Keywords = () => {
   const { data: session } = useSession();
-  const [categories, setCategories] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-
-  const fetchCategories = async () => {
-    // Fetch categories
-    const res = await getCategoriesAndKeywords(session?.token.data.token, 10);
-    if (res) {
-      const categories = res.data.data.categories;
-      setCategories(categories);
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const categoriesData = useSelector(selectAllKeywords);
+  const categoriesDataStatus = useSelector(getStatus);
+  const error = useSelector(getError);
 
   React.useEffect(() => {
     setIsLoading(true);
     if (session?.token.data.token) {
-      fetchCategories();
+      if (categoriesDataStatus === "idle") {
+        dispatch(fetchCategories(session?.token.data.token));
+      }
     }
-  }, [session?.token.data.token]);
+    setIsLoading(false);
+  }, [session?.token.data.token, categoriesDataStatus, dispatch]);
 
   return (
     <>
@@ -47,7 +47,7 @@ const Keywords = () => {
             </p>
           </header>
           <div className="lg:col-span-1 flex lg:place-self-end space-x-3 w-full">
-            <div className="flex space-x-2 sm:w-full lg:w-auto">
+            <div className="flex justify-between space-x-2 sm:w-full">
               <AddCategoryDialog />
               <Search />
             </div>
@@ -63,7 +63,7 @@ const Keywords = () => {
           </div>
         ) : (
           <div className={`grid grid-cols-1 gap-5 md:grid-cols-2 mb-5`}>
-            {categories.map((category) => (
+            {categoriesData.map((category) => (
               <CategoryCard data={category} key={category.id} />
             ))}
           </div>

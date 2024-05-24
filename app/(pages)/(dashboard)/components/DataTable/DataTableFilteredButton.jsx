@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 
 const DataTableFilteredButton = ({ column, title, options }) => {
   const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() ?? []);
+  const selectedValues = new Set(column?.getFilterValue());
   return (
     <Popover>
       <PopoverTrigger asChild>

@@ -1,9 +1,42 @@
+"use client";
 import React from "react";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { getUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const UserForm = () => {
+  const { data: session } = useSession();
+  const [userInfo, setUserInfo] = React.useState({
+    id: "",
+    username: "",
+    name: "",
+    email: "",
+    phone_number: "",
+    photo_profile: "",
+    role: "",
+    otp_enabled: "",
+    company_id: "",
+    pic_role_id: "",
+    created_at: "",
+    updated_at: "",
+    deleted_at: "",
+  });
+
+  const fetchUserInfo = async () => {
+    const res = await getUserInfo(session?.token.data.token);
+    if (res) {
+      setUserInfo(res.data.data);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      fetchUserInfo();
+    }
+  }, [session?.token.data.token]);
+
   return (
     <div className="">
       <h2 className="text-md font-semibold text-gray-900">
@@ -13,11 +46,11 @@ const UserForm = () => {
       <form>
         <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-5">
           <div className="col-span-full">
-            <div className="flex items-center gap-x-3">
-              <UserCircleIcon
-                className="h-24 w-24 text-gray-300"
-                aria-hidden="true"
-              />
+            <div className="flex items-center gap-x-5">
+              <Avatar className={"w-20 h-20"}>
+                <AvatarImage src={userInfo.photo_profile} alt="@shadcn" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
               <button
                 type="button"
                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -35,7 +68,7 @@ const UserForm = () => {
               Nama Pengguna
             </label>
             <div className="mt-2">
-              <Input placeholder="Tulis Nama Pengguna..."></Input>
+              <Input value={userInfo.name}></Input>
             </div>
           </div>
           <div className="sm:col-span-2">
@@ -46,7 +79,7 @@ const UserForm = () => {
               Email Pengguna
             </label>
             <div className="mt-2">
-              <Input id="email" placeholder="example@mail.com"></Input>
+              <Input id="email" value={userInfo.email}></Input>
             </div>
           </div>
           <div className="sm:col-span-2">
@@ -57,11 +90,7 @@ const UserForm = () => {
               Nomor Telepon
             </label>
             <div className="mt-2">
-              <Input
-                type="number"
-                id="number"
-                placeholder="08123455688"
-              ></Input>
+              <Input id="number" value={userInfo.phone_number}></Input>
             </div>
           </div>
         </div>

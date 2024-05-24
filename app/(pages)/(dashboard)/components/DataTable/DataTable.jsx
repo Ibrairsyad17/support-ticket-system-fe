@@ -32,6 +32,7 @@ export const DataTable = ({
 }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
+  const [filter, setFiltering] = React.useState("");
 
   const table = useReactTable({
     data,
@@ -41,6 +42,7 @@ export const DataTable = ({
     })),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setFiltering,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -50,6 +52,7 @@ export const DataTable = ({
     state: {
       sorting,
       columnFilters,
+      globalFilter: filter,
     },
   });
 

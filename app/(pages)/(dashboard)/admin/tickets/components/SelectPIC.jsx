@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
-import { getUsersPIC } from "@/app/api/repository/usersRepository";
+import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 
 const SelectPic = ({ image, name }) => {
   const { data: session } = useSession();

@@ -1,6 +1,30 @@
 import { BASE_URL } from "@/app/utils/constant";
 import axios from "axios";
 
+export const PROVIDER_GET = async (url, token) => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  try {
+    const response = await axios.get(`${BASE_URL}/${url}`, { headers });
+
+    switch (response.status) {
+      case 200:
+        return response;
+      case 201:
+        return response;
+      case 403:
+        throw new Error("forbidden");
+      default:
+        throw new Error("error");
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const PROVIDER_DELETE = async (token, url) => {
   try {
     const headers = {

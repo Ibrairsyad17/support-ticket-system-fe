@@ -71,41 +71,81 @@ export const getTicketsAll = async (token, take) => {
   return response;
 };
 
-export const getTicketsById = async (token, id) => {
+export const getTicketsByPIC = async (token, id) => {
   await delay();
   const query = `
     query Assignments($id: String) {
-        assignments(
-            where: { ticket_id: { equals: $id } }
-        ) {
+    assignments(
+        where: {
+            account_id: { equals: $id }
+        }
+    ) {
+        id
+        assignment_name
+        assignment_detail
+        assignment_file
+        priority
+        status
+        ticket_id
+        created_at
+        accounts {
             id
-            assignment_name
-            assignment_detail
-            assignment_file
-            priority
-            status
-            ticket_id
-            created_at
-            conversation_messages {
-                message
-                conversations {
-                    accounts {
-                        photo_profile
-                        username
-                        name
-                    }
-                    customers {
-                        nama_lengkap
-                        platform
-                        email
-                        instagram_username
-                        twitter_username
-                        whatsapp_number
-                    }
+            name
+        }
+        conversation_messages {
+            message
+            conversations {
+                accounts {
+                    photo_profile
+                    username
+                    name
+                }
+                customers {
+                    nama_lengkap
+                    platform
+                    email
+                    instagram_username
+                    twitter_username
+                    whatsapp_number
                 }
             }
         }
     }
+  }
+  `;
+  const variables = {
+    id,
+  };
+  const response = await PROVIDER_GET_GQL(token, query, variables);
+  return response;
+};
+
+export const getTicketsForPIC = async (token, id) => {
+  await delay();
+  const query = `
+    query Assignments($id: String) {
+    assignments(
+        where: {
+            account_id: { equals: $id }
+        }
+    ) {
+        id
+        assignment_date
+        status
+        assignment_name
+        accounts {
+            id
+            name
+        }
+        conversation_messages {
+            conversations {
+                customers {
+                    nama_lengkap
+                }
+            }
+        }
+    }
+  }
   `;
   const variables = {
     id,

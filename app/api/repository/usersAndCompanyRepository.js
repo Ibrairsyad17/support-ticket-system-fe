@@ -32,3 +32,9 @@ export const getUsersPIC = async (token, role) => {
   const response = await PROVIDER_GET_GQL(token, query, variables);
   return response;
 };
+
+export const getCompanyInfo = async (token) => {
+  await delay();
+  const response = await PROVIDER_GET("company", token);
+  return response;
+};

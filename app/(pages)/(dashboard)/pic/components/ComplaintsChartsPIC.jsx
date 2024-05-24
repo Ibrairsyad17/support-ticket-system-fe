@@ -8,57 +8,37 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
-const productSalesData = [
-  {
-    name: "Jan",
-    product1: 2700,
-    product2: 2400,
-  },
-  {
-    name: "Feb",
-    product1: 3000,
-    product2: 1398,
-  },
-  {
-    name: "Mar",
-    product1: 2700,
-    product2: 9800,
-  },
-  {
-    name: "Apr",
-    product1: 3180,
-    product2: 3908,
-  },
-  {
-    name: "May",
-    product1: 2900,
-    product2: 4800,
-  },
-  {
-    name: "Jun",
-    product1: 2390,
-    product2: 3800,
-  },
-  {
-    name: "Jul",
-    product1: 3490,
-    product2: 4300,
-  },
-  {
-    name: "Aug",
-    product1: 1490,
-    product2: 4300,
-  },
-];
 
-const ComplaintsChartsPIC = () => {
+const ComplaintsChartsPIC = ({ data }) => {
+  const getTotalDataByDate = Object.values(
+    data.reduce((acc, { assignment_date }) => {
+      const dateOnly = assignment_date.split("T")[0];
+      acc[dateOnly] = acc[dateOnly]
+        ? { ...acc[dateOnly], total: acc[dateOnly].total + 1 }
+        : { date: dateOnly, total: 1 };
+      return acc;
+    }, {}),
+  );
+
+  const complaintsData = getTotalDataByDate.map((item) => {
+    const date = new Date(item.date);
+    const formattedDate = date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "short",
+      year: "2-digit",
+    });
+    return {
+      ...item,
+      date: formattedDate,
+    };
+  });
   return (
     <ResponsiveContainer
       width="100%"
       height="80%"
       className="pl-2 pr-10 pb-3.5"
     >
-      <AreaChart width={500} height={400} data={productSalesData}>
+      <AreaChart width={500} height={400} data={complaintsData}>
         <defs>
           <linearGradient id="colorProduct1" x1="0" y1="0" x2="0" y2="1">
             <stop
@@ -76,11 +56,11 @@ const ComplaintsChartsPIC = () => {
           </linearGradient>
         </defs>
         <YAxis className="text-xs" />
-        <XAxis dataKey="name" className="text-xs" />
+        <XAxis dataKey="date" className="text-xs" />
         <Tooltip />
         <CartesianGrid stroke="#f0f0f0" vertical={false} />
         <Area
-          dataKey="product1"
+          dataKey="total"
           type="monotone"
           stackId="1"
           stroke="#39404F"
