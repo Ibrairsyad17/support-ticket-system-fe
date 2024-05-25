@@ -133,8 +133,9 @@ export function UserAuthForm({ className }) {
           type="button"
           disabled={isLoading}
           className="py-5"
+          onClick={() => signIn("google")}
         >
-          <Link href={`/`}>
+          <div>
             {isLoading ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +156,7 @@ export function UserAuthForm({ className }) {
               <GoogleIcon style={{ fontSize: 18, margin: 7 }}></GoogleIcon>
             )}{" "}
             Google
-          </Link>
+          </div>
         </Button>
         <Button
           asChild

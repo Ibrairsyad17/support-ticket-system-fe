@@ -3,11 +3,6 @@ import React, { PureComponent } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 const colors = ["#a855f7", "#c084fc", "#d8b4fe", "#9333ea"];
-const teamPIC1Data = [
-  { name: "Tiket ditugaskan", value: 10 },
-  { name: "Tiket dikerjakan", value: 5 },
-  { name: "Tiket direview", value: 1 },
-];
 
 export default class TeamDataCharts extends PureComponent {
   render() {
@@ -50,13 +45,25 @@ export default class TeamDataCharts extends PureComponent {
       (arr) => arr.name !== "Tiket selesai",
     );
 
+    const totalRole = teamPICData.filter(
+      (team) => team.accounts.pic_roles.role === title,
+    ).length;
+
+    const reduceByAccountID = teamPICData.reduce((acc, ticket) => {
+      const accountID = ticket.account_id;
+      acc[accountID] = (acc[accountID] || 0) + 1;
+      return acc;
+    });
+
+    console.log(reduceByAccountID);
+
     return (
       <div className="flex flex-col space-y-2.5 border py-2 px-1 rounded-lg text-center">
         <h3 className="font-semibold leading-none mt-4 tracking-tight text-xl">
           Tim PIC {title}
         </h3>
         <p className="text-sm text-muted-foreground">
-          <span className="font-semibold">16 </span> anggota tim.
+          <span className="font-semibold">{totalRole}</span> jumlah tiket.
         </p>
         <ResponsiveContainer width="100%" height={200}>
           <PieChart>

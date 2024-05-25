@@ -94,4 +94,18 @@
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
   }
+
+  .checkbox {
+    width: 0;
+    height: 0;
+  }
+
+  .checkbox-label {
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .checkbox:checked + .checkbox-label {
+    border-color: #0f172a;
+  }
 }

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import FilterData from "@/app/(pages)/(dashboard)/components/DataTable/FilterData";
 
 function DataTableToolbar({ table, filteredBy }) {
   return (
@@ -19,6 +20,7 @@ function DataTableToolbar({ table, filteredBy }) {
             className="w-full"
           />
         </div>
+        <FilterData />
         <div className="flex space-x-2">
           <Checkbox
             id="all"

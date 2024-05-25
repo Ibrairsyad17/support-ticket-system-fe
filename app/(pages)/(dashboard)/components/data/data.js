@@ -4,6 +4,7 @@ import {
   ReaderIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons";
+import { Instagram, X } from "@mui/icons-material";
 
 export const statuses = [
   {
@@ -25,6 +26,20 @@ export const statuses = [
     value: "DONE",
     label: "Selesai",
     icon: CheckCircledIcon,
+  },
+];
+export const socials = [
+  {
+    value: "INSTAGRAM",
+    label: "Instagram",
+  },
+  {
+    value: "TWITTER",
+    label: "X (Twitter)",
+  },
+  {
+    value: "WHATSAPP",
+    label: "Whatsapp",
   },
 ];
 export const priorities = [

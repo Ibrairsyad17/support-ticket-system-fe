@@ -109,7 +109,6 @@ export const columns = [
       const getKeyword = row.getValue(
         "conversation_messages",
       ).convo_message_category;
-      console.log(getKeyword);
       return (
         <div>
           {getKeyword.length === 0 && <span>-</span>}

@@ -14,7 +14,12 @@ const TeamsDataStats = () => {
     const getTickets = response.data.data.assignments;
     if (getTickets.length !== 0) {
       const getCategory = getTickets
-        .map((ticket) => ticket.accounts?.pic_roles.role)
+        .map((ticket) => {
+          if (ticket.accounts?.pic_roles === null) {
+            ticket.accounts.pic_roles = { role: "Belum Ditentukan" };
+          }
+          return ticket.accounts?.pic_roles?.role;
+        })
         .filter((value, index, self) => self.indexOf(value) === index);
       console.log(getCategory);
       console.log(getTickets);

@@ -3,42 +3,38 @@ import React from "react";
 import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
 import { columns } from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/Columns";
 import { useSession } from "next-auth/react";
-import { getAllComplaints } from "@/app/api/repository/complaintsRepository";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchComplaints,
+  getStatus,
+  Loading,
+  selectComplaints,
+  selectFilteredComplaintsByDate,
+  selectFilteredComplaintsByPlatform,
+} from "@/app/redux/slices/complaintsSlice";
 
 const ListComplaints = () => {
   const { data: session } = useSession();
   const [complaints, setComplaints] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-
-  const fetchAllComplaints = async () => {
-    const response = await getAllComplaints(session?.token.data.token);
-    if (response) {
-      setComplaints(response.data.data.assignments);
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const complaintsData = useSelector(selectComplaints);
+  const complaintsByPlatform = useSelector(selectFilteredComplaintsByPlatform);
+  const complaintsByDate = useSelector(selectFilteredComplaintsByDate);
+  const getStatusInfo = useSelector(getStatus);
+  const getLoading = useSelector(Loading);
 
   React.useEffect(() => {
-    setIsLoading(true);
     if (session?.token.data.token) {
-      fetchAllComplaints();
+      if (getStatusInfo === "idle") {
+        dispatch(fetchComplaints(session?.token.data.token));
+      }
     }
-  }, [session?.token.data.token]);
+  }, [session?.token.data.token, getStatusInfo, dispatch]);
 
-  const items = [
-    {
-      value: "all",
-      label: "Semua",
-      DataTable: (
-        <DataTable
-          data={complaints}
-          columns={columns}
-          filteredBy="assignment_name"
-          loading={isLoading}
-        />
-      ),
-    },
-  ];
+  const filteredComplaints = complaintsByPlatform.filter((complaint) =>
+    complaintsByDate.includes(complaint),
+  );
 
   return (
     <>
@@ -61,10 +57,10 @@ const ListComplaints = () => {
         {/*<TabsContents defaultValue="all" values={items} />*/}
         <div className="col-span-1">
           <DataTable
-            data={complaints}
+            data={filteredComplaints}
             columns={columns}
             filteredBy="assignment_name"
-            loading={isLoading}
+            loading={getLoading}
           />
         </div>
       </div>
