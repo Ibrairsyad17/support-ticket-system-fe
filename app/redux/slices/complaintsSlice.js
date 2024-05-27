@@ -1,18 +1,20 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllComplaints } from "@/app/api/repository/complaintsRepository";
+import axios from "axios";
+import { BASE_URL } from "@/app/utils/constant";
 
 const initialState = {
   complaints: [],
   filteredComplaintsByPlatform: [],
   filteredComplaintsByDate: [],
+  selectedItems: [],
+  searchedItems: [],
+  currentPage: 1,
+  itemsPerPage: 10,
   status: "idle", // loading, succeeded, failed
   loading: true,
   error: null,
 };
-
-export const filterComplaintsByKeyword = createAction(
-  "complaints/filterByKeyword",
-);
 
 export const fetchComplaints = createAsyncThunk(
   "complaints/fetchComplaints",
@@ -23,6 +25,32 @@ export const fetchComplaints = createAsyncThunk(
     } catch (error) {
       return error.message;
     }
+  },
+);
+
+export const deleteMultipleComplaints = createAsyncThunk(
+  "complaints/deleteMultipleComplaints",
+  async ({ ids, token }) => {
+    const stringIds = ids.join(",");
+
+    const axiosInstance = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const response = await axiosInstance.delete(`/assignment`, {
+      data: {
+        assignment_id: ids,
+      },
+    });
+
+    if (response.status === 204) {
+      return stringIds;
+    }
+
+    return stringIds;
   },
 );
 
@@ -92,26 +120,81 @@ const complaintsSlice = createSlice({
         state.filteredComplaintsByDate = state.complaints;
       }
     },
+    selectItem: (state, action) => {
+      const idNumber = Number(action.payload);
+      if (state.selectedItems.includes(idNumber)) {
+        state.selectedItems = state.selectedItems.filter(
+          (item) => item !== idNumber,
+        );
+      } else {
+        state.selectedItems = [...state.selectedItems, idNumber];
+      }
+    },
+    selectAllItems: (state, action) => {
+      if (action.payload) {
+        state.selectedItems = state.complaints.map((complaint) =>
+          Number(complaint.id),
+        );
+      } else {
+        state.selectedItems = [];
+      }
+    },
+    resetSelectedItems: (state) => {
+      state.selectedItems = [];
+    },
+    searchItems: (state, action) => {
+      const searchText = action.payload.toLowerCase();
+      state.filteredComplaintsByPlatform = state.searchedItems.filter(
+        (complaint) =>
+          complaint.conversation_messages.conversations.customers.nama_lengkap
+            .toLowerCase()
+            .includes(searchText),
+      );
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action) => {
+      state.itemsPerPage = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchComplaints.pending, (state) => {
         state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchComplaints.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.complaints = action.payload;
         state.filteredComplaintsByPlatform = action.payload;
         state.filteredComplaintsByDate = action.payload;
+        state.searchedItems = action.payload;
         state.loading = false;
       })
       .addCase(fetchComplaints.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action?.error.message;
+        state.loading = true;
+      })
+      .addCase(deleteMultipleComplaints.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteMultipleComplaints.fulfilled, (state, action) => {
+        state.complaints = state.complaints.filter(
+          (complaint) => !action.payload.includes(complaint.id),
+        );
+        state.filteredComplaintsByPlatform = state.complaints;
+        state.filteredComplaintsByDate = state.complaints;
+      })
+      .addCase(deleteMultipleComplaints.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action?.error.message;
       });
   },
 });
 
+// Selectors
 export const selectComplaints = (state) => state.complaints.complaints;
 export const selectFilteredComplaintsByPlatform = (state) =>
   state.complaints.filteredComplaintsByPlatform;
@@ -120,8 +203,21 @@ export const selectFilteredComplaintsByDate = (state) =>
 export const getStatus = (state) => state.complaints.status;
 export const getError = (state) => state.complaints.error;
 export const Loading = (state) => state.complaints.loading;
+export const selectSelectedItems = (state) => state.complaints.selectedItems;
+export const selectCurrentPage = (state) => state.complaints.currentPage;
+export const selectItemsPerPage = (state) => state.complaints.itemsPerPage;
 
-export const { filterComplaintsByPlatform, filterComplaintsByDate } =
-  complaintsSlice.actions;
+// Actions
+export const {
+  filterComplaintsByPlatform,
+  filterComplaintsByDate,
+  selectItem,
+  resetSelectedItems,
+  searchItems,
+  selectAllItems,
+  setCurrentPage,
+  setItemsPerPage,
+} = complaintsSlice.actions;
 
+// Reducer
 export default complaintsSlice.reducer;

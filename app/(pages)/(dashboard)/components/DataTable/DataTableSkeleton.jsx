@@ -58,7 +58,7 @@ const invoices = [
 
 const DataTableSkeleton = () => {
   return (
-    <div className="rounded-md border mt-3.5 mb-10">
+    <div className="rounded-md border mb-10">
       <Table>
         <TableHeader>
           <TableRow>

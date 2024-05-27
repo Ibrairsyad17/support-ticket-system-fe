@@ -3,10 +3,11 @@ import Link from "next/link";
 import TimeAgo from "react-timeago";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import indonesiaStrings from "react-timeago/lib/language-strings/id";
-import { Instagram, WhatsApp } from "@mui/icons-material";
+import { Instagram, WhatsApp, X } from "@mui/icons-material";
 
 const RecentComplaints = ({ data }) => {
   const dataSlice = data.slice(0, 3);
+  console.log(dataSlice);
   const formatter = buildFormatter(indonesiaStrings);
 
   return (
@@ -30,6 +31,11 @@ const RecentComplaints = ({ data }) => {
             {platform === "WHATSAPP" && (
               <div className="bg-green-500 p-2 rounded-full">
                 <WhatsApp className="w-6 h-6 text-white" />
+              </div>
+            )}
+            {platform === "TWITTER" && (
+              <div className="bg-gray-900 p-2 rounded-full">
+                <X className="w-6 h-6 text-white" />
               </div>
             )}
 

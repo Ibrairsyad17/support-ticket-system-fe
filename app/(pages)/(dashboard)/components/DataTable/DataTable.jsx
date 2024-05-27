@@ -58,7 +58,7 @@ export const DataTable = ({
 
   return (
     <>
-      <DataTableToolbar table={table} filteredBy={filteredBy} />
+      <DataTableToolbar table={table} />
       {loading ? (
         <DataTableSkeleton />
       ) : (

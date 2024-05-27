@@ -15,11 +15,13 @@ import { PencilIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { updateCategory } from "@/app/redux/slices/keywordSlice";
 import { useDispatch } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
 
 const EditCategoryDialog = ({ id, title }) => {
   const { data: session } = useSession();
   const [name = title, setName] = React.useState("");
   const dispatch = useDispatch();
+  const toast = useToast();
 
   return (
     <Dialog>

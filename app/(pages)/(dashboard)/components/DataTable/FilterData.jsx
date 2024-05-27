@@ -5,17 +5,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { FilterIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import {
   filterComplaintsByDate,
   filterComplaintsByPlatform,
 } from "@/app/redux/slices/complaintsSlice";
 import { socials } from "@/app/(pages)/(dashboard)/components/data/data";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 const FilterData = () => {
   const dispatch = useDispatch();
   const [selectedPlatforms, setSelectedPlatforms] = React.useState([]);
+  const [openPopover, setOpenPopover] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState(null);
 
   const handleFilterChange = (event) => {
@@ -50,12 +51,18 @@ const FilterData = () => {
     dispatch(filterComplaintsByDate(selectedDate));
   }, [selectedDate, dispatch]);
 
+  // Reset Filter
+  const handleResetFilter = () => {
+    setSelectedPlatforms([]);
+    setSelectedDate(null);
+    setOpenPopover(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={openPopover} onOpenChange={setOpenPopover}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="text-xs">
-          <FilterIcon className="h-3.5 w-3.5 mr-2" />
-          Filter Data
+        <Button variant="outline" size="icon">
+          <MixerHorizontalIcon className="h-3.5 w-3.5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-96 p-5">
@@ -154,6 +161,9 @@ const FilterData = () => {
                   </label>
                 </div>
               </div>
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={handleResetFilter}>Atur Ulang</Button>
             </div>
           </div>
         </div>

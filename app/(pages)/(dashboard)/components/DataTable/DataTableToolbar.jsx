@@ -1,44 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import FilterData from "@/app/(pages)/(dashboard)/components/DataTable/FilterData";
 
-function DataTableToolbar({ table, filteredBy }) {
+function DataTableToolbar({ table }) {
   return (
-    <div className="flex items-center justify-between px-2 mt-1 mb-5">
-      <div className="flex space-x-3.5 justify-between items-center">
-        <div className="lg:w-[350px] flex items-center -ml-2">
-          <Input
-            placeholder="Cari data keluhan..."
-            value={table.getColumn(filteredBy)?.getFilterValue() ?? ""}
-            onChange={(event) =>
-              table.getColumn(filteredBy)?.setFilterValue(event.target.value)
-            }
-            className="w-full"
-          />
-        </div>
-        <FilterData />
-        <div className="flex space-x-2">
-          <Checkbox
-            id="all"
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Select all"
-            className="translate-y-[2px] ml-2"
-          />
-          <Label htmlFor="all" className="text-xs text-gray-500">
-            Pilih Semua
-          </Label>
-        </div>
-      </div>
+    <div className="flex items-center justify-end px-2 mt-1 mb-1">
       <div className="flex">
         <div className="flex w-[175px] items-center justify-center text-sm font-normal">
           Halaman ke{" "}

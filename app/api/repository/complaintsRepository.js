@@ -10,6 +10,7 @@ export const getAllComplaints = async (token) => {
         id
         assignment_name
         assignment_date
+        assignment_detail
         conversation_messages {
             message
             convo_message_category {
