@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ChevronLeft, Instagram } from "@mui/icons-material";
+import { ChevronLeft, Instagram, WhatsApp, X } from "@mui/icons-material";
 import {
   CheckCircledIcon,
   DotsHorizontalIcon,
@@ -16,23 +16,41 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
 
-const Header = () => {
+const Header = ({ data }) => {
+  console.log(data);
   return (
     <div className="w-full flex p-5 border-b justify-between items-center">
       <div className="">
-        <Link href={"/admin/complaints/list-complaints"}>
+        <Link href={"/admin/message/inbox"}>
           <ChevronLeft className="w-6 h-6 text-gray-800" />
         </Link>
       </div>
 
       <div className="flex space-x-3 5 items-center">
         <h1 className="text-md lg:text-lg font-semibold text-gray-900">
-          @mark.verstappen77
+          {data.customers?.platform === "INSTAGRAM" &&
+            data.customers?.instagram_username}
+          {data.customers?.platform === "TWITTER" &&
+            data.customers?.twitter_username}
+          {data.customers?.platform === "WHATSAPP" &&
+            data.customers?.whatsapp_username}
         </h1>
         <div className="h-1 w-1 rounded-full bg-gray-500"></div>
         <div className="flex space-x-3 5 items-center">
-          <h1 className="text-sm lg:text-md text-gray-500">via Instagram</h1>
-          <Instagram className="w-5 h-5 text-rose-500" />
+          <h1 className="text-sm lg:text-md text-gray-500">
+            {data.customers?.platform === "INSTAGRAM" && "via Instagram"}
+            {data.customers?.platform === "TWITTER" && "via X (Twitter)"}
+            {data.customers?.platform === "WHATSAPP" && "via WhatsApp"}
+          </h1>
+          {data.customers?.platform === "INSTAGRAM" && (
+            <Instagram className="w-5 h-5 text-rose-500" />
+          )}
+          {data.customers?.platform === "TWITTER" && (
+            <X className="w-5 h-5 text-gray-900" />
+          )}
+          {data.customers?.platform === "WHATSAPP" && (
+            <WhatsApp className="w-5 h-5 text-green-500" />
+          )}
         </div>
       </div>
 
@@ -55,7 +73,7 @@ const Header = () => {
             <InfoCircledIcon className="w-5 h-5 text-gray-800 lg:hidden" />
           </DrawerTrigger>
           <DrawerContent className="h-[40rem]">
-            <DetailsCustomer type="mobile" />
+            <DetailsCustomer type="mobile" data={data} />
           </DrawerContent>
         </Drawer>
       </div>

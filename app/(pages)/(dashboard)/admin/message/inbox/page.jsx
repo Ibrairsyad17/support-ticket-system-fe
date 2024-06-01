@@ -1,63 +1,97 @@
 "use client";
 import React from "react";
-import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
-import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
-import { columns } from "@/app/(pages)/(dashboard)/admin/message/inbox/components/Columns";
 import { useSession } from "next-auth/react";
-import { getMessages } from "@/app/api/repository/messagesRepository";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMessages,
+  filterByTime,
+  getStatus,
+  searchItems,
+  selectFilteredMessages,
+  stateLoading,
+} from "@/app/redux/slices/messagesSlice";
+import DataTableMessages from "@/app/(pages)/(dashboard)/components/DataTable/DataTableMessages";
+import { Input } from "@/components/ui/input";
+import FilterByTime from "@/app/(pages)/(dashboard)/admin/message/inbox/components/FilterByTime";
+import FilterByPlatform from "@/app/(pages)/(dashboard)/admin/message/inbox/components/FilterByPlatform";
+import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
+import FilterByStatus from "@/app/(pages)/(dashboard)/admin/message/inbox/components/FilterByStatus";
 
 const InboxPage = () => {
   const { data: session } = useSession();
-  const [messages, setMessages] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const dispatch = useDispatch();
 
-  const fetchMessages = async () => {
-    const res = await getMessages(session?.token.data.token);
-    if (res) {
-      setMessages(res.data.data.conversations);
-      setIsLoading(false);
-    }
-  };
+  // Selectors
+  const messagesInbox = useSelector(selectFilteredMessages);
+  const getStatusInfo = useSelector(getStatus);
+  const getLoading = useSelector(stateLoading);
+
+  const inputRef = React.useRef(null);
 
   React.useEffect(() => {
-    setIsLoading(true);
     if (session?.token.data.token) {
-      fetchMessages();
+      if (getStatusInfo === "idle") {
+        dispatch(fetchMessages(session?.token.data.token));
+      }
     }
-  }, [session?.token.data.token]);
+  }, [session?.token.data.token, getStatusInfo, dispatch]);
 
-  const items = [
-    {
-      value: "all",
-      label: "Semua",
-      DataTable: (
-        <DataTable
-          data={messages}
-          columns={columns}
-          filteredBy="description"
-          type="headerless"
-          loading={isLoading}
-        />
-      ),
-    },
-  ];
+  const handleSearch = () => {
+    dispatch(searchItems(inputRef.current.value));
+  };
+
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-3">
         {/* Header Section */}
         <div className="col-span-1 grid-cols-1 h-auto">
-          <header>
-            <div className="col-span-4 flex flex-col space-y-2">
-              <h1 className="block text-2xl col-span-4 font-bold text-gray-800 sm:text-3xl">
-                Pesan Masuk
-              </h1>
-              <p className="mt-2 text-md text-gray-400">
-                Kelola pesan yang masuk dari keluhan pengguna.
-              </p>
+          <header className="flex flex-col space-y-4">
+            <div className="grid gap-3 grid-cols-1 lg:grid-cols-6">
+              <div className="col-span-4 flex flex-col space-y-2">
+                <h1 className="block text-2xl col-span-4 font-bold text-gray-800 sm:text-3xl">
+                  Pesan Masuk
+                </h1>
+                <div className="mt-2 text-sm text-gray-400 flex items-center space-x-3">
+                  <span>Data terakhir diperbaharui pada </span>
+                </div>
+              </div>
+              <div className="flex space-x-3 w-full lg:col-span-2 lg:self-end lg:place-self-end">
+                <div className="flex space-x-4 items-center w-full">
+                  <Input
+                    type="search"
+                    placeholder="Cari pesan..."
+                    className="w-full"
+                    ref={inputRef}
+                    onChange={handleSearch}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 lg:flex lg:space-x-4">
+              <span
+                className="font-medium flex cursor-pointer border-b-2 border-gray-900 space-x-3 items-center py-1.5"
+                onClick={() => {
+                  dispatch(fetchMessages(session?.token.data.token));
+                  dispatch(filterByTime("latest"));
+                }}
+              >
+                Semua
+              </span>
+              <FilterByTime />
+              <FilterByPlatform />
+              <FilterByStatus />
             </div>
           </header>
         </div>
-        <TabsContents defaultValue="all" values={items} />
+        {getLoading && <DataTableSkeleton />}
+        {messagesInbox.length === 0 && !getLoading && (
+          <div className="col-span-1 flex items-center justify-center h-[300px]">
+            <p className="text-gray-400 text-lg">Tidak ada pesan</p>
+          </div>
+        )}
+        {messagesInbox.length > 0 && !getLoading && (
+          <DataTableMessages data={messagesInbox} />
+        )}
       </div>
     </>
   );

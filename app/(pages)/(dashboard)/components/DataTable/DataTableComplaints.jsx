@@ -6,8 +6,9 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   InstagramLogoIcon,
+  TwitterLogoIcon,
 } from "@radix-ui/react-icons";
-import { Trash, TwitterIcon } from "lucide-react";
+import { Trash } from "lucide-react";
 import { WhatsApp } from "@mui/icons-material";
 import TimeAgo from "react-timeago";
 import DataTableActions from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/DataTableActions";
@@ -20,17 +21,16 @@ import {
   selectCurrentPage,
   selectItemsPerPage,
   setCurrentPage,
-  setItemsPerPage,
   Loading,
 } from "@/app/redux/slices/complaintsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
+import { Label } from "@/components/ui/label";
 
 const DataTableComplaints = ({ data, refresh }) => {
   const { data: session } = useSession();
-  const inputRef = React.useRef(null);
   const dispatch = useDispatch();
 
   // Selectors
@@ -69,11 +69,14 @@ const DataTableComplaints = ({ data, refresh }) => {
       <div className="flex item-center justify-between">
         <div className="flex space-x-3 px-4 items-center">
           <Checkbox
+            id="select-all"
             className="mt-0.5"
             checked={selectedItems.length === data.length}
             onCheckedChange={handleSelectAll}
           />
-          <p className="text-sm">Pilih semua</p>
+          <Label htmlFor="select-all" className="text-sm">
+            Pilih semua
+          </Label>
           {refresh}
           {selectedItems.length > 0 && (
             <Button variant="outline" size="sm" onClick={handleMultipleDelete}>
@@ -162,7 +165,7 @@ const DataTableComplaints = ({ data, refresh }) => {
                       .platform === "TWITTER" ? (
                       <div className="inline-flex space-x-2 bg-gray-100 px-4 rounded-full py-2 items-center">
                         <div className="bg-gray-900 h-5 w-5 flex items-center justify-center rounded-full ">
-                          <TwitterIcon className="h-3 w-3 text-white" />
+                          <TwitterLogoIcon className="h-3 w-3 text-white" />
                         </div>
 
                         <span className="text-xs text-gray-900">X</span>

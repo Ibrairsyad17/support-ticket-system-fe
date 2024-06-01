@@ -9,7 +9,7 @@ import TabCustomerDetails from "@/app/(pages)/(dashboard)/chats/components/Tabs/
 import TabCreateTicket from "@/app/(pages)/(dashboard)/chats/components/Tabs/TabCreateTicket";
 import TabsTicketHistory from "@/app/(pages)/(dashboard)/chats/components/Tabs/TabsTicketHistory";
 
-const DetailsCustomer = ({ type = "desktop" }) => {
+const DetailsCustomer = ({ type = "desktop", data }) => {
   return (
     <Tabs
       defaultValue="customer"
@@ -36,7 +36,7 @@ const DetailsCustomer = ({ type = "desktop" }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="customer">
-        <TabCustomerDetails />
+        <TabCustomerDetails data={data} />
       </TabsContent>
       <TabsContent value="ticket">
         <TabCreateTicket />

@@ -38,11 +38,17 @@ export const getTicketsAll = async (token, take) => {
         id
         assignment_name
         assignment_detail
+        assignment_date
         assignment_file
         priority
         status
         ticket_id
         created_at
+        account_id
+        accounts{
+            name
+            photo_profile
+        }
         conversation_messages {
             message
             conversations {

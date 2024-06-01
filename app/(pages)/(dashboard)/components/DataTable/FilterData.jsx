@@ -27,13 +27,10 @@ const FilterData = () => {
         selectedPlatforms.filter((platform) => platform !== event.target.value),
       );
     }
-    console.log("handleFilterChange", selectedPlatforms);
   };
 
-  // Dispatch the action whenever selectedPlatforms changes
   React.useEffect(() => {
     dispatch(filterComplaintsByPlatform(selectedPlatforms));
-    console.log("useEffect", selectedPlatforms);
   }, [selectedPlatforms, dispatch]);
 
   // Filter by date
@@ -46,7 +43,6 @@ const FilterData = () => {
     }
   };
 
-  // Dispatch the action whenever selectedDate changes
   React.useEffect(() => {
     dispatch(filterComplaintsByDate(selectedDate));
   }, [selectedDate, dispatch]);

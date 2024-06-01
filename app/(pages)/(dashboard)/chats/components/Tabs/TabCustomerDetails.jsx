@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { WhatsApp, X } from "@mui/icons-material";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-const TabCustomerDetails = () => {
+const TabCustomerDetails = ({ data }) => {
   return (
     <>
       <div className="px-6 py-2.5 mt-3 bg-white text-lg font-semibold">
@@ -14,11 +15,19 @@ const TabCustomerDetails = () => {
       <form className="flex flex-col space-y-6 px-6 pt-2 pb-4">
         <div className="flex flex-col space-y-3">
           <Label htmlFor="name">Nama Lengkap</Label>
-          <Input id="name" defaultValue="Budi Gunawan" />
+          <Input
+            id="name"
+            defaultValue={data === [] ? "" : data.customers?.nama_lengkap}
+            disabled
+          />
         </div>
         <div className="flex flex-col space-y-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" defaultValue="budi123@gmail.com" />
+          <Input
+            id="email"
+            defaultValue={data === [] ? "" : data.customers?.email}
+            disabled
+          />
           <span className="text-gray-500 text-sm">Contoh: ads@gmail.com</span>
         </div>
         <div className="flex flex-col space-y-3">
@@ -29,7 +38,10 @@ const TabCustomerDetails = () => {
             </div>
             <Input
               id="name"
-              defaultValue="budigunn"
+              defaultValue={
+                data === [] ? "" : data.customers?.instagram_username
+              }
+              disabled
               className="focus-visible:ring-0 border-none"
             />
           </div>
@@ -42,7 +54,8 @@ const TabCustomerDetails = () => {
             </div>
             <Input
               id="instagram"
-              defaultValue="budigunn"
+              defaultValue={data === [] ? "" : data.customers?.whatsapp_number}
+              disabled
               className="focus-visible:ring-0 border-none"
             />
           </div>
@@ -55,7 +68,8 @@ const TabCustomerDetails = () => {
             </div>
             <Input
               id="twitter"
-              defaultValue="budigunn"
+              defaultValue={data === [] ? "" : data.customers?.twitter_username}
+              disabled
               className="focus-visible:ring-0 border-none"
             />
           </div>

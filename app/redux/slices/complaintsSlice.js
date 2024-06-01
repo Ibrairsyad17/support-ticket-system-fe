@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllComplaints } from "@/app/api/repository/complaintsRepository";
 import axios from "axios";
 import { BASE_URL } from "@/app/utils/constant";
@@ -148,7 +148,14 @@ const complaintsSlice = createSlice({
         (complaint) =>
           complaint.conversation_messages.conversations.customers.nama_lengkap
             .toLowerCase()
-            .includes(searchText),
+            .includes(searchText) ||
+          complaint.assignment_detail.toLowerCase().includes(searchText) ||
+          (complaint.conversation_messages.convo_message_category === []
+            ? false
+            : complaint.conversation_messages.convo_message_category.some(
+                (category) =>
+                  category.keywords.name.toLowerCase().includes(searchText),
+              )),
       );
     },
     setCurrentPage: (state, action) => {
@@ -184,6 +191,7 @@ const complaintsSlice = createSlice({
         state.complaints = state.complaints.filter(
           (complaint) => !action.payload.includes(complaint.id),
         );
+        state.selectedItems = [];
         state.filteredComplaintsByPlatform = state.complaints;
         state.filteredComplaintsByDate = state.complaints;
       })

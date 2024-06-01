@@ -1,18 +1,36 @@
+"use client";
 import React from "react";
 import Header from "@/app/(pages)/(dashboard)/chats/components/Header";
 import ChatsColumn from "@/app/(pages)/(dashboard)/chats/components/ChatsColumn";
 import InputMessageSection from "@/app/(pages)/(dashboard)/chats/components/InputMessageSection";
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
+import { useSession } from "next-auth/react";
+import { getCustomerInfo } from "@/app/api/repository/customersRepository";
 
-const ChatsPage = ({ params }) => {
+const ChatsPage = ({ params: { id } }) => {
+  const { data: session } = useSession();
+  const [customer, setCustomer] = React.useState([]);
+
+  const fetchCustomer = async () => {
+    const response = await getCustomerInfo(session?.token.data.token, id[0]);
+    if (response.data) {
+      setCustomer(response.data.data.conversations);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      fetchCustomer();
+    }
+  }, [session?.token.data.token]);
   return (
     <div className="grid lg:grid-cols-6 h-full">
       <div className="lg:col-span-4 border-r flex flex-col justify-between items-center">
-        <Header />
+        <Header data={customer[0] ?? []} />
         <ChatsColumn />
         <InputMessageSection />
       </div>
-      <DetailsCustomer />
+      <DetailsCustomer data={customer[0] ?? []} />
     </div>
   );
 };

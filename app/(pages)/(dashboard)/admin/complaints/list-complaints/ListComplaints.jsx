@@ -1,16 +1,13 @@
 "use client";
 import React, { useRef } from "react";
-import { Columns } from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/Columns";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchComplaints,
   getStatus,
-  Loading,
   searchItems,
   selectFilteredComplaintsByDate,
   selectFilteredComplaintsByPlatform,
-  selectSelectedItems,
 } from "@/app/redux/slices/complaintsSlice";
 import { Input } from "@/components/ui/input";
 import FilterData from "@/app/(pages)/(dashboard)/components/DataTable/FilterData";
@@ -31,8 +28,6 @@ const ListComplaints = () => {
   const complaintsByPlatform = useSelector(selectFilteredComplaintsByPlatform);
   const complaintsByDate = useSelector(selectFilteredComplaintsByDate);
   const getStatusInfo = useSelector(getStatus);
-  const getLoading = useSelector(Loading);
-  const selectedItems = useSelector(selectSelectedItems);
 
   const inputRef = useRef(null);
 
