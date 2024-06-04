@@ -11,11 +11,30 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-const TwoFactorOffButton = () => {
+import { useSession } from "next-auth/react";
+import { changeUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
+const TwoFactorOffButton = ({ otp }) => {
+  const { data: session } = useSession();
+
+  const handleEnableTwoFactor = async () => {
+    const data = {
+      otp_enabled: !otp,
+    };
+    const res = await changeUserInfo(data, session?.token.data.token);
+    if (res) {
+      window.location.reload();
+    }
+    console.log(otp);
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Nonaktifkan Verifikasi 2 Langkah</Button>
+        {otp ? (
+          <Button variant="outline">Nonaktifkan Verifikasi 2 Langkah</Button>
+        ) : (
+          <Button>Aktifkan Verifikasi 2 Langkah</Button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -29,7 +48,15 @@ const TwoFactorOffButton = () => {
         </AlertDialogHeader>
         <AlertDialogFooter className="grid lg:grid-cols-2">
           <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction>Nonaktifkan</AlertDialogAction>
+          {otp ? (
+            <AlertDialogAction onClick={handleEnableTwoFactor}>
+              Nonaktifkan
+            </AlertDialogAction>
+          ) : (
+            <AlertDialogAction onClick={handleEnableTwoFactor}>
+              Aktifkan
+            </AlertDialogAction>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

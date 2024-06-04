@@ -126,6 +126,58 @@ export const getTicketsByPIC = async (token, id) => {
   return response;
 };
 
+export const getTicketsConversations = async (token, id) => {
+  const query = `
+    query Assignments ($id: String){
+    assignments(
+        where: {
+            conversation_messages: {
+                conversations: { id: { equals: $id } }
+            }
+        }
+    ) {
+        id
+        assignment_name
+        assignment_detail
+        assignment_file
+        priority
+        status
+        ticket_id
+        created_at
+        accounts {
+            id
+            photo_profile
+            name
+        }
+        conversation_messages {
+            message
+            conversations {
+                id
+                accounts {
+                    photo_profile
+                    username
+                    name
+                }
+                customers {
+                    nama_lengkap
+                    platform
+                    email
+                    instagram_username
+                    twitter_username
+                    whatsapp_number
+                }
+            }
+        }
+    }
+}
+  `;
+  const variables = {
+    id,
+  };
+  const response = await PROVIDER_GET_GQL(token, query, variables);
+  return response;
+};
+
 export const getTicketsForPIC = async (token, id) => {
   await delay();
   const query = `

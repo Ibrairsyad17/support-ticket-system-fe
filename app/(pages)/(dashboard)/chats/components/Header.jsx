@@ -17,7 +17,6 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
 
 const Header = ({ data }) => {
-  console.log(data);
   return (
     <div className="w-full flex p-5 border-b justify-between items-center">
       <div className="">

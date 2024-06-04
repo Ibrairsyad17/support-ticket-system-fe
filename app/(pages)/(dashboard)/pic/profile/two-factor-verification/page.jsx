@@ -1,8 +1,41 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import TwoFactorOffButton from "@/app/(pages)/(dashboard)/pic/profile/components/TwoFactorOffButton";
+import { useSession } from "next-auth/react";
+import { getUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
 
 const TwoFactorVerificationPage = () => {
+  const { data: session } = useSession();
+  const [userInfo, setUserInfo] = React.useState({
+    id: "",
+    username: "",
+    name: "",
+    email: "",
+    phone_number: "",
+    photo_profile: "",
+    role: "",
+    otp_enabled: "",
+    company_id: "",
+    pic_role_id: "",
+    created_at: "",
+    updated_at: "",
+    deleted_at: "",
+  });
+
+  const fetchUserInfo = async () => {
+    const res = await getUserInfo(session?.token.data.token);
+    if (res) {
+      setUserInfo(res.data.data);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      fetchUserInfo();
+    }
+  }, [session?.token.data.token]);
+
   return (
     <div className="flex flex-col space-y-2.5">
       <div className="grid lg:grid-cols-7 gap-9 items-center">
@@ -33,7 +66,7 @@ const TwoFactorVerificationPage = () => {
               Verifikasi Kode OTP melalui email
             </span>
           </div>
-          <TwoFactorOffButton />
+          <TwoFactorOffButton otp={userInfo.otp_enabled} />
         </div>
       </div>
     </div>

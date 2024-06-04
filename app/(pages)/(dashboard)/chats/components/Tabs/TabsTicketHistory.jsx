@@ -1,67 +1,49 @@
+"use client";
 import React from "react";
 import TicketCard from "@/app/(pages)/(dashboard)/chats/components/Ticket/TicketCard";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchConversationTickets,
+  getStatus,
+  selectConversationTickets,
+} from "@/app/redux/slices/ticketsSlice";
+import { useSession } from "next-auth/react";
 
-const tickets = [
-  {
-    id: "TK-4556",
-    status: "Ditugaskan",
-    createdAt: "12/04/2024",
-    priority: "urgent",
-    assigned: {
-      name: "Tono Kurniawan",
-      avatar: "https://github.com/shadcn.png",
-    },
-    title: "Transfer Bank Lemot",
-  },
-  {
-    id: "TK-4557",
-    status: "Ditugaskan",
-    createdAt: "14/04/2024",
-    priority: "urgent",
-    assigned: { name: "Agung Budi", avatar: "https://github.com/shadcn.png" },
-    title: "Aplikasi Ngebug",
-  },
-  {
-    id: "TK-4558",
-    status: "Selesai",
-    createdAt: "17/04/2024",
-    priority: "urgent",
-    assigned: { name: "Agung Budi", avatar: "https://github.com/shadcn.png" },
-    title: "Kendala Pembayaran",
-  },
-  {
-    id: "TK-4559",
-    status: "Selesai",
-    createdAt: "16/04/2024",
-    priority: "urgent",
-    assigned: { name: "Agung Budi", avatar: "https://github.com/shadcn.png" },
-    title: "Aplikasi mengalami kendala",
-  },
-  {
-    id: "TK-4560",
-    status: "Selesai",
-    createdAt: "14/04/2024",
-    priority: "urgent",
-    assigned: { name: "Agung Budi", avatar: "https://github.com/shadcn.png" },
-    title: "Error saat login",
-  },
-];
+const TabsTicketHistory = ({ id }) => {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
 
-const TabsTicketHistory = () => {
-  const assignedTickets = tickets.filter(
-    (ticket) => ticket.status === "Ditugaskan",
+  const selectConversationsTicket = useSelector(selectConversationTickets);
+  const getStatusInfo = useSelector(getStatus);
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      if (getStatusInfo === "idle") {
+        dispatch(
+          fetchConversationTickets({ token: session?.token.data.token, id }),
+        );
+      }
+    }
+  }, [session?.token.data.token, getStatusInfo, dispatch]);
+
+  const doneTickets = selectConversationsTicket.filter(
+    (ticket) => ticket.status === "DONE",
   );
-  const doneTickets = tickets.filter((ticket) => ticket.status === "Selesai");
+
+  const liveTickets = selectConversationsTicket.filter(
+    (ticket) => ticket.status !== "DONE",
+  );
+
   return (
     <>
       <div className="px-6 py-2.5 mt-3 bg-white text-lg font-semibold">
         Tiket Berlangsung
       </div>
       <div className="flex flex-col space-y-3">
-        {assignedTickets.length === 0 && (
+        {liveTickets.length === 0 && (
           <div className="text-center text-gray-500">Tidak ada tiket</div>
         )}
-        {assignedTickets.map((ticket) => (
+        {liveTickets.map((ticket) => (
           <TicketCard key={ticket.id} ticket={ticket} />
         ))}
       </div>

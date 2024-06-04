@@ -122,7 +122,7 @@ const TableActions = ({ data }) => {
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
               <p className="text-gray-600 lg:col-span-2 text-left">Status:</p>
               <div className="col-span-2">
-                <Selects items={statuses} val={data?.status} />
+                <Selects items={statuses} val={data?.status} id={data?.id} />
               </div>
             </div>
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
@@ -134,6 +134,7 @@ const TableActions = ({ data }) => {
                   items={priorities}
                   val={data?.priority}
                   type="legend"
+                  id={data?.id}
                 />
               </div>
             </div>

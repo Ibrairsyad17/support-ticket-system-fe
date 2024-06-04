@@ -12,10 +12,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
 import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
+import { useDispatch } from "react-redux";
+import { updatePICTickets } from "@/app/redux/slices/ticketsSlice";
 
-const SelectPic = ({ image, name }) => {
+const SelectPic = ({ image, name, id }) => {
   const { data: session } = useSession();
   const [pics, setPics] = React.useState([]);
+  const dispatch = useDispatch();
 
   const fetchPics = async () => {
     const res = await getUsersPIC(session?.token.data.token, "PIC");
@@ -29,7 +32,17 @@ const SelectPic = ({ image, name }) => {
   }, [session?.token.data.token]);
 
   return (
-    <Select>
+    <Select
+      onValueChange={(value) => {
+        dispatch(
+          updatePICTickets({
+            id: id,
+            token: session?.token.data.token,
+            pic: value,
+          }),
+        );
+      }}
+    >
       <SelectTrigger>
         <SelectValue
           placeholder={

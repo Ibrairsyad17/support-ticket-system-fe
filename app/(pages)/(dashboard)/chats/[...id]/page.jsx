@@ -6,9 +6,19 @@ import InputMessageSection from "@/app/(pages)/(dashboard)/chats/components/Inpu
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
 import { useSession } from "next-auth/react";
 import { getCustomerInfo } from "@/app/api/repository/customersRepository";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMessages,
+  getStatus,
+  selectMessages,
+} from "@/app/redux/slices/messagesSlice";
 
 const ChatsPage = ({ params: { id } }) => {
   const { data: session } = useSession();
+  // const dispatch = useDispatch();
+  // const getMessages = useSelector(selectMessages);
+  // const getStatusInfo = useSelector(getStatus);
+
   const [customer, setCustomer] = React.useState([]);
 
   const fetchCustomer = async () => {
@@ -23,6 +33,7 @@ const ChatsPage = ({ params: { id } }) => {
       fetchCustomer();
     }
   }, [session?.token.data.token]);
+
   return (
     <div className="grid lg:grid-cols-6 h-full">
       <div className="lg:col-span-4 border-r flex flex-col justify-between items-center">
@@ -30,7 +41,7 @@ const ChatsPage = ({ params: { id } }) => {
         <ChatsColumn />
         <InputMessageSection />
       </div>
-      <DetailsCustomer data={customer[0] ?? []} />
+      <DetailsCustomer data={customer[0] ?? []} id={id[0]} />
     </div>
   );
 };

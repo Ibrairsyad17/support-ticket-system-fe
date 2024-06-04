@@ -1,4 +1,8 @@
-import { PROVIDER_GET_GQL } from "@/app/api/provider";
+import {
+  PROVIDER_DELETE,
+  PROVIDER_GET_GQL,
+  PROVIDER_POST,
+} from "@/app/api/provider";
 
 const delay = () => new Promise((res) => setTimeout(() => res(), 500));
 
@@ -20,6 +24,9 @@ export const getMessages = async (token) => {
               whatsapp_username
           }
           conversation_messages {
+              id
+              sender
+              receiver
               message
               updated_at
           }
@@ -57,4 +64,36 @@ export const getMessagesById = async (token, id) => {
   };
   const response = await PROVIDER_GET_GQL(token, query, variables);
   return response;
+};
+
+export const getTemplateMessages = async (token) => {
+  await delay();
+  const query = `
+    query getTemplateMessages{
+      template_messages {
+          id
+          message
+      }
+    }
+  `;
+  const response = await PROVIDER_GET_GQL(token, query);
+  return response;
+};
+
+export const createTemplateMessage = async (token, data) => {
+  try {
+    const res = await PROVIDER_POST(token, "template-messages", data);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deleteTemplateMessage = async (token, id) => {
+  try {
+    const res = await PROVIDER_DELETE(token, `template-messages/${id}`);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
 };

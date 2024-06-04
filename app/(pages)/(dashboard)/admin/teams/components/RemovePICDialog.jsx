@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   AlertDialog,
@@ -12,8 +13,23 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { deleteMultiplePIC } from "@/app/redux/slices/teamsSlice";
 
 const RemovePicDialog = ({ data }) => {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    dispatch(
+      deleteMultiplePIC({
+        ids: [id],
+        token: session?.token.data.token,
+      }),
+    );
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -34,8 +50,10 @@ const RemovePicDialog = ({ data }) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="grid lg:grid-cols-2 gap-2">
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Batal</AlertDialogCancel>
+          <AlertDialogAction onClick={() => handleDelete(data.id)}>
+            Ya, saya yakin
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

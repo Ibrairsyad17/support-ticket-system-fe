@@ -9,7 +9,7 @@ import TabCustomerDetails from "@/app/(pages)/(dashboard)/chats/components/Tabs/
 import TabCreateTicket from "@/app/(pages)/(dashboard)/chats/components/Tabs/TabCreateTicket";
 import TabsTicketHistory from "@/app/(pages)/(dashboard)/chats/components/Tabs/TabsTicketHistory";
 
-const DetailsCustomer = ({ type = "desktop", data }) => {
+const DetailsCustomer = ({ type = "desktop", data, id }) => {
   return (
     <Tabs
       defaultValue="customer"
@@ -42,7 +42,7 @@ const DetailsCustomer = ({ type = "desktop", data }) => {
         <TabCreateTicket />
       </TabsContent>
       <TabsContent value="history" className="pb-5">
-        <TabsTicketHistory />
+        <TabsTicketHistory id={id} />
       </TabsContent>
     </Tabs>
   );

@@ -28,7 +28,7 @@ const DetailTicketSheet = ({ data }) => {
           <EyeOpenIcon className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="lg:max-w-lg overflow-y-scroll">
+      <SheetContent className="lg:max-w-2xl overflow-y-scroll">
         <SheetHeader>
           <SheetTitle>Tiket {data?.ticket_id}</SheetTitle>
           <div className="flex flex-col space-y-3.5 text-sm">
@@ -104,18 +104,16 @@ const DetailTicketSheet = ({ data }) => {
               </p>
               <div className="col-span-2">
                 <SelectPIC
-                  name={data?.conversation_messages.conversations.accounts.name}
-                  image={
-                    data?.conversation_messages.conversations.accounts
-                      .photo_profile
-                  }
+                  name={data?.accounts.name}
+                  image={data?.accounts.photo_profile}
+                  id={data?.id}
                 />
               </div>
             </div>
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
               <p className="text-gray-600 lg:col-span-2 text-left">Status:</p>
               <div className="col-span-2">
-                <Selects items={statuses} val={data?.status} />
+                <Selects items={statuses} val={data?.status} id={data?.id} />
               </div>
             </div>
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
@@ -127,6 +125,7 @@ const DetailTicketSheet = ({ data }) => {
                   items={priorities}
                   val={data?.priority}
                   type="legend"
+                  id={data?.id}
                 />
               </div>
             </div>

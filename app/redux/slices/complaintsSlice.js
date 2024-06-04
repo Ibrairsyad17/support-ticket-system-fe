@@ -224,7 +224,6 @@ export const {
   searchItems,
   selectAllItems,
   setCurrentPage,
-  setItemsPerPage,
 } = complaintsSlice.actions;
 
 // Reducer

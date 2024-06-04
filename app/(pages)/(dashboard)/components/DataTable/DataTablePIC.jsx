@@ -1,33 +1,31 @@
+"use client";
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import SelectPic from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
+import {
+  Loading,
+  selectAllPicTickets,
+  selectItem,
+  selectSelectedItems,
+  setCurrentPage,
+} from "@/app/redux/slices/ticketsSlice";
 import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import {
   priorities,
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
-import TableActions from "@/app/(pages)/(dashboard)/admin/tickets/components/TableActions";
-import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteMultipleTickets,
-  Loading,
-  resetSelectedItems,
-  selectAllItems,
-  selectItem,
-  selectSelectedItems,
-  setCurrentPage,
-} from "@/app/redux/slices/ticketsSlice";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
+import ChangeStatus from "@/app/(pages)/(dashboard)/pic/tickets/components/ChangeStatus";
+import TableActions from "@/app/(pages)/(dashboard)/pic/tickets/components/TableActions";
 
-const DataTableTickets = ({ data, refresh }) => {
+const DataTablePic = ({ data, refresh }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
-  // Selectors
   const selectedItems = useSelector(selectSelectedItems);
   const currentPage = useSelector((state) => state.tickets.currentPage);
   const itemsPerPage = useSelector((state) => state.tickets.itemsPerPage);
@@ -38,23 +36,12 @@ const DataTableTickets = ({ data, refresh }) => {
     Math.min(currentPage * itemsPerPage, data.length),
   );
 
-  // Handlers
-  const handleDeleteMultiple = () => {
-    dispatch(
-      deleteMultipleTickets({
-        ids: selectedItems,
-        token: session?.token.data.token,
-      }),
-    );
-    dispatch(resetSelectedItems());
-  };
-
   const handleSelectAll = (checked) => {
-    dispatch(selectAllItems(checked));
+    dispatch(selectAllPicTickets(checked));
   };
 
   return (
-    <div className="grid grid-cols-1 gap-y-5">
+    <div className="grid grid-cols-1 my-6 gap-y-5">
       <div className="flex item-center justify-between">
         <div className="flex space-x-3 px-4 items-center">
           <Checkbox
@@ -64,12 +51,7 @@ const DataTableTickets = ({ data, refresh }) => {
           />
           <p className="text-sm">Pilih semua</p>
           {refresh}
-          {selectedItems.length > 0 && (
-            <Button variant="outline" size="sm" onClick={handleDeleteMultiple}>
-              <Trash className="w-4 h-4 mr-2" />
-              Hapus semua
-            </Button>
-          )}
+          {selectedItems.length > 0 && <ChangeStatus />}
         </div>
         <div className="flex space-x-3 items-center">
           <p className="mr-2 text-sm">
@@ -97,7 +79,7 @@ const DataTableTickets = ({ data, refresh }) => {
       ) : (
         <div className="w-full overflow-x-scroll xl:overflow-hidden mb-5">
           <ul className="col-span-1 flex flex-col divide-y divide-gray-100 border rounded w-[76rem] xl:w-full">
-            <li className="grid grid-cols-12 gap-3 bg-gray-100 py-2 px-4 items-center ">
+            <li className="grid grid-cols-12 gap-3 bg-gray-100 py-2 px-4 items-center">
               <div className="col-span-1 flex item-center space-x-4">
                 <Checkbox
                   className="mt-0.5"
@@ -136,11 +118,18 @@ const DataTableTickets = ({ data, refresh }) => {
                   <p className="col-span-2 text-sm">{ticket.assignment_name}</p>
 
                   <div className="col-span-2 text-sm">
-                    <SelectPic
-                      image={ticket.accounts.photo_profile}
-                      name={ticket.accounts.name}
-                      id={ticket.id}
-                    />
+                    <div className="flex space-x-2 items-center">
+                      <div className="flex space-x-2 items-center">
+                        <Avatar className="h-5 w-5">
+                          <AvatarFallback>U</AvatarFallback>
+                          <AvatarImage
+                            src={ticket.accounts.photo_profile}
+                            alt={ticket.accounts.name}
+                          />
+                        </Avatar>
+                        <span className="text-xs">{ticket.accounts.name}</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="col-span-2 text-sm">
@@ -159,7 +148,7 @@ const DataTableTickets = ({ data, refresh }) => {
                     />
                   </div>
                   <div className="col-span-1">
-                    <TableActions data={ticket} />
+                    <TableActions data={ticket} role="pic" />
                   </div>
                 </li>
               );
@@ -171,4 +160,4 @@ const DataTableTickets = ({ data, refresh }) => {
   );
 };
 
-export default DataTableTickets;
+export default DataTablePic;

@@ -55,7 +55,6 @@ const FilterDataTickets = () => {
       filteredTicketsByPriorityAndStatus({
         priorities: selectedPriorities,
         statuses: selectedStatuses,
-        time: selectedTime,
       }),
     );
   }, [selectedPriorities, selectedStatuses, selectedTime, dispatch]);

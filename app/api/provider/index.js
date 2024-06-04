@@ -52,6 +52,82 @@ export const PROVIDER_DELETE = async (token, url) => {
   }
 };
 
+export const PROVIDER_POST = async (token, url, data) => {
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const options = {
+      method: "POST",
+      headers,
+      url: `${BASE_URL}/${url}`,
+      data,
+    };
+    const response = await axios(options).then((res) => res);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const PROVIDER_POST_FORM_DATA = async (token, url, data) => {
+  try {
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+    const options = {
+      method: "POST",
+      headers,
+      url: `${BASE_URL}/${url}`,
+      data,
+    };
+    const response = await axios(options).then((res) => res);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const PROVIDER_PATCH = async (token, url, data) => {
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const options = {
+      method: "PATCH",
+      headers,
+      url: `${BASE_URL}/${url}`,
+      data,
+    };
+    const response = await axios(options).then((res) => res);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const PROVIDER_PATCH_FORM_DATA = async (token, url, data) => {
+  try {
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+    const options = {
+      method: "PATCH",
+      headers,
+      url: `${BASE_URL}/${url}`,
+      data,
+    };
+    const response = await axios(options).then((res) => res);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const PROVIDER_GET_GQL = async (token, query, variables) => {
   try {
     const headers = {

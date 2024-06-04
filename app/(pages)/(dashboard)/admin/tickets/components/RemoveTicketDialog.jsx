@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   AlertDialog,
@@ -12,8 +13,23 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { deleteMultipleTickets } from "@/app/redux/slices/ticketsSlice";
 
-const RemoveTicketDialog = () => {
+const RemoveTicketDialog = ({ data }) => {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    dispatch(
+      deleteMultipleTickets({
+        ids: [Number(id)],
+        token: session?.token.data.token,
+      }),
+    );
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -24,16 +40,18 @@ const RemoveTicketDialog = () => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Apakah anda yakin ingin menghapus tiket TK-1234?
+            Apakah anda yakin ingin menghapus tiket {data.ticket_id}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Anda akan menghapus tiket TK-1234. Tindakan ini tidak dapat
+            Anda akan menghapus tiket {data.ticket_id}. Tindakan ini tidak dapat
             dibatalkan. Apakah Anda yakin ingin menghapus tiket ini?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="grid lg:grid-cols-2 gap-2">
           <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction>Ya, saya yakin</AlertDialogAction>
+          <AlertDialogAction onClick={() => handleDelete(data.id)}>
+            Ya, saya yakin
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

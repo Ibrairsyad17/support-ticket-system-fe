@@ -16,10 +16,17 @@ import FilterByTime from "@/app/(pages)/(dashboard)/admin/message/inbox/componen
 import FilterByPlatform from "@/app/(pages)/(dashboard)/admin/message/inbox/components/FilterByPlatform";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
 import FilterByStatus from "@/app/(pages)/(dashboard)/admin/message/inbox/components/FilterByStatus";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui/button";
 
 const InboxPage = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const [lastRefreshDate, setLastRefreshDate] = React.useState(
+    localStorage.getItem("lastRefreshDate")
+      ? new Date(localStorage.getItem("lastRefreshDate"))
+      : null,
+  );
 
   // Selectors
   const messagesInbox = useSelector(selectFilteredMessages);
@@ -40,6 +47,15 @@ const InboxPage = () => {
     dispatch(searchItems(inputRef.current.value));
   };
 
+  const handleRefresh = () => {
+    dispatch(fetchMessages(session?.token.data.token));
+    const currentDate = new Date();
+    setLastRefreshDate(currentDate);
+
+    // Save the last refresh date to local storage whenever it changes
+    localStorage.setItem("lastRefreshDate", currentDate.toString());
+  };
+
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-3">
@@ -52,7 +68,10 @@ const InboxPage = () => {
                   Pesan Masuk
                 </h1>
                 <div className="mt-2 text-sm text-gray-400 flex items-center space-x-3">
-                  <span>Data terakhir diperbaharui pada </span>
+                  <span>
+                    Data terakhir diperbaharui pada{" "}
+                    {lastRefreshDate.toLocaleString()}{" "}
+                  </span>
                 </div>
               </div>
               <div className="flex space-x-3 w-full lg:col-span-2 lg:self-end lg:place-self-end">
@@ -90,7 +109,19 @@ const InboxPage = () => {
           </div>
         )}
         {messagesInbox.length > 0 && !getLoading && (
-          <DataTableMessages data={messagesInbox} />
+          <DataTableMessages
+            data={messagesInbox}
+            refresh={
+              <Button
+                onClick={handleRefresh}
+                className="text-gray-400"
+                variant="ghost"
+                size="icon"
+              >
+                <ArrowPathIcon className="h-4 w-4" />
+              </Button>
+            }
+          />
         )}
       </div>
     </>

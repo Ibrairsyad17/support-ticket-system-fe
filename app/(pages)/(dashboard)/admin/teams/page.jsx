@@ -1,47 +1,45 @@
 "use client";
 import React from "react";
-import TabsContents from "@/app/(pages)/(dashboard)/components/Tabs/TabsContents";
-import { DataTable } from "@/app/(pages)/(dashboard)/components/DataTable/DataTable";
-import { columns } from "@/app/(pages)/(dashboard)/admin/teams/components/Columns";
 import { Button } from "@/components/ui/button";
 import { FilePlusIcon } from "@radix-ui/react-icons";
 import AddPICDialog from "@/app/(pages)/(dashboard)/admin/teams/components/AddPICDialog";
 import { useSession } from "next-auth/react";
 import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchTeams,
+  getLoadingStatus,
+  getStatus,
+  searchPIC,
+  selectAllTeams,
+  selectFilteredTeams,
+} from "@/app/redux/slices/teamsSlice";
+import DataTableTeams from "@/app/(pages)/(dashboard)/components/DataTable/DataTableTeams";
+import { Input } from "@/components/ui/input";
 
 const TeamsPage = () => {
   const { data: session } = useSession();
-  const [pics, setPics] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const dispatch = useDispatch();
 
-  const fetchPics = async () => {
-    const res = await getUsersPIC(session?.token.data.token, "PIC");
-    if (res) {
-      setPics(res.data.data.accounts);
-      setIsLoading(false);
-    }
-  };
+  const inputRef = React.useRef(null);
+
+  // Selectors
+  const filteredTeams = useSelector(selectFilteredTeams);
+  const loadingStatus = useSelector(getLoadingStatus);
+  const status = useSelector(getStatus);
 
   React.useEffect(() => {
     if (session?.token.data.token) {
-      fetchPics();
+      if (status === "idle") {
+        dispatch(fetchTeams(session?.token.data.token));
+      }
     }
-  }, [session?.token.data.token]);
+  }, [session?.token.data.token, status, dispatch]);
 
-  const items = [
-    {
-      value: "all",
-      label: "Semua",
-      DataTable: (
-        <DataTable
-          data={pics}
-          columns={columns}
-          filteredBy="name"
-          loading={isLoading}
-        />
-      ),
-    },
-  ];
+  const handleSearch = () => {
+    dispatch(searchPIC(inputRef.current.value));
+  };
+
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-3">
@@ -62,9 +60,16 @@ const TeamsPage = () => {
             <Button variant="outline">
               <FilePlusIcon className="mr-2 h-4 w-4" /> Import PIC
             </Button>
+            <Input
+              type="search"
+              placeholder="Cari Data PIC..."
+              className="w-250px md:w-[100px] lg:w-[300px]"
+              ref={inputRef}
+              onChange={handleSearch}
+            />
           </div>
         </div>
-        <TabsContents defaultValue="all" values={items} />
+        <DataTableTeams data={filteredTeams} />
       </div>
     </>
   );

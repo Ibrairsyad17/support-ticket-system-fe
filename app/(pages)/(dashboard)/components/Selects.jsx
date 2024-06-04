@@ -14,18 +14,39 @@ import {
   ReaderIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import {
+  updatePriorityTickets,
+  updateStatusTickets,
+} from "@/app/redux/slices/ticketsSlice";
 
-const Selects = ({ val, items, type = "icon" }) => {
-  // let ItemIcon = "";
-  // let getPIC = [];
-  // if (type === "icon" || type === "legend") {
-  //   const getStatus = items.find((item) => item.label === val);
-  //   ItemIcon = getStatus.icon;
-  // } else if (type === "avatar") {
-  //   getPIC = items.find((item) => item.name === val);
-  // }
+const Selects = ({ val, items, type = "icon", id }) => {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
   return (
-    <Select>
+    <Select
+      className="w-40"
+      onValueChange={(value) => {
+        if (type === "icon") {
+          dispatch(
+            updateStatusTickets({
+              id: id,
+              token: session?.token.data.token,
+              status: value,
+            }),
+          );
+        } else {
+          dispatch(
+            updatePriorityTickets({
+              id: id,
+              token: session?.token.data.token,
+              priority: value,
+            }),
+          );
+        }
+      }}
+    >
       <SelectTrigger>
         <SelectValue
           placeholder={

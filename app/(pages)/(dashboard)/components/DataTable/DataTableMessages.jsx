@@ -23,7 +23,7 @@ import { setCurrentPage } from "@/app/redux/slices/messagesSlice";
 import { Label } from "@/components/ui/label";
 import ChangeStatusOption from "@/app/(pages)/(dashboard)/admin/message/inbox/components/ChangeStatusOption";
 
-const DataTableMessages = ({ data }) => {
+const DataTableMessages = ({ data, refresh }) => {
   const dispatch = useDispatch();
 
   const selectedItems = useSelector(selectSelectedItems);
@@ -56,6 +56,7 @@ const DataTableMessages = ({ data }) => {
           <Label htmlFor="select-all" className="text-sm">
             Pilih semua
           </Label>
+          {refresh}
           {selectedItems.length > 0 && <ChangeStatusOption />}
         </div>
         <div className="flex space-x-3 items-center">

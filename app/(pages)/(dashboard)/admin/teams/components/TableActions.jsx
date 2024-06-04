@@ -4,7 +4,7 @@ import RemovePICDialog from "@/app/(pages)/(dashboard)/admin/teams/components/Re
 
 const TableActions = ({ data }) => {
   return (
-    <div className="px-4 text-xs flex space-x-2">
+    <div className="text-xs flex space-x-2">
       <EditPICDialog data={data} />
       <RemovePICDialog data={data} />
     </div>

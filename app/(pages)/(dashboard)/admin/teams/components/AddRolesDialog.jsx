@@ -12,37 +12,40 @@ import { Button } from "@/components/ui/button";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import TemplateList from "./TemplateList";
-import { useDispatch, useSelector } from "react-redux";
+import RolesList from "@/app/(pages)/(dashboard)/admin/teams/components/RolesList";
 import { useSession } from "next-auth/react";
-import { addTemplateMessage } from "@/app/redux/slices/templateMessagesSlice";
+import { useDispatch } from "react-redux";
+import { createRole } from "@/app/redux/slices/rolesSlice";
 
-const AddTemplateMessages = ({ messages }) => {
+const AddRolesDialog = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
-  const inputRef = React.createRef(null);
+  const inputRef = React.useRef(null);
 
-  const handleAddTemplate = (e) => {
-    e.preventDefault();
-    const data = {
-      message: inputRef.current.value,
-    };
-    dispatch(addTemplateMessage({ data, token: session.token.data.token }));
+  const handleAddRole = () => {
+    dispatch(
+      createRole({
+        role: inputRef.current.value,
+        token: session?.token.data.token,
+      }),
+    );
+    inputRef.current.value = "";
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="icon" variant="ghost">
-          <PlusCircledIcon className="h-4 w-4 text-violet-600" />
+        <Button variant="outline">
+          <PlusCircledIcon className="h-4 w-4 mr-2" />
+          Tambah role
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Tambah template pesan</DialogTitle>
+          <DialogTitle className="text-xl">Tambah role</DialogTitle>
           <DialogDescription className="text-sm">
-            Tambah pesan.
+            Tambah role PIC
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 gap-y-2">
@@ -51,18 +54,22 @@ const AddTemplateMessages = ({ messages }) => {
               <Label htmlFor="link" className="sr-only">
                 Link
               </Label>
-              <Input type="text" ref={inputRef} placeholder="Tulis pesan" />
+              <Input
+                type="text"
+                ref={inputRef}
+                placeholder="Tuliskan nama role"
+              />
             </div>
-            <Button type="submit" className="px-3" onClick={handleAddTemplate}>
+            <Button className="px-3" onClick={handleAddRole}>
               <span className="">Tambah</span>
             </Button>
           </div>
-          <h3 className="text-md font-medium mt-3">List template pesan</h3>
-          <TemplateList data={messages} />
+          <h3 className="text-md font-medium mt-3">List role tersedia</h3>
+          <RolesList />
         </div>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default AddTemplateMessages;
+export default AddRolesDialog;

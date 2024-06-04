@@ -3,7 +3,11 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import { getCompanyInfo } from "@/app/api/repository/usersAndCompanyRepository";
+import {
+  changeCompanyInfo,
+  changeCompanyPhoto,
+  getCompanyInfo,
+} from "@/app/api/repository/usersAndCompanyRepository";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const CompanyForm = () => {
@@ -30,6 +34,44 @@ const CompanyForm = () => {
       fetchUserInfo();
     }
   }, [session?.token.data.token]);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    const res = await changeCompanyPhoto(file, session?.token.data.token);
+    if (res) {
+      fetchUserInfo();
+    }
+  };
+
+  const handleButtonClick = () => {
+    document.getElementById("fileInput").click();
+  };
+
+  const companyRef = React.createRef(companyInfo.name);
+  const emailRef = React.createRef(companyInfo.email);
+
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: companyRef.current.value,
+      email: emailRef.current.value,
+    };
+
+    const res = await changeCompanyInfo(data, session?.token.data.token);
+    if (res) {
+      fetchUserInfo();
+      console.log("Company info updated");
+    } else {
+      console.log("Company info failed to update");
+    }
+  };
+
+  const handleCancel = () => {
+    companyRef.current.value = companyInfo.name;
+    emailRef.current.value = companyInfo.email;
+  };
+
   return (
     <div className="">
       <h2 className="text-md font-semibold text-gray-900">
@@ -44,11 +86,18 @@ const CompanyForm = () => {
                 <AvatarImage src={companyInfo.photo_profile} alt="@shadcn" />
                 <AvatarFallback>C</AvatarFallback>
               </Avatar>
+              <input
+                type="file"
+                id="fileInput"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
               <button
                 type="button"
                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={handleButtonClick}
               >
-                Change
+                Ubah foto
               </button>
             </div>
           </div>
@@ -61,7 +110,7 @@ const CompanyForm = () => {
               Nama Perusahaan
             </label>
             <div className="mt-2">
-              <Input value={companyInfo.name}></Input>
+              <Input defaultValue={companyInfo.name} ref={companyRef}></Input>
             </div>
           </div>
           <div className="sm:col-span-2">
@@ -72,7 +121,7 @@ const CompanyForm = () => {
               Email Perusahaan
             </label>
             <div className="mt-2">
-              <Input value={companyInfo.email}></Input>
+              <Input defaultValue={companyInfo.email} ref={emailRef}></Input>
             </div>
           </div>
         </div>
@@ -82,10 +131,13 @@ const CompanyForm = () => {
             variant="outline"
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
+            onClick={handleCancel}
           >
-            Cancel
+            Batal
           </Button>
-          <Button type="submit">Save</Button>
+          <Button type="submit" onClick={handleSaveChanges}>
+            Simpan
+          </Button>
         </div>
       </form>
     </div>
