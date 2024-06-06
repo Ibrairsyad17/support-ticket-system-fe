@@ -7,7 +7,6 @@ import { Instagram, WhatsApp, X } from "@mui/icons-material";
 
 const RecentComplaints = ({ data }) => {
   const dataSlice = data.slice(0, 3);
-  console.log(dataSlice);
   const formatter = buildFormatter(indonesiaStrings);
 
   return (

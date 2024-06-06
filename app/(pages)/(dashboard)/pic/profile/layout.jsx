@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
         <aside className="-mx-4 lg:w-1/5">
           <SidebarProfiles items={sidebarNavItems} />
         </aside>
-        <div className="flex-1 lg:max-w-[650px] rounded-xl border shadow-sm p-8">
+        <div className="flex-1 lg:max-w-[750px] rounded-xl border shadow-sm p-8">
           {children}
         </div>
       </div>

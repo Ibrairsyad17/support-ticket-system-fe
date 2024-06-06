@@ -8,36 +8,72 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import * as React from "react";
+import axios from "axios";
+import { BASE_URL } from "@/app/utils/constant";
+import { useDispatch } from "react-redux";
+import { setOTP } from "@/app/redux/slices/otpSlice";
+import { useToast } from "@/components/ui/use-toast";
 
-export function PhoneAuthForm({ className }) {
+export function PhoneAuthForm() {
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const [email, setEmail] = React.useState("");
+
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 
-    setTimeout(() => {
-      router.push("/login/phone-number/otp-auth");
-    }, 3000);
+    try {
+      const sendOTP = await axios.post(`${BASE_URL}/auth/otp/generate`, {
+        email: email,
+      });
+      if (sendOTP.status === 200) {
+        setIsLoading(false);
+        dispatch(setOTP(email));
+        router.push("/login/phone-number/otp-auth");
+      } else if (sendOTP.status === 404) {
+        setIsLoading(false);
+        toast({
+          title: "Email tidak ditemukan",
+          variant: "destructive",
+          description: "Email yang Anda masukkan tidak terdaftar",
+          status: "error",
+        });
+        console.error("Error");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Email tidak ditemukan",
+        variant: "destructive",
+        description: "Terjadi kesalahan, cek kembali email anda",
+        status: "error",
+      });
+      console.error(error);
+    }
   }
 
   return (
     <div className={"grid gap-6"}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
+        <div className="grid gap-3">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
             <Input
               id="email"
-              placeholder="Masukkan nomor telepon"
-              type="number"
+              placeholder="Masukkan email"
+              type="email"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
               className="py-5 mb-2"
+              required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <Button disabled={isLoading}>
@@ -58,7 +94,7 @@ export function PhoneAuthForm({ className }) {
                 <path d="M21 12a9 9 0 1 1-6.219-8.56" />
               </svg>
             )}
-            Log In Dengan Nomor HP
+            Kirim Kode OTP
           </Button>
         </div>
       </form>

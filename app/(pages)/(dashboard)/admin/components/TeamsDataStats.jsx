@@ -21,8 +21,6 @@ const TeamsDataStats = () => {
           return ticket.accounts?.pic_roles?.role;
         })
         .filter((value, index, self) => self.indexOf(value) === index);
-      console.log(getCategory);
-      console.log(getTickets);
       setTickets(getTickets);
       setCategory(getCategory);
     }

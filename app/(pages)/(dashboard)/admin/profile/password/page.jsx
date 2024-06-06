@@ -1,7 +1,7 @@
 import React from "react";
-import ChangePassword from "@/app/(pages)/(dashboard)/admin/profile/components/ChangePassword";
+import ChangePasswordForm from "@/app/(pages)/(dashboard)/pic/profile/components/ChangePasswordForm";
 const ChangePasswordPage = () => {
-  return <ChangePassword />;
+  return <ChangePasswordForm />;
 };
 
 export default ChangePasswordPage;

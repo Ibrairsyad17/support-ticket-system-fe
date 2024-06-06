@@ -13,11 +13,11 @@ export default class TeamDataCharts extends PureComponent {
       (item) => item.accounts.pic_roles.role === title,
     );
 
-    const sum = filteredData.reduce((acc, ticket) => {
-      const status = ticket.status;
-      acc[status] = (acc[status] || 0) + 1;
-      return acc;
-    });
+    // const sum = filteredData.reduce((acc, ticket) => {
+    //   const status = ticket.status;
+    //   acc[status] = (acc[status] || 0) + 1;
+    //   return acc;
+    // });
 
     const dataCharts = Object.values(
       filteredData.reduce((acc, { status }) => {
@@ -49,13 +49,11 @@ export default class TeamDataCharts extends PureComponent {
       (team) => team.accounts.pic_roles.role === title,
     ).length;
 
-    const reduceByAccountID = teamPICData.reduce((acc, ticket) => {
-      const accountID = ticket.account_id;
-      acc[accountID] = (acc[accountID] || 0) + 1;
-      return acc;
-    });
-
-    console.log(reduceByAccountID);
+    // const reduceByAccountID = teamPICData.reduce((acc, ticket) => {
+    //   const accountID = ticket.account_id;
+    //   acc[accountID] = (acc[accountID] || 0) + 1;
+    //   return acc;
+    // });
 
     return (
       <div className="flex flex-col space-y-2.5 border py-2 px-1 rounded-lg text-center">

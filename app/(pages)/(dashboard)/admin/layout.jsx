@@ -5,6 +5,7 @@ import { Inter_Tight } from "next/font/google";
 import SidebarAdmin from "@/app/(pages)/(dashboard)/admin/components/SidebarAdmin";
 import { SessionProvider } from "next-auth/react";
 import StoreProvider from "@/app/redux/StoreProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter_Tight({ subsets: ["latin"] });
 export default function RootLayout({ children, session }) {
@@ -15,6 +16,7 @@ export default function RootLayout({ children, session }) {
           <StoreProvider>
             <SidebarAdmin />
             {children}
+            <Toaster />
           </StoreProvider>
         </SessionProvider>
       </body>

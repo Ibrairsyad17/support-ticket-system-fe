@@ -20,8 +20,10 @@ import {
   updatePriorityTickets,
   updateStatusTickets,
 } from "@/app/redux/slices/ticketsSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const Selects = ({ val, items, type = "icon", id }) => {
+  const { toast } = useToast();
   const { data: session } = useSession();
   const dispatch = useDispatch();
   return (
@@ -36,6 +38,11 @@ const Selects = ({ val, items, type = "icon", id }) => {
               status: value,
             }),
           );
+          toast({
+            title: "Berhasil Mengubah Status",
+            variant: "success",
+            description: `Berhasil mengubah status tiket menjadi ${value === "ASSIGNED" ? "Ditugaskan" : value === "IN_PROGRESS" ? "Dikerjakan" : value === "CHECKED" ? "Diperiksa" : "Selesai"}`,
+          });
         } else {
           dispatch(
             updatePriorityTickets({
@@ -44,6 +51,11 @@ const Selects = ({ val, items, type = "icon", id }) => {
               priority: value,
             }),
           );
+          toast({
+            title: "Berhasil Mengubah Status",
+            variant: "success",
+            description: `Berhasil mengubah prioritas tiket menjadi ${value === "HIGH" ? "Tinggi" : value === "LOW" ? "Rendah" : "Normal"}`,
+          });
         }
       }}
     >

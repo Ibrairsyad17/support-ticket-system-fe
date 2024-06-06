@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -31,6 +30,7 @@ import { Instagram, WhatsApp, X } from "@mui/icons-material";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 import LatestComplaintsSkeleton from "@/app/(pages)/(dashboard)/admin/components/LatestComplaintsSkeleton";
+import NotificationPopover from "@/app/(pages)/(dashboard)/admin/components/NotificationPopover";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -44,21 +44,6 @@ const Dashboard = () => {
   );
   const [keywords, setKeywords] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [userInfo, setUserInfo] = React.useState({
-    id: "",
-    username: "",
-    name: "",
-    email: "",
-    phone_number: "",
-    photo_profile: "",
-    role: "",
-    otp_enabled: "",
-    company_id: "",
-    pic_role_id: "",
-    created_at: "",
-    updated_at: "",
-    deleted_at: "",
-  });
 
   const fetchAllKeywords = async () => {
     const res = await getKeywords(session?.token.data.token);
@@ -126,7 +111,10 @@ const Dashboard = () => {
               <h1 className="block text-2xl font-bold text-gray-800 sm:text-3xl">
                 Dashboard
               </h1>
-              <DatePickerWithRange className="lg:justify-self-end" />
+              <div className="flex space-x-3 lg:justify-self-end">
+                <DatePickerWithRange className="" />
+                <NotificationPopover />
+              </div>
             </div>
           </header>
           {isLoading ? (
@@ -223,15 +211,15 @@ const Dashboard = () => {
             <CardContent className="pl-2 -mt-4">
               {isLoading ? (
                 <div className="flex flex-col space-y-4">
-                  <div class="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
+                  <div className="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
                     <Skeleton className="h-3.5 w-32 bg-gray-100 rounded-full" />
                     <Skeleton className="h-3.5 w-6 bg-gray-100 rounded-full" />
                   </div>
-                  <div class="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
+                  <div className="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
                     <Skeleton className="h-3.5 w-32 bg-gray-100 rounded-full" />
                     <Skeleton className="h-3.5 w-6 bg-gray-100 rounded-full" />
                   </div>
-                  <div class="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
+                  <div className="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
                     <Skeleton className="h-3.5 w-32 bg-gray-100 rounded-full" />
                     <Skeleton className="h-3.5 w-6 bg-gray-100 rounded-full" />
                   </div>

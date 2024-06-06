@@ -2,8 +2,6 @@ import {
   PROVIDER_GET,
   PROVIDER_GET_GQL,
   PROVIDER_PATCH,
-  PROVIDER_PATCH_FORM_DATA,
-  PROVIDER_POST,
   PROVIDER_POST_FORM_DATA,
 } from "@/app/api/provider";
 
@@ -114,5 +112,15 @@ export const changeCompanyPhoto = async (image, token) => {
 
 export const changeCompanyInfo = async (data, token) => {
   const response = await PROVIDER_PATCH(token, "company", data);
+  return response;
+};
+
+export const changePassword = async (data, token) => {
+  const response = await PROVIDER_PATCH(token, "auth/change-password", data);
+  return response;
+};
+
+export const userLogout = async (token) => {
+  const response = await PROVIDER_GET("auth/logout", token);
   return response;
 };

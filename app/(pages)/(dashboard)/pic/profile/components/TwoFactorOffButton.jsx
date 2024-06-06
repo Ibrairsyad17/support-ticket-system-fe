@@ -13,8 +13,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { changeUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
+import { useToast } from "@/components/ui/use-toast";
 const TwoFactorOffButton = ({ otp }) => {
   const { data: session } = useSession();
+  const { toast } = useToast();
 
   const handleEnableTwoFactor = async () => {
     const data = {
@@ -22,9 +24,13 @@ const TwoFactorOffButton = ({ otp }) => {
     };
     const res = await changeUserInfo(data, session?.token.data.token);
     if (res) {
+      toast({
+        title: "Opsi Verifikasi 2 Langkah Berhasil Diubah",
+        variant: "success",
+        description: `Verifikasi 2 langkah berhasil diubah menjadi ${!otp ? "aktif" : "nonaktif"} `,
+      });
       window.location.reload();
     }
-    console.log(otp);
   };
 
   return (
@@ -39,7 +45,7 @@ const TwoFactorOffButton = ({ otp }) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Konfirmasi Nonaktifkan Verifikasi 2 Langkah
+            Konfirmasi {otp ? "Nonaktifkan" : "Aktifkan"} Verifikasi 2 Langkah
           </AlertDialogTitle>
           <AlertDialogDescription>
             Dengan menonaktifkan fitur ini, akun Anda mungkin menjadi lebih

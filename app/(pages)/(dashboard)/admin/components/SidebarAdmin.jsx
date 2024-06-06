@@ -26,7 +26,9 @@ import { usePathname } from "next/navigation";
 import SidebarContent from "@/app/(pages)/(dashboard)/components/Sidebars/SidebarContent";
 import NavbarSidebar from "@/app/(pages)/(dashboard)/components/Sidebars/NavbarSidebar";
 import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
+import { userLogout } from "@/app/api/repository/usersAndCompanyRepository";
 
 const listLink = [
   {
@@ -90,7 +92,9 @@ const listLink = [
 ];
 
 const SidebarAdmin = () => {
+  const { data: session } = useSession();
   const pathname = usePathname();
+  const { toast } = useToast();
   return (
     <div>
       <NavbarSidebar listLink={listLink} />
@@ -125,7 +129,26 @@ const SidebarAdmin = () => {
           <div className="px-7">
             <Button
               className={`flex w-full justify-start items-center gap-x-4 text-sm text-slate-700 `}
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={async () => {
+                // signOut({ callbackUrl: "/" });
+
+                try {
+                  await userLogout(session?.token.data.token);
+                  toast({
+                    title: "Berhasil Keluar",
+                    variant: "success",
+                    description: "Berhasil keluar dari aplikasi",
+                  });
+                  signOut({ callbackUrl: "/" });
+                } catch (error) {
+                  console.log(error);
+                  toast({
+                    title: "Gagal Keluar",
+                    variant: "destructive",
+                    description: "Gagal keluar dari aplikasi",
+                  });
+                }
+              }}
               variant="ghost"
             >
               <ArrowRightStartOnRectangleIcon className={`w-5 h-5`} />

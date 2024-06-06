@@ -9,8 +9,10 @@ import {
   getUserInfo,
 } from "@/app/api/repository/usersAndCompanyRepository";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
 
 const UserProfileForm = () => {
+  const { toast } = useToast();
   const { data: session } = useSession();
   const [userInfo, setUserInfo] = React.useState({
     id: "",
@@ -64,6 +66,11 @@ const UserProfileForm = () => {
     };
     const res = await changeUserInfo(data, session?.token.data.token);
     if (res) {
+      toast({
+        title: "Nama Pengguna Berhasil Diubah",
+        variant: "success",
+        description: `Berhasil mengubah nama pengguna ${data.username}`,
+      });
       fetchUserInfo();
     }
     console.log(data);

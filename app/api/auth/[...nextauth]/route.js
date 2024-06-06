@@ -29,7 +29,32 @@ export const authConfig = {
         });
 
         const user = await res.json();
-        console.log({ user });
+
+        if (res.ok && user) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
+    CredentialsProvider({
+      id: "otp",
+      name: "OTP",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        token: { label: "OTP", type: "text" },
+      },
+      async authorize(credentials) {
+        const { email, token } = credentials;
+        const res = await fetch(`${process.env.BASE_URL}/auth/otp/verify`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, token }),
+        });
+
+        const user = await res.json();
 
         if (res.ok && user) {
           return user;
@@ -51,6 +76,7 @@ export const authConfig = {
     },
     async session(session, token, user) {
       session.user = token;
+      console.log("session user: ", session.user);
       return session;
     },
   },

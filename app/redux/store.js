@@ -6,6 +6,7 @@ import messagesReducer from "./slices/messagesSlice";
 import teamsReducer from "./slices/teamsSlice";
 import rolesReducer from "./slices/rolesSlice";
 import templateMessagesReducer from "./slices/templateMessagesSlice";
+import otpReducer from "./slices/otpSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     messages: messagesReducer,
     roles: rolesReducer,
     templateMessages: templateMessagesReducer,
+    otp: otpReducer,
   },
 });
