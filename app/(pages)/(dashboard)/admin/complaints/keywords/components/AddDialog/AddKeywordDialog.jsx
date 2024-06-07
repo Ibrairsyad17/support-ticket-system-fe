@@ -17,10 +17,12 @@ import KeywordList from "../KeywordsList/KeywordList";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { addKeyword } from "@/app/redux/slices/keywordSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 export function AddKeywordDialog({ data, id }) {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const [name, setName] = React.useState("");
 
@@ -59,6 +61,11 @@ export function AddKeywordDialog({ data, id }) {
                     token: session?.token.data.token,
                   }),
                 );
+                toast({
+                  title: `Berhasil menambahkan kata kunci ${name}`,
+                  description: `Kata kunci ${name} berhasil ditambahkan`,
+                  variant: "success",
+                });
                 setName("");
               }}
               className="px-3"

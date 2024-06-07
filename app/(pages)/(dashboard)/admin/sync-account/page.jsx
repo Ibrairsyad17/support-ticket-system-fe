@@ -1,6 +1,7 @@
 import React from "react";
-import SyncAccountCard from "@/app/(pages)/(dashboard)/admin/sync-account/components/SyncAccountCard";
-import { socialMediaStats } from "@/app/(pages)/(dashboard)/components/Stats/SocialMediaStats";
+import InstagramCard from "@/app/(pages)/(dashboard)/admin/sync-account/components/InstagramCard";
+import TwitterCard from "@/app/(pages)/(dashboard)/admin/sync-account/components/TwitterCard";
+import WhatsAppCard from "@/app/(pages)/(dashboard)/admin/sync-account/components/WhatsappCard";
 
 const SyncAccountPage = () => {
   return (
@@ -19,7 +20,11 @@ const SyncAccountPage = () => {
               Helptix.
             </p>
           </header>
-          <SyncAccountCard listPlatform={socialMediaStats} />
+          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-5`}>
+            <InstagramCard />
+            <TwitterCard />
+            <WhatsAppCard />
+          </div>
         </div>
       </div>
     </>

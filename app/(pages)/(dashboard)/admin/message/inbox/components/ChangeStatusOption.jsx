@@ -16,10 +16,13 @@ import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckCircle2Icon } from "lucide-react";
 import { ClockIcon } from "@heroicons/react/24/outline";
+import { useToast } from "@/components/ui/use-toast";
 
 const ChangeStatusOption = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+
+  const { toast } = useToast();
 
   const selectedItems = useSelector(selectSelectedItems);
 
@@ -34,6 +37,11 @@ const ChangeStatusOption = () => {
       );
     });
     dispatch(fetchMessages(session?.token.data.token));
+    toast({
+      title: "Status Berhasil Diubah",
+      variant: "success",
+      description: "Status pesan berhasil diubah menjadi selesai",
+    });
   };
 
   const handleChangeStatusWaiting = () => {

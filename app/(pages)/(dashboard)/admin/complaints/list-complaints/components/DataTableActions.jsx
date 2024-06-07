@@ -16,10 +16,13 @@ import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { deleteMultipleComplaints } from "@/app/redux/slices/complaintsSlice";
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
 
 const DataTableActions = ({ id }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+
+  const { toast } = useToast();
 
   const handleDelete = (id) => {
     dispatch(
@@ -28,6 +31,11 @@ const DataTableActions = ({ id }) => {
         token: session?.token.data.token,
       }),
     );
+    toast({
+      title: "Berhasil Menghapus",
+      variant: "success",
+      description: "Berhasil menghapus data",
+    });
   };
   return (
     <div className="flex justify-end space-x-3">

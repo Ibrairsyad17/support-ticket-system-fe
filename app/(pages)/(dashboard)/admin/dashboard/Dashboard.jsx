@@ -12,7 +12,6 @@ import {
   ArrowUpCircleIcon,
   CheckCircleIcon,
   ClockIcon,
-  KeyIcon,
 } from "@heroicons/react/24/outline";
 import ComplaintsChartsAdmin from "@/app/(pages)/(dashboard)/admin/components/ComplaintsChartsAdmin";
 import RecentComplaints from "@/app/(pages)/(dashboard)/admin/components/RecentComplaints";
@@ -119,25 +118,16 @@ const Dashboard = () => {
           </header>
           {isLoading ? (
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2`}
+              className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
             >
-              <Skeleton className="rounded-xl bg-gray-100 h-24" />
               <Skeleton className="rounded-xl bg-gray-100 h-24" />
               <Skeleton className="rounded-xl bg-gray-100 h-24" />
               <Skeleton className="rounded-xl bg-gray-100 h-24" />
             </div>
           ) : (
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2`}
+              className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
             >
-              <StatsCard
-                value={keywords.length}
-                backgroundColor="bg-gradient-to-br from-rose-50 to-rose-200"
-                iconColor="text-rose-500"
-                icon={{ icon: KeyIcon }}
-                title="Jumlah Kata Kunci"
-                shadowColor="shadow-rose-300"
-              />
               <StatsCard
                 value={assignedComplaints.length}
                 backgroundColor="bg-gradient-to-br from-violet-50 to-violet-200"

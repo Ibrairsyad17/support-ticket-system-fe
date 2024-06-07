@@ -148,7 +148,7 @@ export const messagesSlice = createSlice({
         state.status = "succeeded";
         state.messages = action.payload;
         state.filteredMessages = action.payload;
-        state.filteredMessages = state.filteredMessages.sort(
+        state.filteredMessages = state.filteredMessages?.sort(
           (a, b) =>
             new Date(
               b.conversation_messages[

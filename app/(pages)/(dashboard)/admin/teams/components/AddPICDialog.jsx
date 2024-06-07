@@ -26,10 +26,12 @@ import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllRoles } from "@/app/redux/slices/rolesSlice";
 import { createPIC, getStatus } from "@/app/redux/slices/teamsSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const AddPicDialog = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  // const { toast } = useToast();
 
   // Selectors
   const picRoles = useSelector(selectAllRoles);
@@ -50,7 +52,6 @@ const AddPicDialog = () => {
       pic_role_id: role,
     };
     dispatch(createPIC({ data, token: session?.token.data.token }));
-    console.log(data);
   };
 
   return (

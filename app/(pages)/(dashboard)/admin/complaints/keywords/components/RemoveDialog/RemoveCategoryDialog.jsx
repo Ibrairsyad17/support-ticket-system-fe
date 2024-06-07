@@ -13,13 +13,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { deleteCategory } from "@/app/redux/slices/keywordSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 export function RemoveCategoryDialog({ id, title }) {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   return (
     <AlertDialog>
@@ -49,7 +50,10 @@ export function RemoveCategoryDialog({ id, title }) {
                     token: session?.token.data.token,
                   }),
                 );
-                toast.success("Kategori berhasil dihapus");
+                toast({
+                  title: `Berhasil menghapus kategori ${title}`,
+                  variant: "success",
+                });
               }}
             >
               Ya, hapus kategori

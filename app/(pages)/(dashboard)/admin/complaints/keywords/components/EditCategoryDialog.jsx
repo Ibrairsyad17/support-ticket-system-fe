@@ -21,7 +21,7 @@ const EditCategoryDialog = ({ id, title }) => {
   const { data: session } = useSession();
   const [name = title, setName] = React.useState("");
   const dispatch = useDispatch();
-  const toast = useToast();
+  const { toast } = useToast();
 
   return (
     <Dialog>
@@ -60,6 +60,10 @@ const EditCategoryDialog = ({ id, title }) => {
                     token: session?.token.data.token,
                   }),
                 );
+                toast({
+                  title: `Berhasil mengubah kategori ${title}`,
+                  variant: "success",
+                });
               }}
               className="px-3"
             >

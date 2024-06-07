@@ -13,13 +13,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { deleteKeyword } from "@/app/redux/slices/keywordSlice";
-import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
 
 const RemoveKeywordDialog = ({ type = "icon", id }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const { toast } = useToast();
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -61,7 +63,11 @@ const RemoveKeywordDialog = ({ type = "icon", id }) => {
                     token: session?.token.data.token,
                   }),
                 );
-                toast.success("Kata kunci berhasil dihapus");
+                toast({
+                  title: `Berhasil menghapus kata kunci`,
+                  description: `Kata kunci berhasil dihapus`,
+                  variant: "success",
+                });
               }}
             >
               Ya, hapus kata kunci

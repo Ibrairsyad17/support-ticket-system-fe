@@ -16,11 +16,14 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { createCategory } from "@/app/redux/slices/keywordSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 export function AddCategoryDialog() {
   const { data: session } = useSession();
   const [name, setName] = React.useState("");
   const dispatch = useDispatch();
+  const { toast } = useToast();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -61,6 +64,10 @@ export function AddCategoryDialog() {
                     token: session?.token.data.token,
                   }),
                 );
+                toast({
+                  title: "Kategori berhasil ditambahkan",
+                  variant: "success",
+                });
                 setName("");
               }}
             >
