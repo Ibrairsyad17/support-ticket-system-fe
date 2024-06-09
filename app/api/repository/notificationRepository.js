@@ -4,10 +4,11 @@ export const getAllNotifications = async (token) => {
   const query = `
     query Notifications {
         notifications(
-            take: 15
+            take: 5
+            orderBy: { updated_at: desc }
         ){
-            id
             action_by_accounts{
+                id
                 photo_profile
                 name
             }

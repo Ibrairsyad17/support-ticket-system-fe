@@ -16,7 +16,6 @@ import {
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
-import CommentInput from "@/app/(pages)/(dashboard)/components/Comment/CommentInput";
 import Link from "next/link";
 import SelectPIC from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
 
@@ -140,10 +139,7 @@ const DetailTicketSheet = ({ data }) => {
             <h3 className="font-semibold text-gray-900 pt-2 text-left">
               Komentar
             </h3>
-            <div className="flex flex-col space-y-2.5 lg:items-center">
-              <Comment />
-              <CommentInput />
-            </div>
+            <Comment id={data?.id} />
           </div>
         </SheetHeader>
       </SheetContent>

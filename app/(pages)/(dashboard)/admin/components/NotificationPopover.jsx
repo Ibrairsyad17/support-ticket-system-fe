@@ -9,22 +9,49 @@ import { BellIcon } from "@radix-ui/react-icons";
 import NotificationContents from "@/app/(pages)/(dashboard)/admin/components/NotificationContents";
 import { useSocket } from "@/app/SocketIOProvider";
 import { useSession } from "next-auth/react";
+import { getAllNotifications } from "@/app/api/repository/notificationRepository";
 
 const NotificationPopover = () => {
-  const socket = useSocket();
+  const { data: session } = useSession();
+  const sockets = useSocket();
+  const socket = sockets ? sockets.notifications : null;
   const [notifications, setNotifications] = React.useState([]);
-
-  React.useEffect(() => {
-    const savedNotifications = localStorage.getItem("notifications");
-    if (savedNotifications) {
-      setNotifications(JSON.parse(savedNotifications));
-    }
-  }, []);
 
   React.useEffect(() => {
     if (socket) {
       socket.on("NOTIFICATION", async (data) => {
-        let status = { ...data };
+        const restructuredData = {
+          action_by_accounts: {
+            id: data.action_by_id,
+            name: data.action_by_name,
+            photo_profile: data.action_by_photo,
+          },
+          action_message: data.action_message,
+          action_type: data.action_type,
+          recipient: data.recipient_id,
+          recipient_accounts: {
+            name: data.recipient_name,
+          },
+          updated_at: data.sent_time,
+        };
+        setNotifications((prevNotifications) => {
+          return [restructuredData, ...prevNotifications];
+        });
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("NOTIFICATION");
+      }
+    };
+  }, [socket]);
+
+  const fetchNotifications = async () => {
+    const res = await getAllNotifications(session?.token.data.token);
+    if (res) {
+      const notificate = res.data.data.notifications.map((notification) => {
+        let status = { ...notification };
         status.action_message = status.action_message.replace(
           "IN_PROGRESS",
           "Dikerjakan",
@@ -44,27 +71,22 @@ const NotificationPopover = () => {
 
         let name = { ...status };
         name.action_message = name.action_message.replace(
-          status.action_by_id,
-          status.action_by_name,
+          status.action_by_accounts.id,
+          status.action_by_accounts.name,
         );
 
-        setNotifications((prevNotifications) => {
-          const newNotifications = [name, ...prevNotifications];
-          localStorage.setItem(
-            "notifications",
-            JSON.stringify(newNotifications),
-          );
-          return newNotifications;
-        });
+        return name;
       });
-    }
 
-    return () => {
-      if (socket) {
-        socket.off("NOTIFICATION");
-      }
-    };
-  }, [socket]);
+      setNotifications(notificate);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      fetchNotifications();
+    }
+  }, [session?.token.data.token]);
 
   return (
     <Popover>

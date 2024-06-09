@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import StoreProvider from "@/app/redux/StoreProvider";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "@/components/ui/toaster";
+import SocketIOProvider from "@/app/SocketIOProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,9 +17,11 @@ export default function RootLayout({ children, session }) {
       <body className={inter.className}>
         <SessionProvider session={session}>
           <StoreProvider>
-            <SidebarPIC />
-            {children}
-            <Toaster />
+            <SocketIOProvider>
+              <SidebarPIC />
+              {children}
+              <Toaster />
+            </SocketIOProvider>
           </StoreProvider>
         </SessionProvider>
       </body>

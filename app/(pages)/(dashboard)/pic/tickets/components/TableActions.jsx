@@ -16,7 +16,6 @@ import {
 } from "@/app/(pages)/(dashboard)/components/data/data";
 import Selects from "@/app/(pages)/(dashboard)/components/Selects";
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
-import CommentInput from "@/app/(pages)/(dashboard)/components/Comment/CommentInput";
 import Link from "next/link";
 
 const TableActions = ({ data }) => {
@@ -27,7 +26,7 @@ const TableActions = ({ data }) => {
           <EyeOpenIcon className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-lg overflow-y-scroll">
+      <SheetContent className="sm:max-w-3xl overflow-y-scroll">
         <SheetHeader>
           <SheetTitle>Tiket {data.ticket_id}</SheetTitle>
           <div className="flex flex-col space-y-3.5 text-sm">
@@ -151,7 +150,6 @@ const TableActions = ({ data }) => {
             </h3>
             <div className="flex flex-col space-y-2.5 lg:items-center">
               <Comment />
-              <CommentInput />
             </div>
           </div>
         </SheetHeader>

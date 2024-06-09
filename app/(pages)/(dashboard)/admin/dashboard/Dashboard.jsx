@@ -61,7 +61,6 @@ const Dashboard = () => {
       if (status === "IN_PROGRESS") setOnGoingComplaints(data);
       if (status === "ASSIGNED") setAssignedComplaints(data);
       if (status === "CHECKED") setCheckedComplaints(data);
-
       setIsLoading(false);
     }
   };
