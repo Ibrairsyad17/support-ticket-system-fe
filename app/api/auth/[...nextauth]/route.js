@@ -9,7 +9,6 @@ export const authConfig = {
       name: "Google",
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorizationUrl: `${process.env.BASE_URL}/auth/google`,
     }),
     CredentialsProvider({
       id: "credentials",
@@ -72,11 +71,11 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
+      console.log("jwt token: ", token);
       return { ...token, ...user };
     },
     async session(session, token, user) {
       session.user = token;
-      console.log("session user: ", session.user);
       return session;
     },
   },

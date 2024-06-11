@@ -40,17 +40,17 @@ const RecentComplaints = ({ data }) => {
 
             <div className="ml-4">
               <Link
-                href={`/chats/${item.id}`}
-                className="text-sm font-medium leading-none hover:underline"
+                href={`/chats/${item.conversation_messages.conversations.id}`}
+                className="text-xs font-medium leading-none hover:underline"
               >
                 {item.assignment_name}
               </Link>
-              <p className="text-sm text-muted-foreground block overflow-hidden w-48 text-ellipsis truncate">
+              <p className="text-xs text-muted-foreground block overflow-hidden w-48 text-ellipsis truncate">
                 {item.assignment_detail}
               </p>
             </div>
-            <div className="ml-auto font-medium text-sm text-green-500">
-              <TimeAgo date={formattedTime} formatter={formatter} />
+            <div className="ml-auto font-medium text-xs text-green-500">
+              <TimeAgo date={formattedTime} />
             </div>
           </div>
         );

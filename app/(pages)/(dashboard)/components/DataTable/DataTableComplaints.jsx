@@ -208,7 +208,10 @@ const DataTableComplaints = ({ data, refresh }) => {
                     />
                   </div>
                   <div className="col-span-1">
-                    <DataTableActions id={complaint.id} />
+                    <DataTableActions
+                      id={complaint.id}
+                      chatID={complaint.conversation_messages.conversations.id}
+                    />
                   </div>
                 </li>
               );

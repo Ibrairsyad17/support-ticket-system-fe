@@ -35,7 +35,7 @@ const AddTemplateMessages = ({ messages }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button size="icon" variant="ghost">
-          <PlusCircledIcon className="h-4 w-4 text-violet-600" />
+          <PlusCircledIcon className="h-6 w-6 text-violet-600" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

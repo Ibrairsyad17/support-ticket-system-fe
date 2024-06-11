@@ -82,7 +82,7 @@ const NavbarSidebar = ({ listLink }) => {
               className={`text-sm font-semibold text-gray-800 truncate`}
               aria-current="page"
             >
-              Dashboard
+              {listLink.find((item) => pathname.startsWith(item.href))?.title}
             </li>
           </ol>
         </div>

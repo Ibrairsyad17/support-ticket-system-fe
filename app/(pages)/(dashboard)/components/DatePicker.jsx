@@ -13,6 +13,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useDispatch } from "react-redux";
+import { setDateRange } from "@/app/redux/slices/complaintsSlice";
 
 export function DatePickerWithRange({ className }) {
   let initialState;
@@ -29,6 +31,14 @@ export function DatePickerWithRange({ className }) {
   }
 
   const [date, setDate] = React.useState(initialState);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (date?.from && date?.to) {
+      dispatch(setDateRange({ startDate: date.from, endDate: date.to }));
+    }
+  }, [date, dispatch]);
 
   return (
     <div className={cn("grid gap-2", className)}>

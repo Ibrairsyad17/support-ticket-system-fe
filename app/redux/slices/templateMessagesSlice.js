@@ -9,6 +9,7 @@ const initialState = {
   templateMessages: [],
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
   loading: true,
+  selectedTemplateMessage: null,
 };
 
 // Fetch template messages
@@ -52,7 +53,11 @@ export const removeTemplateMessage = createAsyncThunk(
 export const templateMessagesSlice = createSlice({
   name: "templateMessages",
   initialState,
-  reducers: {},
+  reducers: {
+    selectTemplateMessage: (state, action) => {
+      state.selectedTemplateMessage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -106,5 +111,7 @@ export const templateMessagesSlice = createSlice({
 export const selectAllTemplateMessages = (state) =>
   state.templateMessages.templateMessages;
 export const getStatus = (state) => state.templateMessages.status;
+
+export const { selectTemplateMessage } = templateMessagesSlice.actions;
 
 export default templateMessagesSlice.reducer;

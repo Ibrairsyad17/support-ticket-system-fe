@@ -6,11 +6,16 @@ export const getAllComplaints = async (token) => {
   await delay();
   const query = `
    query Assignments {
-    assignments {
+    assignments(
+        orderBy: {
+            assignment_date: desc
+        }
+    ) {
         id
         assignment_name
         assignment_date
         assignment_detail
+        status
         conversation_messages {
             message
             convo_message_category {
@@ -22,6 +27,7 @@ export const getAllComplaints = async (token) => {
                 }
             }
             conversations {
+                id
                 social_media {
                     platform
                 }

@@ -9,6 +9,10 @@ const initialState = {
   filteredComplaintsByDate: [],
   selectedItems: [],
   searchedItems: [],
+  dateRange: {
+    startDate: new Date(),
+    endDate: new Date(),
+  },
   currentPage: 1,
   itemsPerPage: 10,
   status: "idle", // loading, succeeded, failed
@@ -164,6 +168,18 @@ const complaintsSlice = createSlice({
     setItemsPerPage: (state, action) => {
       state.itemsPerPage = action.payload;
     },
+    setDateRange: (state, action) => {
+      state.dateRange = action.payload;
+      console.log("setDateRange", action.payload);
+      const { startDate, endDate } = state.dateRange;
+      state.filteredComplaintsByDate = state.complaints.filter((complaint) => {
+        const complaintDate = new Date(complaint.assignment_date);
+        return (
+          complaintDate >= new Date(startDate) &&
+          complaintDate <= new Date(endDate)
+        );
+      });
+    },
   },
   extraReducers(builder) {
     builder
@@ -224,6 +240,7 @@ export const {
   searchItems,
   selectAllItems,
   setCurrentPage,
+  setDateRange,
 } = complaintsSlice.actions;
 
 // Reducer

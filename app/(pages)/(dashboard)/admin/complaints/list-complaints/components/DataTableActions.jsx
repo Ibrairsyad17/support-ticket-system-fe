@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 
-const DataTableActions = ({ id }) => {
+const DataTableActions = ({ id, chatID }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const DataTableActions = ({ id }) => {
   return (
     <div className="flex justify-end space-x-3">
       <Button asChild variant="ghost" size="icon">
-        <Link href={`/chats/${id}`}>
+        <Link href={`/chats/${chatID}`}>
           <EyeOpenIcon className="h-5 w-5" />
         </Link>
       </Button>

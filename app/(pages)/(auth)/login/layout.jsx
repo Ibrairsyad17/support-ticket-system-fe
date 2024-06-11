@@ -9,8 +9,8 @@ import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
-  title: "Log in | Helpmate",
-  description: "Log in dengan akun email untuk mengakses Helpmate",
+  title: "Log in | Helptix",
+  description: "Log in dengan akun email untuk mengakses Helptix",
 };
 
 export default function RootLayout({ children }) {
@@ -21,10 +21,10 @@ export default function RootLayout({ children }) {
           <main>
             <Navbar></Navbar>
             <div className="container relative flex-col items-start justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-              <div className="relative h-screen bg-gray-100 hidden flex-col px-28 pt-10 lg:flex ">
+              <div className="relative hidden flex-col px-20 pt-7 lg:flex ">
                 <h1
                   style={{ lineHeight: 1.4 }}
-                  className="max-w-xl mb-4 text-4xl tracking-wide font-bold md:text-4xl"
+                  className="max-w-2xl mb-4 text-4xl tracking-wide font-bold md:text-3xl"
                 >
                   Penyelesaian Nyata{" "}
                   <Badge className="lg:rounded-xl lg:px-4 lg:py-2 bg-emerald-50 shadow-none hover:bg-emerald-50">
@@ -42,9 +42,9 @@ export default function RootLayout({ children }) {
                   <Image
                     width={0}
                     height={0}
-                    sizes="100vw"
+                    sizes="75vw"
                     priority
-                    style={{ width: "100%", height: "auto" }}
+                    style={{ width: "80%", height: "auto" }}
                     src="/assets/img/lp-1.svg"
                     className="mx-auto my-5"
                     alt="mockup"

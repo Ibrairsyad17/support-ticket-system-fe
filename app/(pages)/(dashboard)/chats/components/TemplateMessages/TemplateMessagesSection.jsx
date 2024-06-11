@@ -9,13 +9,14 @@ import {
   fetchTemplateMessages,
   getStatus,
   selectAllTemplateMessages,
+  selectTemplateMessage,
 } from "@/app/redux/slices/templateMessagesSlice";
 
 const TemplateMessagesSection = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
-  const selectTemplateMessage = useSelector(selectAllTemplateMessages);
+  const templateMessage = useSelector(selectAllTemplateMessages);
   const getStatusInfo = useSelector(getStatus);
 
   React.useEffect(() => {
@@ -27,34 +28,31 @@ const TemplateMessagesSection = () => {
   }, [session, getStatusInfo, dispatch]);
 
   return (
-    <div className="flex justify-between items-center px-4">
-      <div>
-        <RadioGroup
-          defaultValue="comfortable"
-          className="flex w-[93%] overflow-x-scroll"
-        >
-          {selectTemplateMessage.map((item) => (
-            <div
-              key={item.id}
-              className="flex flex-shrink-0 items-center space-x-2"
+    <div className="flex justify-between items-center px-4 relative bottom-0 left-0">
+      <div className="flex space-x-3 w-[93%] overflow-x-scroll py-1">
+        {templateMessage.map((template) => (
+          <div key={template.id} className="space-x-3 flex-shrink-0">
+            <input
+              type="radio"
+              id={template.id}
+              name="template"
+              value={template.id}
+              onChange={() => {
+                dispatch(selectTemplateMessage(template.message));
+              }}
+              className="sr-only checkbox"
+            />
+            <label
+              htmlFor={template.id}
+              className="checkbox-label px-4 py-1 text-sm border rounded-full"
             >
-              <RadioGroupItem
-                className="hidden w-full"
-                value={item.id}
-                id={`r${item.id}`}
-              />
-              <Label
-                className="cursor-pointer px-3 py-1 rounded-full text-xs border border-gray-300 "
-                htmlFor={`r${item.id}`}
-              >
-                {item.message}
-              </Label>
-            </div>
-          ))}
-        </RadioGroup>
+              {template.message}
+            </label>
+          </div>
+        ))}
       </div>
 
-      <AddTemplateMessages messages={selectTemplateMessage} />
+      <AddTemplateMessages messages={templateMessage} />
     </div>
   );
 };

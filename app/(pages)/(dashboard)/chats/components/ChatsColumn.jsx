@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 const ChatsColumn = () => {
   return (
-    <ul className="space-y-5 w-full px-5 py-4 h-[35rem] mb-5 overflow-y-scroll">
+    <ul className="space-y-5 w-full px-5 py-4 h-[35rem] overflow-y-scroll">
       <li className="flex gap-x-2 sm:gap-x-4">
         <div className="bg-white border border-gray-200 rounded-2xl p-4 space-y-3">
           <div className="space-y-1.5">

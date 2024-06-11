@@ -140,7 +140,7 @@ const TicketDetails = ({ ticket }) => {
                 File:
               </p>
               <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2">
-                {/*<Link href={ticket?.assignment_file ?? "/"}>File Lampiran</Link>*/}
+                <Link href={ticket?.assignment_file ?? "/"}>File Lampiran</Link>
               </span>
             </div>
 
@@ -149,7 +149,6 @@ const TicketDetails = ({ ticket }) => {
             </h3>
             <div className="flex flex-col space-y-2.5 lg:items-center">
               <Comment />
-              <CommentInput />
             </div>
           </div>
         </SheetHeader>

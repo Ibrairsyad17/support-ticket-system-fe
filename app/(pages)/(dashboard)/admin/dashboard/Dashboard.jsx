@@ -30,71 +30,53 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 import LatestComplaintsSkeleton from "@/app/(pages)/(dashboard)/admin/components/LatestComplaintsSkeleton";
 import NotificationPopover from "@/app/(pages)/(dashboard)/admin/components/NotificationPopover";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchComplaints,
+  getStatus,
+  Loading,
+  selectFilteredComplaintsByDate,
+} from "@/app/redux/slices/complaintsSlice";
 
 const Dashboard = () => {
   const { data: session } = useSession();
-  const [doneComplaints, setDoneComplaints] = React.useState([]);
-  const [onGoingComplaints, setOnGoingComplaints] = React.useState([]);
-  const [assignedComplaints, setAssignedComplaints] = React.useState([]);
-  const [checkedComplaints, setCheckedComplaints] = React.useState([]);
-  const [latestComplaints, setLatestComplaints] = React.useState([]);
-  const [latestComplaintsByDate, setLatestComplaintsByDate] = React.useState(
-    [],
-  );
   const [keywords, setKeywords] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const fetchAllKeywords = async () => {
     const res = await getKeywords(session?.token.data.token);
     if (res) {
       const data = res.data.data.keywords;
       setKeywords(data);
-      setIsLoading(false);
     }
   };
 
-  const fetchComplaintsByStatus = async (status) => {
-    const res = await getComplaintsByStatus(session?.token.data.token, status);
-    if (res) {
-      const data = res.data.data.assignments;
-      if (status === "DONE") setDoneComplaints(data);
-      if (status === "IN_PROGRESS") setOnGoingComplaints(data);
-      if (status === "ASSIGNED") setAssignedComplaints(data);
-      if (status === "CHECKED") setCheckedComplaints(data);
-      setIsLoading(false);
-    }
-  };
+  const complaints = useSelector(selectFilteredComplaintsByDate);
+  const getStatusInfo = useSelector(getStatus);
+  const getLoadingInfo = useSelector(Loading);
 
-  const fetchLatestComplaints = async () => {
-    const res = await getComplaintsByPlatform(session?.token.data.token);
-    if (res) {
-      const data = res.data.data.assignments;
-      setLatestComplaints(data);
-      setIsLoading(false);
-    }
-  };
-
-  const fetchComplaintsByDate = async () => {
-    const res = await getLatestComplaintsByDate(session?.token.data.token, 10);
-    if (res) {
-      const data = res.data.data.assignments;
-      setLatestComplaintsByDate(data);
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    setIsLoading(true);
     if (session?.token.data.token) {
+      if (getStatusInfo === "idle") {
+        dispatch(fetchComplaints(session?.token.data.token));
+      }
       fetchAllKeywords();
-      fetchComplaintsByStatus("DONE");
-      fetchComplaintsByStatus("IN_PROGRESS");
-      fetchComplaintsByStatus("ASSIGNED");
-      fetchComplaintsByStatus("CHECKED");
-      fetchComplaintsByDate();
-      fetchLatestComplaints();
     }
-  }, [session?.token.data.token]);
+  }, [session?.token.data.token, dispatch, getStatusInfo]);
+
+  const assignedComplaints = complaints.filter(
+    (complaint) => complaint.status === "ASSIGNED",
+  );
+  const inProgressComplaints = complaints.filter(
+    (complaint) => complaint.status === "IN_PROGRESS",
+  );
+  const doneComplaints = complaints.filter(
+    (complaint) => complaint.status === "DONE",
+  );
+  const checkedComplaints = complaints.filter(
+    (complaint) => complaint.status === "CHECKED",
+  );
 
   return (
     <>
@@ -110,12 +92,12 @@ const Dashboard = () => {
                 Dashboard
               </h1>
               <div className="flex space-x-3 lg:justify-self-end">
-                <DatePickerWithRange className="" />
+                <DatePickerWithRange />
                 <NotificationPopover />
               </div>
             </div>
           </header>
-          {isLoading ? (
+          {getLoadingInfo ? (
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
             >
@@ -136,7 +118,7 @@ const Dashboard = () => {
                 shadowColor="shadow-violet-300"
               />
               <StatsCard
-                value={onGoingComplaints.length}
+                value={inProgressComplaints.length}
                 backgroundColor="bg-gradient-to-br from-yellow-50 to-yellow-200"
                 iconColor="text-amber-500"
                 icon={{ icon: ClockIcon }}
@@ -162,17 +144,16 @@ const Dashboard = () => {
             <CardHeader>
               <CardTitle className="text-xl">Data Keluhan</CardTitle>
             </CardHeader>
-            {isLoading ? (
+            {getLoadingInfo ? (
               <div className="flex flex-col space-y-4 w-8/12 mx-auto items-center pt-20">
                 <Loader2 className="animate-spin w-10 h-10 text-gray-600 font-thin" />
                 <p className="text-gray-400 font-normal">Memuat Data</p>
               </div>
             ) : (
-              <ComplaintsChartsAdmin data={latestComplaintsByDate} />
+              <ComplaintsChartsAdmin data={complaints} />
             )}
           </Card>
-
-          {/* Keluhan Terbaru */}
+          {/*Keluhan Terbaru*/}
           <Card className="col-span-3 border-0 shadow-md shadow-gray-100">
             <CardHeader>
               <CardTitle className="text-xl">Keluhan Terbaru</CardTitle>
@@ -181,10 +162,10 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {isLoading ? (
+              {getLoadingInfo ? (
                 <LatestComplaintsSkeleton />
               ) : (
-                <RecentComplaints data={latestComplaints} />
+                <RecentComplaints data={complaints} />
               )}
             </CardContent>
           </Card>
@@ -198,7 +179,7 @@ const Dashboard = () => {
               <CardTitle className="text-xl">Kata Kunci Terbanyak</CardTitle>
             </CardHeader>
             <CardContent className="pl-2 -mt-4">
-              {isLoading ? (
+              {getLoadingInfo ? (
                 <div className="flex flex-col space-y-4">
                   <div className="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
                     <Skeleton className="h-3.5 w-32 bg-gray-100 rounded-full" />
@@ -228,7 +209,7 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {isLoading ? (
+              {getLoadingInfo ? (
                 <div
                   className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
                 >
@@ -242,7 +223,7 @@ const Dashboard = () => {
                 >
                   <StatsCard
                     value={
-                      latestComplaints.filter(
+                      complaints.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "INSTAGRAM",
@@ -257,7 +238,7 @@ const Dashboard = () => {
                   />
                   <StatsCard
                     value={
-                      latestComplaints.filter(
+                      complaints.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "TWITTER",
@@ -272,7 +253,7 @@ const Dashboard = () => {
                   />
                   <StatsCard
                     value={
-                      latestComplaints.filter(
+                      complaints.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "WHATSAPP",
@@ -301,7 +282,7 @@ const Dashboard = () => {
               List tiket yang telah dibuat.
             </p>
           </div>
-          {isLoading ? (
+          {getLoadingInfo ? (
             <div className={`grid lg:grid-cols-3 col-span-4 gap-3`}>
               <Skeleton className="rounded-xl bg-gray-200 h-24" />
               <Skeleton className="rounded-xl bg-gray-200 h-24" />
@@ -318,7 +299,7 @@ const Dashboard = () => {
                 shadowColor="shadow-gray-200"
               />
               <StatsCard
-                value={onGoingComplaints.length}
+                value={inProgressComplaints.length}
                 backgroundColor="bg-white"
                 iconColor="text-gray-900"
                 icon={{ icon: ClockIcon }}

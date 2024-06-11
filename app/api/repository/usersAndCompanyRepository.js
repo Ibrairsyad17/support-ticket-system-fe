@@ -2,6 +2,7 @@ import {
   PROVIDER_GET,
   PROVIDER_GET_GQL,
   PROVIDER_PATCH,
+  PROVIDER_POST,
   PROVIDER_POST_FORM_DATA,
 } from "@/app/api/provider";
 
@@ -122,5 +123,10 @@ export const changePassword = async (data, token) => {
 
 export const userLogout = async (token) => {
   const response = await PROVIDER_GET("auth/logout", token);
+  return response;
+};
+
+export const sendRequestDemo = async (data) => {
+  const response = await PROVIDER_POST("", "demo", data);
   return response;
 };

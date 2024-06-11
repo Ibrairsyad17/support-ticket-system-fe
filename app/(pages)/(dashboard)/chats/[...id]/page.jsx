@@ -35,8 +35,8 @@ const ChatsPage = ({ params: { id } }) => {
   }, [session?.token.data.token]);
 
   return (
-    <div className="grid lg:grid-cols-6 h-full">
-      <div className="lg:col-span-4 border-r flex flex-col justify-between items-center">
+    <div className="grid lg:grid-cols-6 absolute bottom-0 top-0 left-0 right-0">
+      <div className="lg:col-span-4 border-r flex flex-col space-y-2 items-center">
         <Header data={customer[0] ?? []} />
         <ChatsColumn />
         <InputMessageSection />

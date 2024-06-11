@@ -32,7 +32,7 @@ const TeamsDataStats = () => {
 
   return (
     <div className="grid grid-cols-1 gap-y-5">
-      <div className="grid lg:grid-cols-4 gap-x-5">
+      <div className="grid lg:grid-cols-3 gap-5">
         {category.map((category, index) => (
           <TeamDataCharts data={tickets} title={category} key={index} />
         ))}
