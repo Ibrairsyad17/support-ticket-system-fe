@@ -3,7 +3,7 @@
 import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
-import DateRange from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ import { setDateRangePIC } from "@/app/redux/slices/ticketsSlice";
 
 export function DatePickerWithRange({ className }) {
   let initialState;
-  if (typeof DateRange !== "undefined") {
+  if (typeof DayPicker !== "undefined") {
     initialState = {
       from: new Date(2024, 0, 30),
       to: addDays(new Date(2024, 0, 20), 20),

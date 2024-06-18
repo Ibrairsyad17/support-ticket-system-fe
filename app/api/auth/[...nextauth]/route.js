@@ -71,7 +71,6 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      console.log("jwt token: ", token);
       return { ...token, ...user };
     },
     async session(session, token, user) {

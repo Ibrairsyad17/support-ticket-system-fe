@@ -10,18 +10,22 @@ export const PROVIDER_GET = async (url, token) => {
   try {
     const response = await axios.get(`${BASE_URL}/${url}`, { headers });
 
+    console.log(response);
+
     switch (response.status) {
       case 200:
         return response;
       case 201:
         return response;
+      case 401:
+        return response.status;
       case 403:
-        throw new Error("forbidden");
+        return new Error("forbidden");
       default:
-        throw new Error("error");
+        return new Error("error");
     }
   } catch (err) {
-    throw err;
+    return err.response.status;
   }
 };
 
