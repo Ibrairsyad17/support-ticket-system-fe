@@ -14,20 +14,20 @@ const WhatsAppCard = () => {
         >
           <WhatsApp className={`w-5 h-5 flex-shrink-0 size-3`} />
         </div>
-        <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
+        <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-normal bg-teal-100 text-teal-800 rounded-full">
           <CheckCircleIcon className="flex-shrink-0 size-3 w-4 h-4" />
           Terhubung
         </span>
       </div>
-      <h3 className="font-semibold leading-none tracking-tight text-md mt-2.5">
+      <h3 className="font-semibold leading-none tracking-tight text-sm mt-2.5">
         WhatsApp
       </h3>
-      <p className=" leading-none tracking-tight font-medium text-gray-400 text-sm">
+      <p className=" leading-none tracking-tight font-medium text-gray-400 text-xs">
         Hubungkan dengan akun WhatsApp
       </p>
-      <Button asChild>
+      <Button asChild className="text-xs" size="sm">
         <Link href={`/sync-account/whatsapp`}>
-          <Link1Icon className="mr-2 h-4 w-4" /> Hubungkan WhatsApp
+          <Link1Icon className="mr-2 h-3 w-3" /> Hubungkan WhatsApp
         </Link>
       </Button>
     </div>

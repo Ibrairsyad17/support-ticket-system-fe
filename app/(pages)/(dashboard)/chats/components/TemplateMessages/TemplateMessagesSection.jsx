@@ -11,6 +11,13 @@ import {
   selectAllTemplateMessages,
   selectTemplateMessage,
 } from "@/app/redux/slices/templateMessagesSlice";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const TemplateMessagesSection = () => {
   const { data: session } = useSession();
@@ -28,29 +35,44 @@ const TemplateMessagesSection = () => {
   }, [session, getStatusInfo, dispatch]);
 
   return (
-    <div className="flex justify-between items-center px-4 relative bottom-0 left-0">
-      <div className="flex space-x-3 w-[93%] overflow-x-scroll py-1">
-        {templateMessage.map((template) => (
-          <div key={template.id} className="space-x-3 flex-shrink-0">
-            <input
-              type="radio"
-              id={template.id}
-              name="template"
-              value={template.id}
-              onChange={() => {
-                dispatch(selectTemplateMessage(template.message));
-              }}
-              className="sr-only checkbox"
-            />
-            <label
-              htmlFor={template.id}
-              className="checkbox-label px-4 py-1 text-sm border rounded-full"
+    <div className="flex justify-between items-center pb-3 px-4 relative bottom-0 left-0">
+      <Carousel
+        opts={{
+          align: "start",
+        }}
+        className="w-full max-w-[87%]"
+      >
+        <CarouselContent>
+          {templateMessage.map((message, index) => (
+            <CarouselItem
+              key={message.id}
+              className="flex-shrink-0 flex items-center"
             >
-              {template.message}
-            </label>
-          </div>
-        ))}
-      </div>
+              <div className="p-1">
+                <div className="">
+                  <input
+                    type="radio"
+                    id={message.id}
+                    name="message"
+                    value={message.id}
+                    onChange={() => {
+                      dispatch(selectTemplateMessage(message.message));
+                    }}
+                    className="sr-only checkbox"
+                  />
+                  <label
+                    htmlFor={message.id}
+                    className="checkbox-label px-4 py-1 text-sm border rounded-full"
+                  >
+                    {message.message}
+                  </label>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselNext />
+      </Carousel>
 
       <AddTemplateMessages messages={templateMessage} />
     </div>

@@ -130,3 +130,23 @@ export const sendRequestDemo = async (data) => {
   const response = await PROVIDER_POST("", "demo", data);
   return response;
 };
+
+export const getSyncAccounts = async (token) => {
+  const query = `
+  query SyncAccounts{
+    social_media(
+        where: {
+            status: {
+                equals: "CONNECTED"
+            }
+        }
+    ){
+        id
+        name
+        platform
+        status
+    }
+}`;
+  const response = await PROVIDER_GET_GQL(token, query);
+  return response;
+};

@@ -17,7 +17,7 @@ import {
 } from "@/app/(pages)/(dashboard)/components/data/data";
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
 import Link from "next/link";
-import SelectPIC from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
+import SelectPic from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
 
 const DetailTicketSheet = ({ data }) => {
   return (
@@ -102,10 +102,11 @@ const DetailTicketSheet = ({ data }) => {
                 Ditugaskan Ke:
               </p>
               <div className="col-span-2">
-                <SelectPIC
-                  name={data?.accounts.name}
+                <SelectPic
                   image={data?.accounts.photo_profile}
+                  name={data?.accounts.name}
                   id={data?.id}
+                  conversation={data?.assignment_conversations.id}
                 />
               </div>
             </div>
@@ -133,13 +134,17 @@ const DetailTicketSheet = ({ data }) => {
                 File:
               </p>
               <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2">
-                <Link href={data?.assignment_file}>File Lampiran</Link>
+                {/*<Link href={data?.assignment_file}>File Lampiran</Link>*/}
               </span>
             </div>
             <h3 className="font-semibold text-gray-900 pt-2 text-left">
               Komentar
             </h3>
-            <Comment id={data?.id} />
+            <Comment
+              id={data?.id}
+              pic={data?.accounts.id}
+              admin={data?.assignment_conversations.admin_id}
+            />
           </div>
         </SheetHeader>
       </SheetContent>

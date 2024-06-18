@@ -101,21 +101,14 @@ const TableActions = ({ data }) => {
               <div className="flex space-x-2 items-center">
                 <Avatar className="h-4 w-4">
                   <AvatarImage
-                    src={
-                      data?.conversation_messages.conversations.accounts
-                        .photo_profile
-                    }
-                    alt={
-                      data?.conversation_messages.conversations.accounts.name
-                    }
+                    src={data?.accounts.photo_profile}
+                    alt={data?.accounts.name}
                   />
                   <AvatarFallback className="bg-gray-200 text-gray-400">
                     U
                   </AvatarFallback>
                 </Avatar>
-                <span>
-                  {data?.conversation_messages.conversations.accounts.name}
-                </span>
+                <span>{data?.accounts.name}</span>
               </div>
             </div>
             <div className="grid lg:grid-cols-4 justify-between items-center py-1.5 border-b">
@@ -141,15 +134,17 @@ const TableActions = ({ data }) => {
               <p className="text-gray-600 col-span-2 text-left inline-block mr-2">
                 File:
               </p>
-              <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2">
-                <Link href={data?.assignment_file}>File Lampiran</Link>
-              </span>
+              <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2"></span>
             </div>
             <h3 className="font-semibold text-gray-900 pt-2 text-left">
               Komentar
             </h3>
             <div className="flex flex-col space-y-2.5 lg:items-center">
-              <Comment />
+              <Comment
+                id={data?.id}
+                pic={data?.accounts.id}
+                admin={data?.assignment_conversations.admin_id}
+              />
             </div>
           </div>
         </SheetHeader>

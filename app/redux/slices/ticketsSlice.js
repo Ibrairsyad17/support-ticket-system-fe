@@ -17,6 +17,10 @@ const initialState = {
   selectedItems: [],
   searchedItems: [],
   searchedItemsPic: [],
+  setDateRange: {
+    startDate: new Date(),
+    endDate: new Date(),
+  },
   currentPage: 1,
   itemsPerPage: 10,
   status: "idle",
@@ -96,7 +100,7 @@ export const deleteMultipleTickets = createAsyncThunk(
 
 export const updatePICTickets = createAsyncThunk(
   "tickets/updatePICTickets",
-  async ({ id, token, pic }) => {
+  async ({ id, token, pic, cid }) => {
     const axiosInstance = axios.create({
       baseURL: BASE_URL,
       headers: {
@@ -108,7 +112,11 @@ export const updatePICTickets = createAsyncThunk(
       recipient: pic,
     });
 
-    if (response.status === 200) {
+    const responsePIC = await axiosInstance.patch(`/assignment-convo/${cid}`, {
+      pic_id: pic,
+    });
+
+    if (response.status === 200 && responsePIC.status === 200) {
       const getTicketUpdated = await getPICById(token, pic);
       const updatedTicket = getTicketUpdated.data.data.accounts[0];
       return { ...updatedTicket, ticket_id: response.data.data.id };
@@ -254,6 +262,18 @@ const ticketsSlice = createSlice({
     // Set current page
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
+    },
+
+    // Set Date Rage
+    setDateRangePIC: (state, action) => {
+      state.setDateRange = action.payload;
+      state.filteredTicketsPic = state.ticketsPic.filter((ticket) => {
+        const ticketDate = new Date(ticket.assignment_date);
+        return (
+          ticketDate >= new Date(state.setDateRange.startDate) &&
+          ticketDate <= new Date(state.setDateRange.endDate)
+        );
+      });
     },
   },
   extraReducers(builder) {
@@ -466,6 +486,7 @@ export const {
   setCurrentPage,
   searchItemsPic,
   selectAllPicTickets,
+  setDateRangePIC,
 } = ticketsSlice.actions;
 
 // Reducer

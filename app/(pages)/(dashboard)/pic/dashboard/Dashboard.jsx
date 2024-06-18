@@ -23,6 +23,12 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchTicketsPic,
+  getStatus,
+  selectFilteredTicketsPic,
+} from "@/app/redux/slices/ticketsSlice";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -43,6 +49,10 @@ const Dashboard = () => {
     updated_at: "",
     deleted_at: "",
   });
+  const dispatch = useDispatch();
+
+  const selectTickets = useSelector(selectFilteredTicketsPic);
+  const getStatusInfo = useSelector(getStatus);
 
   const fetchUserInfo = async () => {
     const res = await getUserInfo(session?.token.data.token);
@@ -68,11 +78,17 @@ const Dashboard = () => {
   }, [session?.token.data.token]);
 
   React.useEffect(() => {
-    setIsLoading(true);
-    if (session?.token.data.token) {
-      fetchTicketsByPIC(userInfo.id);
+    if (session?.token.data.token && userInfo.id) {
+      if (getStatusInfo === "idle") {
+        dispatch(
+          fetchTicketsPic({
+            token: session?.token.data.token,
+            id: userInfo.id,
+          }),
+        );
+      }
     }
-  }, [userInfo.id]);
+  }, [session?.token.data.token, userInfo.id, dispatch]);
 
   return (
     <>
@@ -108,7 +124,7 @@ const Dashboard = () => {
                 <p className="text-gray-400 font-normal">Memuat Data</p>
               </div>
             ) : (
-              <ComplaintsChartsPIC data={tickets} />
+              <ComplaintsChartsPIC data={selectTickets} />
             )}
           </Card>
 
@@ -124,7 +140,7 @@ const Dashboard = () => {
               {isLoading ? (
                 <LatestComplaintsSkeleton />
               ) : (
-                <LatestAssignment data={tickets} />
+                <LatestAssignment data={selectTickets} />
               )}
             </CardContent>
           </Card>
@@ -150,7 +166,7 @@ const Dashboard = () => {
             <div className={`grid lg:grid-cols-3 col-span-4 gap-3`}>
               <StatsCard
                 value={
-                  tickets.filter((ticket) => ticket.status === "ASSIGNED")
+                  selectTickets.filter((ticket) => ticket.status === "ASSIGNED")
                     .length
                 }
                 backgroundColor="bg-white"
@@ -161,8 +177,9 @@ const Dashboard = () => {
               />
               <StatsCard
                 value={
-                  tickets.filter((ticket) => ticket.status === "IN_PROGRESS")
-                    .length
+                  selectTickets.filter(
+                    (ticket) => ticket.status === "IN_PROGRESS",
+                  ).length
                 }
                 backgroundColor="bg-white"
                 iconColor="text-gray-900"
@@ -172,7 +189,8 @@ const Dashboard = () => {
               />
               <StatsCard
                 value={
-                  tickets.filter((ticket) => ticket.status === "CHECKED").length
+                  selectTickets.filter((ticket) => ticket.status === "CHECKED")
+                    .length
                 }
                 backgroundColor="bg-white"
                 iconColor="text-gray-900"

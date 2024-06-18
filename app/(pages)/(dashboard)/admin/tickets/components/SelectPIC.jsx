@@ -15,7 +15,7 @@ import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 import { useDispatch } from "react-redux";
 import { updatePICTickets } from "@/app/redux/slices/ticketsSlice";
 
-const SelectPic = ({ image, name, id }) => {
+const SelectPic = ({ image, name, id, conversation }) => {
   const { data: session } = useSession();
   const [pics, setPics] = React.useState([]);
   const dispatch = useDispatch();
@@ -39,6 +39,7 @@ const SelectPic = ({ image, name, id }) => {
             id: id,
             token: session?.token.data.token,
             pic: value,
+            cid: conversation,
           }),
         );
       }}

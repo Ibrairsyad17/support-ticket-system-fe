@@ -170,7 +170,6 @@ const complaintsSlice = createSlice({
     },
     setDateRange: (state, action) => {
       state.dateRange = action.payload;
-      console.log("setDateRange", action.payload);
       const { startDate, endDate } = state.dateRange;
       state.filteredComplaintsByDate = state.complaints.filter((complaint) => {
         const complaintDate = new Date(complaint.assignment_date);

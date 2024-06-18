@@ -121,17 +121,17 @@ const DataTableMessages = ({ data, refresh }) => {
                   <div className=" text-sm">
                     <div className="font-semibold">
                       {ticket.customers.platform === "INSTAGRAM" && (
-                        <Link href="/">
+                        <Link href={`/chats/${ticket.id}`}>
                           {ticket.customers.instagram_username}
                         </Link>
                       )}
                       {ticket.customers.platform === "TWITTER" && (
-                        <Link href="/">
+                        <Link href={`/chats/${ticket.id}`}>
                           {ticket.customers.twitter_username}
                         </Link>
                       )}
                       {ticket.customers.platform === "WHATSAPP" && (
-                        <Link href="/">
+                        <Link href={`/chats/${ticket.id}`}>
                           {ticket.customers.whatsapp_username}
                         </Link>
                       )}

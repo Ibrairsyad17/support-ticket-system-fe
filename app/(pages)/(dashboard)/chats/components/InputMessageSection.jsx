@@ -28,8 +28,8 @@ const InputMessageSection = () => {
   return (
     <div className="w-full lg:w-8/12 flex flex-col z-50 absolute bottom-0 left-0">
       <TemplateMessagesSection />
-      <div className="grid grid-cols-6 lg:grid-cols-12 px-5 items-center">
-        <div className="col-span-1 flex space-x-2 h-20 items-center">
+      <div className="grid grid-cols-6 lg:grid-cols-12 border-t px-5 items-center">
+        <div className="col-span-1 flex space-x-2 h-16 items-center">
           <Button
             variant="ghost"
             size="icon"
@@ -59,7 +59,7 @@ const InputMessageSection = () => {
             ref={inputRef}
           ></Input>
         </form>
-        <div className="col-span-1 flex space-x-2 h-20 items-center place-self-end">
+        <div className="col-span-1 flex space-x-2 h-16 items-center place-self-end">
           <Button
             variant="ghost"
             size="icon"

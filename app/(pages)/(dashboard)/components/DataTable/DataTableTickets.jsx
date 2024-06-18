@@ -27,6 +27,8 @@ const DataTableTickets = ({ data, refresh }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
+  console.log(data);
+
   // Selectors
   const selectedItems = useSelector(selectSelectedItems);
   const currentPage = useSelector((state) => state.tickets.currentPage);
@@ -140,6 +142,7 @@ const DataTableTickets = ({ data, refresh }) => {
                       image={ticket.accounts.photo_profile}
                       name={ticket.accounts.name}
                       id={ticket.id}
+                      conversation={ticket.assignment_conversations.id}
                     />
                   </div>
 

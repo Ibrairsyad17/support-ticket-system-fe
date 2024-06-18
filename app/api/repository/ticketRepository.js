@@ -46,8 +46,13 @@ export const getTicketsAll = async (token, take) => {
         created_at
         account_id
         accounts{
+            id
             name
             photo_profile
+        }
+        assignment_conversations{
+            id
+            admin_id
         }
         conversation_messages {
             message
@@ -89,14 +94,20 @@ export const getTicketsByPIC = async (token, id) => {
         id
         assignment_name
         assignment_detail
+        assignment_date
         assignment_file
         priority
         status
         ticket_id
         created_at
-        accounts {
+        accounts{
             id
             name
+            photo_profile
+        }
+        assignment_conversations{
+            id
+            admin_id
         }
         conversation_messages {
             message
@@ -149,6 +160,10 @@ export const getTicketsConversations = async (token, id) => {
             photo_profile
             name
         }
+        assignment_conversations{
+            id
+            admin_id
+        }
         conversation_messages {
             message
             conversations {
@@ -194,6 +209,10 @@ export const getTicketsForPIC = async (token, id) => {
         accounts {
             id
             name
+        }
+        assignment_conversations{
+            id
+            admin_id
         }
         conversation_messages {
             conversations {

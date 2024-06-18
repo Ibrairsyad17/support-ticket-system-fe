@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { useDispatch } from "react-redux";
 import { setDateRange } from "@/app/redux/slices/complaintsSlice";
+import { setDateRangePIC } from "@/app/redux/slices/ticketsSlice";
 
 export function DatePickerWithRange({ className }) {
   let initialState;
@@ -37,6 +38,7 @@ export function DatePickerWithRange({ className }) {
   React.useEffect(() => {
     if (date?.from && date?.to) {
       dispatch(setDateRange({ startDate: date.from, endDate: date.to }));
+      dispatch(setDateRangePIC({ startDate: date.from, endDate: date.to }));
     }
   }, [date, dispatch]);
 

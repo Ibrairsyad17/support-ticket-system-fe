@@ -29,6 +29,7 @@ const AddTemplateMessages = ({ messages }) => {
       message: inputRef.current.value,
     };
     dispatch(addTemplateMessage({ data, token: session.token.data.token }));
+    inputRef.current.value = "";
   };
 
   return (
