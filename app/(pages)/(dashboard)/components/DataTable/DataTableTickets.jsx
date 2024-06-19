@@ -27,8 +27,6 @@ const DataTableTickets = ({ data, refresh }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
 
-  console.log(data);
-
   // Selectors
   const selectedItems = useSelector(selectSelectedItems);
   const currentPage = useSelector((state) => state.tickets.currentPage);

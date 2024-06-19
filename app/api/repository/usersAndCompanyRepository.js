@@ -155,3 +155,8 @@ export const syncInstagramAccount = async (token, data) => {
   const response = await PROVIDER_POST(token, "ig/auth/login", data);
   return response;
 };
+
+export const logoutInstagramAccount = async (token, sessionID) => {
+  const response = await PROVIDER_POST(token, `ig/auth/${sessionID}/logout`);
+  return response;
+};

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { BASE_URL } from "@/app/utils/constant";
 
 export const authConfig = {
   providers: [
@@ -19,7 +20,8 @@ export const authConfig = {
       },
       async authorize(credentials) {
         const { email, password } = credentials;
-        const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
+
+        const res = await fetch(`${BASE_URL}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +47,7 @@ export const authConfig = {
       },
       async authorize(credentials) {
         const { email, token } = credentials;
-        const res = await fetch(`${process.env.BASE_URL}/auth/otp/verify`, {
+        const res = await fetch(`${BASE_URL}/auth/otp/verify`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,6 +56,7 @@ export const authConfig = {
         });
 
         const user = await res.json();
+        console.log(user);
 
         if (res.ok && user) {
           return user;

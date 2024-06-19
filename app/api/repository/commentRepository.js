@@ -18,7 +18,6 @@ export const getCommentsById = async (token, id) => {
                 assignment_id
                 assignment_messages{
                     sender_photo_profile
-                    sender_name
                     sender
                     receiver
                     message

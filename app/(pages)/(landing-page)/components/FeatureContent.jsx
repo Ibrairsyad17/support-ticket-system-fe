@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const FeatureContent = ({ data }) => {
   return (
@@ -8,7 +10,17 @@ const FeatureContent = ({ data }) => {
       <div className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
         <div className="lg:col-span-5">
           <div className="grid grid-cols-6 gap-2 mt-16 lg:mt-0 sm:gap-6 place-items-center">
-            <div className="col-span-6">
+            <motion.div
+              className="col-span-6"
+              animate={{
+                scale: [0, 1.1, 1],
+                opacity: [0, 0.5, 1],
+                transition: {
+                  duration: 0.4,
+                  repeatType: "reverse",
+                },
+              }}
+            >
               <Image
                 className="rounded-xl"
                 src={data.image}
@@ -16,7 +28,7 @@ const FeatureContent = ({ data }) => {
                 width={500}
                 height={300}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
 

@@ -110,7 +110,7 @@ const Comment = ({ id, pic, admin }) => {
                 </AvatarFallback>
               </Avatar>
               <span className="font-semibold text-green-600">
-                {comment.sender_name}
+                {/*{comment.sender_name}*/}
               </span>
               <span className="text-gray-600">
                 <TimeAgo date={comment.sent_time} />

@@ -52,7 +52,7 @@ const SyncAccountPage = () => {
           </header>
           <div className={`grid grid-cols-1 lg:grid-cols-3 gap-5`}>
             <div className="flex flex-col space-y-4">
-              {instagram.length < 0 && (
+              {instagram.length === 0 && (
                 <InstagramCard
                   data={{
                     id: 1,

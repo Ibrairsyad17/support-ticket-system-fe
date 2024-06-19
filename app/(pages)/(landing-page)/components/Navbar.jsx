@@ -24,7 +24,7 @@ export default function Navbar() {
       }`}
     >
       <nav
-        className="mx-auto flex max-w-[85rem] items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-6xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">

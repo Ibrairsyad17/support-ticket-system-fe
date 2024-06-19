@@ -8,8 +8,19 @@ import {
 } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { logoutInstagramAccount } from "@/app/api/repository/usersAndCompanyRepository";
+import { useSession } from "next-auth/react";
 
 const InstagramCard = ({ data }) => {
+  const { data: session } = useSession();
+  const handleLogout = async () => {
+    const res = await logoutInstagramAccount(
+      session?.token.data.token,
+      data.id,
+    );
+    if (res) window.location.reload();
+  };
+
   return (
     <div className="grid grid-cols-1 gap-3 shadow-md shadow-gray-100 rounded-lg py-5 px-4">
       <div className="flex w-full justify-between items-center">
@@ -46,7 +57,12 @@ const InstagramCard = ({ data }) => {
         )}
       </p>
       {data.status === "CONNECTED" && (
-        <Button className="text-xs" size="sm" variant="outline">
+        <Button
+          className="text-xs"
+          size="sm"
+          variant="outline"
+          onClick={handleLogout}
+        >
           <ExitIcon className="mr-2 h-3 w-3" /> Keluar
         </Button>
       )}
