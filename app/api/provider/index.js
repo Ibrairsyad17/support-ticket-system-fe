@@ -25,7 +25,7 @@ export const PROVIDER_GET = async (url, token) => {
         return new Error("error");
     }
   } catch (err) {
-    return err.response.status;
+    return err;
   }
 };
 

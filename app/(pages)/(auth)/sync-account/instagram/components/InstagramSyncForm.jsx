@@ -3,17 +3,55 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { syncInstagramAccount } from "@/app/api/repository/usersAndCompanyRepository";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
 
 const InstagramSyncForm = () => {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState(false);
+
+  const router = useRouter();
+  const { toast } = useToast();
 
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 
-    setTimeout(() => {
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    try {
+      const res = await syncInstagramAccount(session?.token.data.token, data);
+      console.log(res, data);
+      if (res.response.status === 422) {
+        toast({
+          title: "Gagal Sinkronisasi Akun Instagram Kamu",
+          description: "Username atau password salah",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        setError(true);
+      } else {
+        toast({
+          title: "Berhasil masuk dengan akun Instagram",
+          description: `Kamu masuk dengan akun Instagram ${username}`,
+          variant: "success",
+        });
+        router.push("/admin/sync-account");
+      }
+    } catch (error) {
+      console.error(error);
       setIsLoading(false);
-    }, 3000);
+      setError(true);
+    }
   }
 
   return (
@@ -21,30 +59,39 @@ const InstagramSyncForm = () => {
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">
-            <Label className="mb-1 ml-1" htmlFor="email">
-              Email
+            <Label className="mb-1 ml-1" htmlFor="username">
+              Username
             </Label>
             <Input
-              id="email"
-              placeholder="Type your username or email"
-              type="email"
+              id="username"
+              placeholder="Masukkan Username..."
+              type="text"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
               className="my-1 py-5"
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
             <Label className="mb-1 mt-2 ml-1" htmlFor="pass">
               Password
             </Label>
             <Input
               id="pass"
-              placeholder="Type your password"
+              placeholder="Masukkan Kata Sandi..."
               type="password"
               autoCorrect="off"
               disabled={isLoading}
               className="my-1 py-5"
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
+            {error && (
+              <p className="text-red-500 mt-2">
+                Maaf, kata sandi salah. Mohon periksa kembali kata sandi Anda.
+              </p>
+            )}
           </div>
           <Button disabled={isLoading} className="mt-2 py-5">
             {isLoading && (

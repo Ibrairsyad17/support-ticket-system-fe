@@ -150,3 +150,8 @@ export const getSyncAccounts = async (token) => {
   const response = await PROVIDER_GET_GQL(token, query);
   return response;
 };
+
+export const syncInstagramAccount = async (token, data) => {
+  const response = await PROVIDER_POST(token, "ig/auth/login", data);
+  return response;
+};

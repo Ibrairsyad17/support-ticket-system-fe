@@ -1,6 +1,11 @@
 import React from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { ExitIcon, InstagramLogoIcon, Link1Icon } from "@radix-ui/react-icons";
+import {
+  Cross1Icon,
+  ExitIcon,
+  InstagramLogoIcon,
+  Link1Icon,
+} from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -15,16 +20,30 @@ const InstagramCard = ({ data }) => {
             className={`w-5 h-5 flex-shrink-0 size-5 text-rose-600`}
           />
         </div>
-        <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-normal bg-teal-100 text-teal-800 rounded-full">
-          <CheckCircleIcon className="flex-shrink-0 size-3 w-4 h-4" />
-          {data?.status === "CONNECTED" ? "Terhubung" : "Belum Terhubung"}
-        </span>
+        {data.status === "CONNECTED" ? (
+          <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-normal bg-teal-100 text-teal-800 rounded-full">
+            <CheckCircleIcon className="flex-shrink-0 size-3 w-4 h-4 mx-1" />
+            Terhubung
+          </span>
+        ) : (
+          <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-normal bg-red-100 text-red-800 rounded-full">
+            <Cross1Icon className="flex-shrink-0 size-4 w-3 h-3 mx-1" />
+            Belum Terhubung
+          </span>
+        )}
       </div>
       <h3 className="font-semibold leading-none tracking-tight text-sm mt-2.5">
         Instagram
       </h3>
       <p className=" leading-none tracking-tight font-normal text-gray-400 text-xs">
-        Username: <span className="font-medium ml-1.5">{data?.name}</span>
+        {data?.status === "CONNECTED" ? (
+          <span>
+            Username
+            <span className="font-medium leading-4 ml-1.5">{data?.name}</span>
+          </span>
+        ) : (
+          <span className="font-medium leading-4">{data?.name}</span>
+        )}
       </p>
       {data.status === "CONNECTED" && (
         <Button className="text-xs" size="sm" variant="outline">
