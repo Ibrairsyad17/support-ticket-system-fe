@@ -1,8 +1,4 @@
-import {
-  PROVIDER_GET_GQL,
-  PROVIDER_POST,
-  PROVIDER_POST_FORM_DATA,
-} from "@/app/api/provider";
+import { PROVIDER_GET_GQL, PROVIDER_POST_FORM_DATA } from "@/app/api/provider";
 
 export const getCommentsById = async (token, id) => {
   const query = `
@@ -18,6 +14,7 @@ export const getCommentsById = async (token, id) => {
                 assignment_id
                 assignment_messages{
                     sender_photo_profile
+                    sender_name
                     sender
                     receiver
                     message

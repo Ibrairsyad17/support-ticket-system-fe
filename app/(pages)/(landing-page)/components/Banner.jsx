@@ -1,18 +1,45 @@
+"use client";
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ArrowButton from "@/app/(pages)/(landing-page)/components/ArrowButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 const Banner = () => {
+  const controlsText = useAnimation();
+
+  const [textRef, inViewRef] = useInView({
+    triggerOnce: true, // Trigger the animation only once
+    threshold: 0.2, // Trigger the animation when 20% of the component is visible
+  });
+
+  useEffect(() => {
+    if (inViewRef) {
+      controlsText.start("visible");
+    }
+  }, [controlsText, inViewRef]);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
   return (
-    <section className="max-w-[85rem] transition duration-300 antialiased mx-auto overflow-hidden">
-      <div className="px-4 mx-auto">
+    <section className="max-w-6xl transition duration-300 antialiased mx-auto overflow-hidden">
+      <div className="mx-auto">
         <Card className="px-6 border-none shadow-none bg-gradient-to-l from-emerald-100 to-emerald-300 mb-20">
           <CardContent className="px-6 py-0">
             <div className="grid lg:grid-cols-7">
-              <div className="flex flex-col lg:col-span-5 justify-center">
+              <motion.div
+                className="flex flex-col lg:col-span-5 justify-center"
+                ref={textRef}
+                initial="hidden"
+                animate={controlsText}
+                variants={textVariants}
+              >
                 <h4 className="text-md mt-10 lg:mt-2 text-gray-800 mb-2">
                   Yuk, Cobain Sekarang!
                 </h4>
@@ -28,7 +55,7 @@ const Banner = () => {
                     </Link>
                   </Button>
                 </div>
-              </div>
+              </motion.div>
 
               <div className="lg:col-span-2">
                 <div className="mt-8 lg:mt-0">

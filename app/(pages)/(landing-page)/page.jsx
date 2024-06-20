@@ -11,18 +11,61 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 import HeroSection from "@/app/(pages)/(landing-page)/components/HeroSection";
 import Banner from "@/app/(pages)/(landing-page)/components/Banner";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 const Home = () => {
+  const controlsText = useAnimation();
+  const controlsImage = useAnimation();
+
+  const [textRef, inViewRef] = useInView({
+    triggerOnce: true, // Trigger the animation only once
+    threshold: 0.2, // Trigger the animation when 20% of the component is visible
+  });
+
+  const [imageRef, inViewImage] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  useEffect(() => {
+    if (inViewRef) {
+      controlsText.start("visible");
+    }
+    if (inViewImage) {
+      controlsImage.start("visible");
+    }
+  }, [controlsText, controlsImage, inViewRef, inViewImage]);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
+  const imageVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: [30, 0],
+      opacity: [0, 0.7, 1],
+      transition: {
+        duration: 0.3,
+        delay: 0.2,
+        repeatType: "reverse",
+      },
+    },
+  };
+
   return (
     <>
       <section className="bg-white">
         <div className="grid max-w-6xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <motion.div
             className="mr-auto place-self-center lg:col-span-7"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            ref={textRef}
+            initial="hidden"
+            animate={controlsText}
+            variants={textVariants}
           >
             <h1 className="max-w-2xl mb-4 text-4xl tracking-wide font-bold md:text-4xl xl:text-5xl">
               Penyelesaian Nyata{" "}
@@ -45,16 +88,10 @@ const Home = () => {
           </motion.div>
           <motion.div
             className="hidden lg:mt-0 lg:col-span-5 lg:flex justify-end drop-shadow-md"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{
-              y: [20, 0],
-              opacity: [0, 0.5, 1],
-              transition: {
-                duration: 0.3,
-                delay: 0.2,
-                repeatType: "reverse",
-              },
-            }}
+            ref={imageRef}
+            initial="hidden"
+            animate={controlsImage}
+            variants={imageVariants}
           >
             <Image
               width={0}

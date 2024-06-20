@@ -1,6 +1,10 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FeatureContent from "@/app/(pages)/(landing-page)/components/FeatureContent";
+import { useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 const featuresDetails = [
   {
@@ -53,10 +57,34 @@ const featuresDetails = [
 ];
 
 function Features() {
+  const controlsText = useAnimation();
+
+  const [textRef, inViewRef] = useInView({
+    triggerOnce: true, // Trigger the animation only once
+    threshold: 0.2, // Trigger the animation when 20% of the component is visible
+  });
+
+  useEffect(() => {
+    if (inViewRef) {
+      controlsText.start("visible");
+    }
+  }, [controlsText, inViewRef]);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.7 } },
+  };
+
   return (
-    <section className="bg-white lg:my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto lg:w-10/12 w-11/12 place-items-center overflow-hidden">
+    <section className="bg-white lg:my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto lg:max-w-6xl w-11/12 place-items-center overflow-hidden">
       <div className="max-w-[85rem] px-4 pt-8 mx-auto lg:px-6">
-        <div className="lg:text-center lg:max-w-5xl mx-auto">
+        <motion.div
+          className="lg:text-center lg:max-w-5xl mx-auto"
+          ref={textRef}
+          initial="hidden"
+          animate={controlsText}
+          variants={textVariants}
+        >
           <h2 className="text-3xl font-bold md:text-3xl md:leading-tight ">
             Layanan Terlengkap Untuk Mengatasi Keluhan Pelanggan Anda
           </h2>
@@ -64,7 +92,7 @@ function Features() {
             Selesaikan berbagai keluhan dalam satu tempat penyelesaian yang
             nyata dan efisien.
           </p>
-        </div>
+        </motion.div>
       </div>
       <Tabs
         defaultValue="tickets"
