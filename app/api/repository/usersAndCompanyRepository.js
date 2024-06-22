@@ -111,6 +111,18 @@ export const changeCompanyPhoto = async (image, token) => {
   return response;
 };
 
+export const importPIC = async (data, token) => {
+  const formData = new FormData();
+  formData.append("file", data);
+
+  const response = await PROVIDER_POST_FORM_DATA(
+    token,
+    "pic-roles/upload-template",
+    formData,
+  );
+  return response;
+};
+
 export const changeCompanyInfo = async (data, token) => {
   const response = await PROVIDER_PATCH(token, "company", data);
   return response;

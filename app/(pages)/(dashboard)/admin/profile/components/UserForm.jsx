@@ -66,7 +66,6 @@ const UserForm = () => {
     const res = await changeUserInfo(data, session?.token.data.token);
     if (res) {
       fetchUserInfo();
-      console.log(res);
     } else {
       console.log("Failed to update data");
     }

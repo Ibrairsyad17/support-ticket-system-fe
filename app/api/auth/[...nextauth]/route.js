@@ -56,7 +56,6 @@ export const authConfig = {
         });
 
         const user = await res.json();
-        console.log(user);
 
         if (res.ok && user) {
           return user;
@@ -71,6 +70,7 @@ export const authConfig = {
   },
   session: {
     strategy: "jwt",
+    maxAge: 86400,
   },
   callbacks: {
     async jwt({ token, user }) {

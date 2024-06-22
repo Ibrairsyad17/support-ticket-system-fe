@@ -10,8 +10,6 @@ export const PROVIDER_GET = async (url, token) => {
   try {
     const response = await axios.get(`${BASE_URL}/${url}`, { headers });
 
-    console.log(response);
-
     switch (response.status) {
       case 200:
         return response;

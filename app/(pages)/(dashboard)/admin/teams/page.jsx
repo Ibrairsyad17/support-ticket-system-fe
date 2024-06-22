@@ -16,6 +16,7 @@ import {
 } from "@/app/redux/slices/teamsSlice";
 import DataTableTeams from "@/app/(pages)/(dashboard)/components/DataTable/DataTableTeams";
 import { Input } from "@/components/ui/input";
+import ImportPICDialog from "@/app/(pages)/(dashboard)/admin/teams/components/ImportPICDialog";
 
 const TeamsPage = () => {
   const { data: session } = useSession();
@@ -54,9 +55,7 @@ const TeamsPage = () => {
           </header>
           <div className="flex space-x-2 items-center">
             <AddPICDialog />
-            <Button variant="outline">
-              <FilePlusIcon className="mr-2 h-4 w-4" /> Import PIC
-            </Button>
+            <ImportPICDialog />
             <Input
               type="search"
               placeholder="Cari Data PIC..."
