@@ -4,7 +4,7 @@ export const getAllNotifications = async (token) => {
   const query = `
     query Notifications {
         notifications(
-            take: 5
+            take: 10
             orderBy: { updated_at: desc }
         ){
             action_by_accounts{

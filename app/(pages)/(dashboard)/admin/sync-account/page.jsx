@@ -36,7 +36,7 @@ const SyncAccountPage = () => {
 
   return (
     <>
-      <div className="w-full pt-5 lg:pt-8 px-4 sm:px-6 md:px-8 lg:ps-72">
+      <div className="w-full pt-5 lg:pt-8 px-4 sm:px-6 md:px-8 lg:ps-72 pb-7">
         {/* Header Section */}
         <div className="grid-cols-1 h-auto">
           <header className={`mb-7`}>

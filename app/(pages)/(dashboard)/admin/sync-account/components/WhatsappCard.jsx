@@ -36,7 +36,7 @@ const WhatsAppCard = ({ data }) => {
         {data?.status === "CONNECTED" ? (
           <span>
             Username
-            <span className="font-medium leading-4 ml-1.5">{data?.name}</span>
+            <span className="font-medium leading-4 ml-1.5">{data?.id}</span>
           </span>
         ) : (
           <span className="font-medium leading-4">{data?.name}</span>

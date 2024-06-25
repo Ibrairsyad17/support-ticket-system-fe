@@ -133,6 +133,11 @@ export const changePassword = async (data, token) => {
   return response;
 };
 
+export const forgotPassword = async (data) => {
+  const response = await PROVIDER_POST("", "auth/forgot-password", data);
+  return response;
+};
+
 export const userLogout = async (token) => {
   const response = await PROVIDER_GET("auth/logout", token);
   return response;
@@ -170,5 +175,10 @@ export const syncInstagramAccount = async (token, data) => {
 
 export const logoutInstagramAccount = async (token, sessionID) => {
   const response = await PROVIDER_POST(token, `ig/auth/${sessionID}/logout`);
+  return response;
+};
+
+export const startWhatsappSession = async (token) => {
+  const response = await PROVIDER_GET("whatsapp-2/session/start", token);
   return response;
 };

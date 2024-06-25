@@ -35,7 +35,7 @@ import { useToast } from "@/components/ui/use-toast";
 const AddPicDialog = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  // const { toast } = useToast();
+  const { toast } = useToast();
 
   // Selectors
   const picRoles = useSelector(selectAllRoles);
@@ -56,6 +56,20 @@ const AddPicDialog = () => {
       pic_role_id: role,
     };
     dispatch(createPIC({ data, token: session?.token.data.token }));
+    if (getStatusInfo === "failed") {
+      toast({
+        title: "Gagal menambahkan data PIC",
+        description: "Nomor atau email sudah terdaftar",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: `Berhasil menambahkan data PIC ${data.name}`,
+        description: "Data PIC berhasil ditambahkan",
+        variant: "success",
+      });
+    }
+
     dispatch(fetchTeams(session?.token.data.token));
   };
 

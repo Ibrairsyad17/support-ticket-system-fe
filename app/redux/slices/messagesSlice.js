@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getMessages } from "@/app/api/repository/messagesRepository";
+import {
+  getMessages,
+  getMessagesById,
+} from "@/app/api/repository/messagesRepository";
 import { BASE_URL } from "@/app/utils/constant";
 import axios from "axios";
 
@@ -8,6 +11,9 @@ const initialState = {
   searchedItems: [],
   filteredMessages: [],
   selectedItems: [],
+  chats: [],
+  lastChat: {},
+  chatsInfo: {},
   currentPage: 1,
   itemsPerPage: 20,
   isLoading: true,
@@ -42,6 +48,18 @@ export const changeMessageStatus = createAsyncThunk(
     console.log(response);
 
     return { id, status };
+  },
+);
+
+export const fetchChatById = createAsyncThunk(
+  "messages/fetchMessagesById",
+  async ({ id, token }) => {
+    try {
+      const response = await getMessagesById(token, id);
+      return response.data.data.conversations;
+    } catch (error) {
+      return error.message;
+    }
   },
 );
 
@@ -177,6 +195,20 @@ export const messagesSlice = createSlice({
       })
       .addCase(changeMessageStatus.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(fetchChatById.pending, (state) => {
+        state.status = "loading";
+        state.isLoading = true;
+      })
+      .addCase(fetchChatById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.chats = action.payload[0].conversation_messages;
+        state.chatsInfo = action.payload[0];
+        state.lastChat =
+          action.payload[0].conversation_messages[
+            action.payload[0].conversation_messages.length - 1
+          ];
+        state.isLoading = false;
       });
   },
 });
@@ -188,6 +220,9 @@ export const selectFilteredMessages = (state) =>
 export const selectCurrentPage = (state) => state.messages.currentPage;
 export const selectItemsPerPage = (state) => state.messages.itemsPerPage;
 export const selectSelectedItems = (state) => state.messages.selectedItems;
+export const selectChats = (state) => state.messages.chats;
+export const selectChatsInfo = (state) => state.messages.chatsInfo;
+export const selectLastChat = (state) => state.messages.lastChat;
 export const getStatus = (state) => state.messages.status;
 export const stateLoading = (state) => state.messages.isLoading;
 

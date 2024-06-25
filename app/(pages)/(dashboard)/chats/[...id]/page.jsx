@@ -6,12 +6,6 @@ import InputMessageSection from "@/app/(pages)/(dashboard)/chats/components/Inpu
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
 import { useSession } from "next-auth/react";
 import { getChatsInfo } from "@/app/api/repository/customersRepository";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchMessages,
-  getStatus,
-  selectMessages,
-} from "@/app/redux/slices/messagesSlice";
 
 const ChatsPage = ({ params: { id } }) => {
   const { data: session } = useSession();
@@ -25,7 +19,6 @@ const ChatsPage = ({ params: { id } }) => {
     const response = await getChatsInfo(session?.token.data.token, id[0]);
     if (response) {
       setChatsInfo(response.data.data.conversations[0]);
-      console.log(response.data.data.conversations);
     }
   };
 
@@ -35,14 +28,17 @@ const ChatsPage = ({ params: { id } }) => {
     }
   }, [session?.token.data.token]);
 
-  console.log(chatsInfo);
-
   return (
     <div className="grid lg:grid-cols-6 absolute bottom-0 top-0 left-0 right-0">
       <div className="lg:col-span-4 border-r flex flex-col space-y-2 items-center">
         <Header data={chatsInfo} />
-        <ChatsColumn />
-        <InputMessageSection />
+        <ChatsColumn id={id[0]} />
+        <InputMessageSection
+          platform={chatsInfo.social_media?.platform}
+          sessionId={chatsInfo.social_media?.id}
+          customer={chatsInfo.customers}
+          id={id[0]}
+        />
       </div>
       <DetailsCustomer data={chatsInfo} id={id[0]} />
     </div>

@@ -1,10 +1,37 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import PasswordIcon from "@mui/icons-material/Password";
+import { forgotPassword } from "@/app/api/repository/usersAndCompanyRepository";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 function ResetPage() {
+  const [email, setEmail] = React.useState("");
+  const { toast } = useToast();
+
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+    };
+
+    const res = await forgotPassword(data);
+    if (res == 404) {
+      toast({
+        title: "Email tidak ditemukan",
+        description: "Email yang anda masukkan tidak terdaftar",
+        variant: "destructive",
+      });
+    } else {
+      router.push("/forgot-password/sent");
+    }
+  };
+
   return (
     <>
       <main className="w-full max-w-md mx-auto p-6">
@@ -19,13 +46,13 @@ function ResetPage() {
                 Atur ulang kata sandi
               </h1>
               <p className="my-4 text-xs text-gray-600 ">
-                Masukkan alamat e-mail atau nomor HP yang terdaftar. Kami akan
-                mengirimkan link untuk atur ulang kata sandi.
+                Masukkan alamat e-mail yang terdaftar. Kami akan mengirimkan
+                link untuk atur ulang kata sandi.
               </p>
             </div>
 
             <div className="mt-5">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="grid gap-y-4">
                   <div>
                     <Label htmlFor="email" className="sr-only text-sm">
@@ -37,9 +64,10 @@ function ResetPage() {
                         id="email"
                         name="email"
                         className="py-3 px-4 block w-full rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none"
-                        placeholder="Masukkan email atau nomor HP"
+                        placeholder="Masukkan alamat email"
                         required
                         aria-describedby="email-error"
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                         <svg

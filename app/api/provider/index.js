@@ -69,7 +69,7 @@ export const PROVIDER_POST = async (token, url, data) => {
     const response = await axios(options).then((res) => res);
     return response;
   } catch (error) {
-    return error;
+    return error.response.status;
   }
 };
 

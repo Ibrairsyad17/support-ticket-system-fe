@@ -52,7 +52,7 @@ export const createPIC = createAsyncThunk(
         return response.status;
       }
     } catch (error) {
-      return error.message;
+      return error.response.status;
     }
   },
 );
@@ -158,11 +158,11 @@ const teamsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createPIC.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        if (action.payload === "Request failed with status code 409") {
-          state.error =
-            "Gagal menambahkan data, nomor atau email sudah terdaftar";
+        if (action.payload === 409) {
+          state.error = true;
           state.status = "failed";
+        } else {
+          state.error = false;
         }
         state.teams.push(action.payload);
         state.filteredPIC = state.teams;

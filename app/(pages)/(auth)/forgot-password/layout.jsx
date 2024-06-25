@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "../../../globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
         className={`${inter.className} flex h-full items-center py-16 bg-gray-50`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

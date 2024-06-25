@@ -110,6 +110,8 @@ export const templateMessagesSlice = createSlice({
 
 export const selectAllTemplateMessages = (state) =>
   state.templateMessages.templateMessages;
+export const selectSelectedTemplateMessage = (state) =>
+  state.templateMessages.selectedTemplateMessage;
 export const getStatus = (state) => state.templateMessages.status;
 
 export const { selectTemplateMessage } = templateMessagesSlice.actions;

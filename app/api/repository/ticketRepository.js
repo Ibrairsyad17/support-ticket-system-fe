@@ -1,4 +1,4 @@
-import { PROVIDER_GET_GQL } from "@/app/api/provider";
+import { PROVIDER_GET_GQL, PROVIDER_POST_FORM_DATA } from "@/app/api/provider";
 
 const delay = () => new Promise((res) => setTimeout(() => res(), 500));
 
@@ -63,12 +63,12 @@ export const getTicketsAll = async (token, take) => {
                     name
                 }
                 customers {
-                    nama_lengkap
                     platform
                     email
                     instagram_username
                     twitter_username
                     whatsapp_number
+                    whatsapp_username
                 }
             }
         }
@@ -118,12 +118,12 @@ export const getTicketsByPIC = async (token, id) => {
                     name
                 }
                 customers {
-                    nama_lengkap
                     platform
                     email
                     instagram_username
                     twitter_username
                     whatsapp_number
+                    whatsapp_username
                 }
             }
         }
@@ -174,7 +174,6 @@ export const getTicketsConversations = async (token, id) => {
                     name
                 }
                 customers {
-                    nama_lengkap
                     platform
                     email
                     instagram_username
@@ -217,7 +216,10 @@ export const getTicketsForPIC = async (token, id) => {
         conversation_messages {
             conversations {
                 customers {
-                    nama_lengkap
+                    whatsapp_number
+                    whatsapp_username
+                    instagram_username
+                    twitter_username
                 }
             }
         }
@@ -228,5 +230,19 @@ export const getTicketsForPIC = async (token, id) => {
     id,
   };
   const response = await PROVIDER_GET_GQL(token, query, variables);
+  return response;
+};
+
+export const createTicket = async (token, data) => {
+  const formData = new FormData();
+  formData.append("assignment_name", data.assignment_name);
+  formData.append("assignment_detail", data.assignment_detail);
+  formData.append("recipient", data.recipient);
+  formData.append("priority", data.priority);
+  formData.append("status", data.status);
+  formData.append("assignment_date", data.assignment_date);
+  formData.append("conversation_messages_id", data.conversation_messages_id);
+
+  const response = await PROVIDER_POST_FORM_DATA(token, "assignment", formData);
   return response;
 };

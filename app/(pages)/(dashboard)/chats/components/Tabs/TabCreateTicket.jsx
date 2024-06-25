@@ -11,12 +11,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 import { useSession } from "next-auth/react";
+import { selectLastChat } from "@/app/redux/slices/messagesSlice";
+import { createTicket } from "@/app/api/repository/ticketRepository";
 
 const TabCreateTicket = () => {
   const { data: session } = useSession();
@@ -26,7 +27,8 @@ const TabCreateTicket = () => {
   const [recipient, setRecipient] = React.useState("");
   const [pics, setPics] = React.useState([]);
   const [status, setStatus] = React.useState("ASSIGNED");
-  const dispatch = useDispatch();
+
+  const convo_messages_id = useSelector(selectLastChat);
 
   const fetchPics = async () => {
     const res = await getUsersPIC(session?.token.data.token, "PIC");
@@ -39,7 +41,7 @@ const TabCreateTicket = () => {
     if (session?.token.data.token) fetchPics();
   }, [session?.token.data.token]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       assignment_name: nameTicket.current.value,
@@ -48,8 +50,10 @@ const TabCreateTicket = () => {
       priority,
       status,
       assignment_date: new Date().toISOString(),
+      conversation_messages_id: Number(convo_messages_id.id),
     };
-    console.log(data);
+    const res = await createTicket(session?.token.data.token, data);
+    console.log(res);
   };
 
   return (
@@ -57,7 +61,10 @@ const TabCreateTicket = () => {
       <div className="px-6 py-2.5 mt-3 bg-white text-lg font-semibold">
         Form Data Pelanggan
       </div>
-      <form className="flex flex-col space-y-6 px-6 pt-2 pb-4">
+      <form
+        className="flex flex-col space-y-6 px-6 pt-2 pb-4"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col space-y-3">
           <Label htmlFor="name">Ditugaskan ke</Label>
           <Select
@@ -105,7 +112,7 @@ const TabCreateTicket = () => {
             }}
           >
             <SelectTrigger className="">
-              <SelectValue defaultValue="Ditugaskan" placeholder="Ditugaskan" />
+              <SelectValue defaultValue="ASSIGNED" placeholder="Ditugaskan" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -146,7 +153,7 @@ const TabCreateTicket = () => {
                 id="normal"
                 name="priority"
                 className="hidden checkbox"
-                value="NORMAL"
+                value="MEDIUM"
                 onClick={(e) => {
                   setPriority(e.target.value);
                 }}
@@ -180,15 +187,13 @@ const TabCreateTicket = () => {
             </div>
           </div>
         </div>
-        {/*<div className="flex flex-col space-y-3">*/}
-        {/*  <Label htmlFor="file">File</Label>*/}
-        {/*  <Input id="file" type="file" />*/}
-        {/*</div>*/}
+        <div className="flex flex-col space-y-3">
+          <Label htmlFor="file">File</Label>
+          <Input id="file" type="file" />
+        </div>
         <div className="grid lg:grid-cols-2 space-x-2">
           <Button variant="outline">Atur Ulang</Button>
-          <Button type="submit" onClick={handleSubmit}>
-            Buat Tiket
-          </Button>
+          <Button type="submit">Buat Tiket</Button>
         </div>
       </form>
     </>

@@ -32,7 +32,11 @@ export const getAllComplaints = async (token) => {
                     platform
                 }
                 customers {
-                    nama_lengkap
+                    platform
+                    whatsapp_number
+                    whatsapp_username
+                    instagram_username
+                    twitter_username
                 }
             }
         }

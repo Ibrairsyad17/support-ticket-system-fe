@@ -128,10 +128,18 @@ const DataTableTickets = ({ data, refresh }) => {
                     <p className=" text-sm">{ticket.ticket_id}</p>
                   </div>
                   <p className="col-span-2 text-sm">
-                    {
+                    {ticket.conversation_messages.conversations.customers
+                      .platform === "WHATSAPP" &&
                       ticket.conversation_messages.conversations.customers
-                        .nama_lengkap
-                    }
+                        .whatsapp_username}
+                    {ticket.conversation_messages.conversations.customers
+                      .platform === "INSTAGRAM" &&
+                      ticket.conversation_messages.conversations.customers
+                        .instagram_username}
+                    {ticket.conversation_messages.conversations.customers
+                      .platform === "TWITTER" &&
+                      ticket.conversation_messages.conversations.customers
+                        .twitter_username}
                   </p>
                   <p className="col-span-2 text-sm">{ticket.assignment_name}</p>
 

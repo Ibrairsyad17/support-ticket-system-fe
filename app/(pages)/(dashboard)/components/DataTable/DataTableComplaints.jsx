@@ -143,10 +143,18 @@ const DataTableComplaints = ({ data, refresh }) => {
                       onCheckedChange={() => handleSelect(complaint.id)}
                     />
                     <p className=" text-sm">
-                      {
+                      {complaint.conversation_messages.conversations.customers
+                        .platform === "WHATSAPP" &&
                         complaint.conversation_messages.conversations.customers
-                          .nama_lengkap
-                      }
+                          .whatsapp_username}
+                      {complaint.conversation_messages.conversations.customers
+                        .platform === "INSTAGRAM" &&
+                        complaint.conversation_messages.conversations.customers
+                          .instagram_username}
+                      {complaint.conversation_messages.conversations.customers
+                        .platform === "TWITTER" &&
+                        complaint.conversation_messages.conversations.customers
+                          .twitter_username}
                     </p>
                   </div>
                   <div className="col-span-2 text-sm">

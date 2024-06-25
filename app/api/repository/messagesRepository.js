@@ -42,23 +42,23 @@ export const getMessagesById = async (token, id) => {
   await delay();
   const query = `
     query getMessagesById($id: String){
-      conversations(id: $id) {
+      conversations(
+        where: {
+          id: { equals: $id }
+        }
+      ){
+        id
+        customer_id
+        account_id
+        conversation_messages {
           id
-          account_id
-          customer_id
-          customers {
-              platform
-              instagram_full_name
-              instagram_username
-              twitter_username
-              whatsapp_number
-              whatsapp_username
-          }
-          conversation_messages {
-              message
-              updated_at
-          }
-      }`;
+          sender
+          receiver
+          message
+          sent_time
+        }
+      }
+    }`;
   const variables = {
     id,
   };

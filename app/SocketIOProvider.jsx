@@ -4,7 +4,7 @@ import { BASE_URL } from "@/app/utils/constant";
 import { useSession } from "next-auth/react";
 import { getUserInfo } from "@/app/api/repository/usersAndCompanyRepository";
 
-const SocketIoContext = createContext();
+const SocketIoContext = createContext(undefined);
 
 export const useSocket = () => {
   return useContext(SocketIoContext);
@@ -49,6 +49,7 @@ const SocketIOProvider = ({ children }) => {
       assignment_conversations: io(
         `${BASE_URL}/assignment-conversations/${userInfo.company_id}`,
       ),
+      conversations: io(`${BASE_URL}/conversations/${userInfo.company_id}`),
     };
 
     Object.values(socketInstances).forEach((socketInstance) => {

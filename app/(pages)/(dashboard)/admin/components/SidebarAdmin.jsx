@@ -54,11 +54,7 @@ const listLink = [
     icon: InboxIcon,
     active: InboxIconActive,
     type: "multi-link",
-    links: [
-      { title: "Pesan Masuk", href: "/admin/message/inbox" },
-      { title: "Menunggu", href: "/admin/message/progress" },
-      { title: "Selesai", href: "/admin/message/done" },
-    ],
+    links: [{ title: "Pesan Masuk", href: "/admin/message/inbox" }],
     href: "/admin/message",
   },
   {
