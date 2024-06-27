@@ -24,7 +24,7 @@ function SuccessReset() {
                 <div className="grid gap-y-4">
                   <div>
                     <Image
-                      src={`/auth/customer-support.svg`}
+                      src={`/assets/img/auth/customer-support.svg`}
                       width={0}
                       height={0}
                       priority
@@ -37,7 +37,7 @@ function SuccessReset() {
                     asChild
                     className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent  disabled:opacity-50 disabled:pointer-events-none "
                   >
-                    <Link href={`/`}>Lanjutkan</Link>
+                    <Link href={`/login`}>Lanjutkan</Link>
                   </Button>
                   <Button
                     asChild

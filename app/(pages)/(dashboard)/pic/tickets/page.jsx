@@ -6,10 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTicketsPic,
   getStatus,
-  Loading,
   searchItemsPic,
   selectFilteredTicketsPic,
-  selectSelectedItems,
 } from "@/app/redux/slices/ticketsSlice";
 import DataTablePIC from "@/app/(pages)/(dashboard)/components/DataTable/DataTablePIC";
 import { Input } from "@/components/ui/input";
@@ -35,12 +33,6 @@ const TicketsPICPage = () => {
     updated_at: "",
     deleted_at: "",
   });
-
-  const [lastRefreshDate, setLastRefreshDate] = React.useState(
-    localStorage.getItem("lastRefreshDate")
-      ? new Date(localStorage.getItem("lastRefreshDate"))
-      : null,
-  );
 
   const selectTickets = useSelector(selectFilteredTicketsPic);
   const getStatusInfo = useSelector(getStatus);
@@ -81,10 +73,6 @@ const TicketsPICPage = () => {
     dispatch(
       fetchTicketsPic({ token: session?.token.data.token, id: userInfo.id }),
     );
-    const currentDate = new Date();
-    setLastRefreshDate(currentDate);
-
-    localStorage.setItem("lastRefreshDate", currentDate.toString());
   };
 
   return (
@@ -99,10 +87,7 @@ const TicketsPICPage = () => {
                   Tiket
                 </h1>
                 <div className="mt-2 text-sm text-gray-400 flex items-center space-x-3">
-                  <span>
-                    Data terakhir diperbaharui pada{" "}
-                    {lastRefreshDate?.toLocaleString()}{" "}
-                  </span>
+                  <span>Data terakhir diperbaharui pada </span>
                 </div>
               </div>
               <div className="flex space-x-3 lg:col-span-3 lg:self-end lg:place-self-end">

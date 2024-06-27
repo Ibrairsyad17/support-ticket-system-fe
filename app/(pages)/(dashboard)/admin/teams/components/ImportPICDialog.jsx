@@ -37,6 +37,7 @@ const ImportPicDialog = () => {
         description: "PIC berhasil ditambahkan",
         variant: "success",
       });
+      window.location.reload();
     } else {
       toast({
         title: "Gagal Import PIC",
