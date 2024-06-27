@@ -18,17 +18,22 @@ import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 import { useSession } from "next-auth/react";
 import { selectLastChat } from "@/app/redux/slices/messagesSlice";
 import { createTicket } from "@/app/api/repository/ticketRepository";
+import { useToast } from "@/components/ui/use-toast";
+import { fetchConversationTickets } from "@/app/redux/slices/ticketsSlice";
 
-const TabCreateTicket = () => {
+const TabCreateTicket = ({ id }) => {
   const { data: session } = useSession();
   const nameTicket = React.createRef();
   const descriptionTicket = React.createRef();
-  const [priority, setPriority] = React.useState("normal");
+  const [priority, setPriority] = React.useState("MEDIUM");
   const [recipient, setRecipient] = React.useState("");
   const [pics, setPics] = React.useState([]);
   const [status, setStatus] = React.useState("ASSIGNED");
 
   const convo_messages_id = useSelector(selectLastChat);
+
+  const { toast } = useToast();
+  const dispatch = useDispatch();
 
   const fetchPics = async () => {
     const res = await getUsersPIC(session?.token.data.token, "PIC");
@@ -54,6 +59,28 @@ const TabCreateTicket = () => {
     };
     const res = await createTicket(session?.token.data.token, data);
     console.log(res);
+    if (res.data?.code === 201) {
+      toast({
+        title: "Tiket Dibuat",
+        description: `Tiket dengan nama ${data.assignment_name} dibuat`,
+        variant: "success",
+      });
+      dispatch(
+        fetchConversationTickets({ token: session?.token.data.token, id }),
+      );
+      setStatus("ASSIGNED");
+      setPriority("MEDIUM");
+      setRecipient("");
+      nameTicket.current.value = "";
+      descriptionTicket.current.value = "";
+    } else {
+      toast({
+        title: "Gagal Membuat Tiket",
+        description:
+          "Terjadi kesalahan saat membuat tiket cek kembali data yang anda input atau coba kirimkan pesan ke pelanggan untuk membuat tiket baru",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -92,7 +119,7 @@ const TabCreateTicket = () => {
           <Input
             id="name"
             ref={nameTicket}
-            defaultValue="Transfer Bank Lemot"
+            placeholder="Ketikkan Nama Keluhan"
           />
         </div>
         <div className="flex flex-col space-y-3">

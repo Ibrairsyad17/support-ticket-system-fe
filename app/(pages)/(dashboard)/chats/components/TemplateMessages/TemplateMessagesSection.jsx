@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import AddTemplateMessages from "@/app/(pages)/(dashboard)/chats/components/TemplateMessages/AddTemplateMessages";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +14,6 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 const TemplateMessagesSection = () => {
@@ -35,7 +32,7 @@ const TemplateMessagesSection = () => {
   }, [session, getStatusInfo, dispatch]);
 
   return (
-    <div className="flex justify-between items-center pb-3 px-4 relative bottom-0 left-0">
+    <div className="flex justify-between items-center bg-white pb-3 px-4 relative bottom-0 left-0">
       <Carousel
         opts={{
           align: "start",
@@ -43,7 +40,7 @@ const TemplateMessagesSection = () => {
         className="w-full max-w-[87%]"
       >
         <CarouselContent>
-          {templateMessage.map((message, index) => (
+          {templateMessage.map((message) => (
             <CarouselItem
               key={message.id}
               className="flex-shrink-0 flex items-center"

@@ -9,9 +9,6 @@ import { getChatsInfo } from "@/app/api/repository/customersRepository";
 
 const ChatsPage = ({ params: { id } }) => {
   const { data: session } = useSession();
-  // const dispatch = useDispatch();
-  // const getMessages = useSelector(selectMessages);
-  // const getStatusInfo = useSelector(getStatus);
 
   const [chatsInfo, setChatsInfo] = React.useState({});
 
@@ -30,8 +27,8 @@ const ChatsPage = ({ params: { id } }) => {
 
   return (
     <div className="grid lg:grid-cols-6 absolute bottom-0 top-0 left-0 right-0">
-      <div className="lg:col-span-4 border-r flex flex-col space-y-2 items-center">
-        <Header data={chatsInfo} />
+      <div className="lg:col-span-4 border-r bg-white flex flex-col space-y-2 items-center">
+        <Header data={chatsInfo} cid={id[0]} />
         <ChatsColumn id={id[0]} />
         <InputMessageSection
           platform={chatsInfo.social_media?.platform}

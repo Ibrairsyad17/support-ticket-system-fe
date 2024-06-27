@@ -40,6 +40,8 @@ export const PROVIDER_DELETE = async (token, url) => {
     };
     const response = await axios(options).then((res) => res);
     switch (response.status) {
+      case 200:
+        return response;
       case 204:
         return [];
       case 404:

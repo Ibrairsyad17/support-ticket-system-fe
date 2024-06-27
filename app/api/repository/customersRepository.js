@@ -1,5 +1,6 @@
 import {
   PROVIDER_GET_GQL,
+  PROVIDER_PATCH,
   PROVIDER_POST,
   PROVIDER_POST_FORM_DATA,
 } from "@/app/api/provider";
@@ -80,5 +81,10 @@ export const sendIGMessage = async (token, id, message) => {
   form.append("message", message.message);
 
   const res = await PROVIDER_POST_FORM_DATA(token, `ig/dm/${id}/send`, form);
+  return res;
+};
+
+export const setAdditionalInfo = async (token, id, info) => {
+  const res = await PROVIDER_PATCH(token, `customer/${id}`, info);
   return res;
 };

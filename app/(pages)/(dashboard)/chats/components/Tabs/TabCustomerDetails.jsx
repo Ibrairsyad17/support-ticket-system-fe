@@ -6,7 +6,36 @@ import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { WhatsApp, X } from "@mui/icons-material";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { setAdditionalInfo } from "@/app/api/repository/customersRepository";
+import { useToast } from "@/components/ui/use-toast";
+
 const TabCustomerDetails = ({ data }) => {
+  const { data: session } = useSession();
+  const [additionalInfo, setAdditional] = React.useState("");
+
+  const { toast } = useToast();
+
+  const handleSetAdditionalInfo = async (e) => {
+    e.preventDefault();
+    const res = await setAdditionalInfo(
+      session.token.data.token,
+      data.customer_id,
+      { additional_info: additionalInfo },
+    );
+    if (res.status === 200) {
+      toast({
+        title: "Berhasil menambahkan informasi tambahan",
+        variant: "success",
+      });
+    } else {
+      toast({
+        title: "Gagal menambahkan informasi tambahan",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       <div className="px-6 py-2.5 mt-3 bg-white text-lg font-semibold">
@@ -76,9 +105,14 @@ const TabCustomerDetails = ({ data }) => {
         </div>
         <div className="flex flex-col space-y-3">
           <Label htmlFor="more">Informasi Tambahan</Label>
-          <Textarea placeholder="Type your message here." className="h-28" />
+          <Textarea
+            placeholder="Type your message here."
+            className="h-28"
+            value={additionalInfo}
+            onChange={(e) => setAdditional(e.target.value)}
+          />
         </div>
-        <Button type="submit" className="self-end ">
+        <Button className="self-end " onClick={handleSetAdditionalInfo}>
           Simpan Data
         </Button>
       </form>

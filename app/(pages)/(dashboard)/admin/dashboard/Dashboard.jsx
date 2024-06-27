@@ -20,11 +20,6 @@ import TeamsDataStats from "@/app/(pages)/(dashboard)/admin/components/TeamsData
 import { useSession } from "next-auth/react";
 import { getKeywords } from "@/app/api/repository/keywordsRepository";
 import StatsCard from "@/app/(pages)/(dashboard)/admin/components/StatsCard";
-import {
-  getComplaintsByPlatform,
-  getComplaintsByStatus,
-  getLatestComplaintsByDate,
-} from "@/app/api/repository/complaintsRepository";
 import { Instagram, WhatsApp, X } from "@mui/icons-material";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";

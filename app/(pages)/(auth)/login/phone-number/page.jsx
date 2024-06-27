@@ -1,6 +1,5 @@
 import React from "react";
 import PhoneAuthForm from "./components/PhoneAuthForm";
-import Link from "next/link";
 
 function UseOTP() {
   return (

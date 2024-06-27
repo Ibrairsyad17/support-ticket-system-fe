@@ -17,11 +17,6 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 const TicketsAdminPage = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  const [lastRefreshDate, setLastRefreshDate] = React.useState(
-    localStorage.getItem("lastRefreshDate")
-      ? new Date(localStorage.getItem("lastRefreshDate"))
-      : null,
-  );
 
   // Selectors
   const filteredTickets = useSelector(selectFilteredTickets);
@@ -43,11 +38,6 @@ const TicketsAdminPage = () => {
 
   const handleRefresh = () => {
     dispatch(fetchTickets(session?.token.data.token));
-    const currentDate = new Date();
-    setLastRefreshDate(currentDate);
-
-    // Save the last refresh date to local storage whenever it changes
-    localStorage.setItem("lastRefreshDate", currentDate.toString());
   };
   return (
     <>
@@ -61,10 +51,7 @@ const TicketsAdminPage = () => {
                   Tiket
                 </h1>
                 <div className="mt-2 text-sm text-gray-400 flex items-center space-x-3">
-                  <span>
-                    Data terakhir diperbaharui pada{" "}
-                    {lastRefreshDate?.toLocaleString()}
-                  </span>
+                  <span>Data terakhir diperbaharui pada </span>
                 </div>
               </div>
               <div className="flex space-x-3 lg:col-span-3 lg:self-end lg:place-self-end">

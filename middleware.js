@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   async function middleware(req) {
+    console.log(req.nextauth.token);
     if (
       req.nextauth.token.message ===
       "OTP has been sent to your email or phone number"

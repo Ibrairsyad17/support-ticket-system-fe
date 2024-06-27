@@ -16,10 +16,13 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { deleteMultiplePIC } from "@/app/redux/slices/teamsSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const RemovePicDialog = ({ data }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+
+  const { toast } = useToast();
 
   const handleDelete = (id) => {
     dispatch(
@@ -28,6 +31,11 @@ const RemovePicDialog = ({ data }) => {
         token: session?.token.data.token,
       }),
     );
+    toast({
+      title: "PIC berhasil dihapus",
+      description: `PIC ${data.name} berhasil dihapus`,
+      variant: "success",
+    });
   };
 
   return (

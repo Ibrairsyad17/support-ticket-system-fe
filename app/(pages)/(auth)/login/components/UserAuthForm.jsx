@@ -13,11 +13,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-export function UserAuthForm({ className }) {
+export function UserAuthForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const email = useRef("");
   const password = useRef("");
-  const push = useRouter();
 
   async function onSubmit() {
     setIsLoading(true);
@@ -133,7 +132,12 @@ export function UserAuthForm({ className }) {
           type="button"
           disabled={isLoading}
           className="py-5"
-          onClick={() => signIn("google")}
+          onClick={() =>
+            signIn("google", {
+              redirect: true,
+              callbackUrl: "/admin/dashboard",
+            })
+          }
         >
           <div>
             {isLoading ? (

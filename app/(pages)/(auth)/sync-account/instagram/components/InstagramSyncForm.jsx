@@ -30,8 +30,15 @@ const InstagramSyncForm = () => {
 
     try {
       const res = await syncInstagramAccount(session?.token.data.token, data);
-      console.log(res, data);
-      if (res.response.status === 422) {
+      console.log(res.status);
+      if (res.status === 200) {
+        toast({
+          title: "Berhasil masuk dengan akun Instagram",
+          description: `Kamu masuk dengan akun Instagram ${username}`,
+          variant: "success",
+        });
+        router.push("/admin/sync-account");
+      } else {
         toast({
           title: "Gagal Sinkronisasi Akun Instagram Kamu",
           description: "Username atau password salah",
@@ -39,13 +46,6 @@ const InstagramSyncForm = () => {
         });
         setIsLoading(false);
         setError(true);
-      } else {
-        toast({
-          title: "Berhasil masuk dengan akun Instagram",
-          description: `Kamu masuk dengan akun Instagram ${username}`,
-          variant: "success",
-        });
-        router.push("/admin/sync-account");
       }
     } catch (error) {
       console.error(error);

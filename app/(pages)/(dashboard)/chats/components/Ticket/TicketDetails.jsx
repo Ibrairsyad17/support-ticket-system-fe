@@ -148,7 +148,11 @@ const TicketDetails = ({ ticket }) => {
               Komentar
             </h3>
             <div className="flex flex-col space-y-2.5 lg:items-center">
-              <Comment />
+              <Comment
+                id={ticket?.id}
+                pic={ticket?.accounts.id}
+                admin={ticket?.assignment_conversations.admin_id}
+              />
             </div>
           </div>
         </SheetHeader>

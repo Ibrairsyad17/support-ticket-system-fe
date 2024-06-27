@@ -93,7 +93,7 @@ const InputMessageSection = ({ sessionId, platform, customer, id }) => {
   }, [socket]);
 
   return (
-    <div className="w-full lg:w-8/12 flex flex-col z-50 absolute bottom-0 left-0">
+    <div className="w-full lg:w-8/12 flex flex-col bg-white z-50 absolute bottom-0 left-0">
       <TemplateMessagesSection />
       <div className="grid grid-cols-6 lg:grid-cols-12 border-t px-5 items-center">
         <div className="col-span-1 flex space-x-2 h-16 items-center">

@@ -1,6 +1,7 @@
 import {
   PROVIDER_DELETE,
   PROVIDER_GET_GQL,
+  PROVIDER_PATCH,
   PROVIDER_POST,
 } from "@/app/api/provider";
 
@@ -96,4 +97,11 @@ export const deleteTemplateMessage = async (token, id) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+export const changeMessageStatus = async (id, status, token) => {
+  const res = await PROVIDER_PATCH(token, `conversations/${id}`, {
+    status: status,
+  });
+  return res;
 };

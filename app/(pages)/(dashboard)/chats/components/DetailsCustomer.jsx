@@ -39,7 +39,7 @@ const DetailsCustomer = ({ type = "desktop", data, id }) => {
         <TabCustomerDetails data={data} />
       </TabsContent>
       <TabsContent value="ticket">
-        <TabCreateTicket />
+        <TabCreateTicket id={id} />
       </TabsContent>
       <TabsContent value="history" className="pb-5">
         <TabsTicketHistory id={id} />

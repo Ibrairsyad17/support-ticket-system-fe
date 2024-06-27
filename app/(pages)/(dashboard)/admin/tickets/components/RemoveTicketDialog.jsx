@@ -15,11 +15,17 @@ import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
-import { deleteMultipleTickets } from "@/app/redux/slices/ticketsSlice";
+import {
+  deleteMultipleTickets,
+  fetchTickets,
+} from "@/app/redux/slices/ticketsSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const RemoveTicketDialog = ({ data }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+
+  const { toast } = useToast();
 
   const handleDelete = (id) => {
     dispatch(
@@ -28,6 +34,12 @@ const RemoveTicketDialog = ({ data }) => {
         token: session?.token.data.token,
       }),
     );
+    dispatch(fetchTickets(session?.token.data.token));
+    toast({
+      title: "Tiket berhasil dihapus",
+      description: `Tiket ${data.ticket_id} berhasil dihapus`,
+      variant: "success",
+    });
   };
 
   return (

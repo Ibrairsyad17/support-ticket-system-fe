@@ -1,4 +1,5 @@
 import {
+  PROVIDER_DELETE,
   PROVIDER_GET,
   PROVIDER_GET_GQL,
   PROVIDER_PATCH,
@@ -133,6 +134,15 @@ export const changePassword = async (data, token) => {
   return response;
 };
 
+export const resetPassword = async (data, tokenUrl, idUrl) => {
+  const response = await PROVIDER_POST(
+    "",
+    `auth/reset-password?token=${tokenUrl}&id=${idUrl}`,
+    data,
+  );
+  return response;
+};
+
 export const forgotPassword = async (data) => {
   const response = await PROVIDER_POST("", "auth/forgot-password", data);
   return response;
@@ -180,5 +190,13 @@ export const logoutInstagramAccount = async (token, sessionID) => {
 
 export const startWhatsappSession = async (token) => {
   const response = await PROVIDER_GET("whatsapp-2/session/start", token);
+  return response;
+};
+
+export const deleteWhatsappSession = async (token, sessionID) => {
+  const response = await PROVIDER_DELETE(
+    token,
+    `whatsapp-2/session/${sessionID}`,
+  );
   return response;
 };

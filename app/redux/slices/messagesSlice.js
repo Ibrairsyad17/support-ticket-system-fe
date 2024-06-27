@@ -71,13 +71,13 @@ export const messagesSlice = createSlice({
       const searchText = action.payload.toLowerCase();
       state.filteredMessages = state.searchedItems.filter(
         (messages) =>
-          messages.customers.instagram_username
+          messages.customers?.instagram_username
             .toLowerCase()
             .includes(searchText) ||
-          messages.customers.twitter_username
+          messages.customers?.twitter_username
             .toLowerCase()
             .includes(searchText) ||
-          messages.customers.whatsapp_username
+          messages.customers?.whatsapp_username
             .toLowerCase()
             .includes(searchText),
       );

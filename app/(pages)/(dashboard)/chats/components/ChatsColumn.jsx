@@ -41,7 +41,7 @@ const ChatsColumn = ({ id }) => {
   }, [session?.token.data.token, dispatch, getStatusInfo]);
 
   return (
-    <ul className="space-y-5 w-full px-6 py-4 h-[20rem] lg:h-[35rem] overflow-y-scroll">
+    <ul className="space-y-5 w-full px-6 lg:pt-5 lg:pb-10 h-[30rem] md:h-[50rem] lg:h-[24rem] xl:h-[32rem] 2xl:h-[36rem] overflow-y-scroll">
       {chats.map((chat) => {
         const date = new Date(chat.sent_time);
         const hours = date.getUTCHours();

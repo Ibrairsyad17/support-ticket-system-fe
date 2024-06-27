@@ -5,6 +5,7 @@ import { Inter_Tight } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import StoreProvider from "@/app/redux/StoreProvider";
 import SocketIOProvider from "@/app/SocketIOProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter_Tight({ subsets: ["latin"] });
 
@@ -14,7 +15,10 @@ export default function RootLayout({ children, session }) {
       <body className={`${inter.className} max-h-screen`}>
         <SessionProvider session={session}>
           <StoreProvider>
-            <SocketIOProvider>{children}</SocketIOProvider>
+            <SocketIOProvider>
+              {children}
+              <Toaster />
+            </SocketIOProvider>
           </StoreProvider>
         </SessionProvider>
       </body>

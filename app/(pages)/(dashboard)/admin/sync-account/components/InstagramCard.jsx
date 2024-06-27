@@ -48,10 +48,16 @@ const InstagramCard = ({ data }) => {
       </h3>
       <p className=" leading-none tracking-tight font-normal text-gray-400 text-xs">
         {data?.status === "CONNECTED" ? (
-          <span>
-            Username
-            <span className="font-medium leading-4 ml-1.5">{data?.name}</span>
-          </span>
+          <div className="flex flex-col">
+            <span>
+              Username:
+              <span className="font-medium leading-4 ml-1.5">{data?.name}</span>
+            </span>
+            <span>
+              Session ID:
+              <span className="font-medium leading-4 ml-1.5">{data?.id}</span>
+            </span>
+          </div>
         ) : (
           <span className="font-medium leading-4">{data?.name}</span>
         )}

@@ -1,6 +1,5 @@
 import React from "react";
 import { UserAuthForm } from "./components/UserAuthForm";
-import Link from "next/link";
 
 function LoginPage() {
   return (

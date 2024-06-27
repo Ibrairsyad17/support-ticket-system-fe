@@ -22,11 +22,6 @@ import { Button } from "@/components/ui/button";
 const InboxPage = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  const [lastRefreshDate, setLastRefreshDate] = React.useState(
-    localStorage.getItem("lastRefreshDate")
-      ? new Date(localStorage.getItem("lastRefreshDate"))
-      : null,
-  );
 
   // Selectors
   const messagesInbox = useSelector(selectFilteredMessages);
@@ -49,11 +44,6 @@ const InboxPage = () => {
 
   const handleRefresh = () => {
     dispatch(fetchMessages(session?.token.data.token));
-    const currentDate = new Date();
-    setLastRefreshDate(currentDate);
-
-    // Save the last refresh date to local storage whenever it changes
-    localStorage.setItem("lastRefreshDate", currentDate.toString());
   };
 
   return (
@@ -68,10 +58,7 @@ const InboxPage = () => {
                   Pesan Masuk
                 </h1>
                 <div className="mt-2 text-sm text-gray-400 flex items-center space-x-3">
-                  <span>
-                    Data terakhir diperbaharui pada{" "}
-                    {lastRefreshDate.toLocaleString()}{" "}
-                  </span>
+                  <span>Data terakhir diperbaharui pada </span>
                 </div>
               </div>
               <div className="flex space-x-3 w-full lg:col-span-2 lg:self-end lg:place-self-end">

@@ -15,8 +15,54 @@ import { Button } from "@/components/ui/button";
 import { ClockIcon } from "@heroicons/react/24/outline";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
+import { changeMessageStatus } from "@/app/api/repository/messagesRepository";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
 
-const Header = ({ data }) => {
+const Header = ({ data, cid }) => {
+  const { data: session } = useSession();
+
+  const { toast } = useToast();
+
+  const handleChangeStatusWaiting = async () => {
+    const res = await changeMessageStatus(
+      cid,
+      false,
+      session?.token.data.token,
+    );
+    if (res.status === 200) {
+      toast({
+        title: "Status Berhasil Diubah",
+        variant: "success",
+        description: "Status pesan berhasil diubah menjadi menunggu",
+      });
+    } else {
+      toast({
+        title: "Status Gagal Diubah",
+        variant: "destructive",
+        description: "Status pesan gagal diubah",
+      });
+    }
+  };
+
+  const handleChangeStatusDone = async () => {
+    const res = await changeMessageStatus(cid, true, session?.token.data.token);
+    console.log(res);
+    if (res.status === 200) {
+      toast({
+        title: "Status Berhasil Diubah",
+        variant: "success",
+        description: "Status pesan berhasil diubah menjadi selesai",
+      });
+    } else {
+      toast({
+        title: "Status Gagal Diubah",
+        variant: "destructive",
+        description: "Status pesan gagal diubah",
+      });
+    }
+  };
+
   return (
     <div className="w-full flex p-5 border-b justify-between items-center">
       <div className="">
@@ -59,10 +105,10 @@ const Header = ({ data }) => {
             <DotsHorizontalIcon className="w-6 h-6 text-gray-800" />
           </PopoverTrigger>
           <PopoverContent className="flex flex-col w-[200px] p-2">
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={handleChangeStatusWaiting}>
               <ClockIcon className="mr-2 h-4 w-4" /> Tandai Menunggu
             </Button>
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={handleChangeStatusDone}>
               <CheckCircledIcon className="mr-2 h-4 w-4" /> Tandai Selesai
             </Button>
           </PopoverContent>
