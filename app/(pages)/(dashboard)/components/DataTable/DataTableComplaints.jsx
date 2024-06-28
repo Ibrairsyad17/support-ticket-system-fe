@@ -22,13 +22,13 @@ import {
   selectItemsPerPage,
   setCurrentPage,
   Loading,
+  fetchComplaints,
 } from "@/app/redux/slices/complaintsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
 import { Label } from "@/components/ui/label";
-import { fetchTickets } from "@/app/redux/slices/ticketsSlice";
 import { useToast } from "@/components/ui/use-toast";
 
 const DataTableComplaints = ({ data, refresh }) => {
@@ -70,7 +70,7 @@ const DataTableComplaints = ({ data, refresh }) => {
       title: "Berhasil Menghapus",
       variant: "success",
     });
-    dispatch(fetchTickets(session?.token.data.token));
+    dispatch(fetchComplaints(session?.token.data.token));
   };
 
   return (
