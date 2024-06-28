@@ -21,6 +21,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
 import ChangeStatus from "@/app/(pages)/(dashboard)/pic/tickets/components/ChangeStatus";
 import TableActions from "@/app/(pages)/(dashboard)/pic/tickets/components/TableActions";
+import { BASE_URL } from "@/app/utils/constant";
 
 const DataTablePic = ({ data, refresh }) => {
   const { data: session } = useSession();
@@ -131,7 +132,7 @@ const DataTablePic = ({ data, refresh }) => {
                         <Avatar className="h-5 w-5">
                           <AvatarFallback>U</AvatarFallback>
                           <AvatarImage
-                            src={ticket.accounts.photo_profile}
+                            src={`${BASE_URL}/${ticket.accounts.photo_profile}`}
                             alt={ticket.accounts.name}
                           />
                         </Avatar>

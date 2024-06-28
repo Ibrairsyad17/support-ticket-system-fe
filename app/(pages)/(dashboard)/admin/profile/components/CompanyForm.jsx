@@ -9,6 +9,7 @@ import {
   getCompanyInfo,
 } from "@/app/api/repository/usersAndCompanyRepository";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { BASE_URL } from "@/app/utils/constant";
 
 const CompanyForm = () => {
   const { data: session } = useSession();
@@ -83,7 +84,10 @@ const CompanyForm = () => {
           <div className="col-span-full">
             <div className="flex items-center gap-x-3">
               <Avatar className={"w-20 h-20"}>
-                <AvatarImage src={companyInfo.photo_profile} alt="@shadcn" />
+                <AvatarImage
+                  src={`${BASE_URL}/${companyInfo.photo_profile}`}
+                  alt="company photo profile"
+                />
                 <AvatarFallback>C</AvatarFallback>
               </Avatar>
               <input

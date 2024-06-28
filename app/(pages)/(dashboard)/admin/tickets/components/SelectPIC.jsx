@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { getUsersPIC } from "@/app/api/repository/usersAndCompanyRepository";
 import { useDispatch } from "react-redux";
 import { updatePICTickets } from "@/app/redux/slices/ticketsSlice";
+import { BASE_URL } from "@/app/utils/constant";
 
 const SelectPic = ({ image, name, id, conversation }) => {
   const { data: session } = useSession();
@@ -51,7 +52,7 @@ const SelectPic = ({ image, name, id, conversation }) => {
               <div className="flex space-x-2 items-center">
                 <Avatar className="h-5 w-5">
                   <AvatarFallback>U</AvatarFallback>
-                  <AvatarImage src={image} alt={name} />
+                  <AvatarImage src={`${BASE_URL}/${image}`} alt={name} />
                 </Avatar>
                 <span className="text-xs">{name}</span>
               </div>

@@ -10,6 +10,7 @@ import {
 } from "@/app/api/repository/usersAndCompanyRepository";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
+import { BASE_URL } from "@/app/utils/constant";
 
 const UserProfileForm = () => {
   const { toast } = useToast();
@@ -93,7 +94,10 @@ const UserProfileForm = () => {
           <div className="col-span-full">
             <div className="flex items-center gap-x-5">
               <Avatar className={"w-20 h-20"}>
-                <AvatarImage src={userInfo.photo_profile} alt="@shadcn" />
+                <AvatarImage
+                  src={`${BASE_URL}/${userInfo.photo_profile}`}
+                  alt="@shadcn"
+                />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <input

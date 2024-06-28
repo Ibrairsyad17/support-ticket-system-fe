@@ -80,21 +80,6 @@ const UserForm = () => {
     numberRef.current.value = userInfo.phone_number;
   };
 
-  const fetchUserPhotoProfile = async () => {
-    const res = await fetchUserPhoto(session?.token.data.token, {
-      url: userInfo.photo_profile,
-    });
-    if (res) {
-      setPhoto(res);
-    }
-  };
-
-  React.useEffect(() => {
-    if (session?.token.data.token) {
-      if (userInfo.photo_profile) fetchUserPhotoProfile();
-    }
-  }, [session?.token.data.token, userInfo.photo_profile]);
-
   return (
     <div className="">
       <h2 className="text-md font-semibold text-gray-900">
