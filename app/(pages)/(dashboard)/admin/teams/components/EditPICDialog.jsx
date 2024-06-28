@@ -26,13 +26,16 @@ import { useSession } from "next-auth/react";
 import { selectAllRoles } from "@/app/redux/slices/rolesSlice";
 import { useSelector } from "react-redux";
 import { getStatus } from "@/app/redux/slices/teamsSlice";
+import { editPIC } from "@/app/api/repository/usersAndCompanyRepository";
+import { useToast } from "@/components/ui/use-toast";
 
 const EditPicDialog = ({ data }) => {
   const { data: session } = useSession();
 
   // Selectors
   const picRoles = useSelector(selectAllRoles);
-  const getStatusInfo = useSelector(getStatus);
+
+  const { toast } = useToast();
 
   // Input Ref
   const nameRef = React.createRef(data?.name);
@@ -40,6 +43,41 @@ const EditPicDialog = ({ data }) => {
   const phoneRef = React.createRef(data?.phone_number);
   const usernameRef = React.createRef(data?.username);
   const [role, setRole] = React.useState(data?.pic_roles.id);
+
+  const handleEditPic = async (e) => {
+    e.preventDefault();
+
+    const dataToSubmit = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      no_telp: phoneRef.current.value,
+      username: usernameRef.current.value,
+      pic_role_id: Number(role),
+    };
+
+    if (data?.email === emailRef.current.value) {
+      delete dataToSubmit.email;
+    }
+
+    console.log(dataToSubmit);
+
+    const res = await editPIC(dataToSubmit, session?.token.data.token, data.id);
+    if (res.status === 200) {
+      toast({
+        title: "Berhasil mengubah data PIC",
+        message: "PIC berhasil diubah",
+        variant: "success",
+      });
+      window.location.reload();
+    } else {
+      toast({
+        title: "Gagal mengubah data PIC",
+        message: "Terjadi kesalahan saat mengubah PIC, email sudah digunakan",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -62,6 +100,7 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="name"
                 className="mt-2"
+                ref={nameRef}
                 defaultValue={data?.name}
               />
             </div>
@@ -71,6 +110,7 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="username"
                 className="mt-2"
+                ref={usernameRef}
                 defaultValue={data?.username}
               />
             </div>
@@ -80,6 +120,7 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="email"
                 className="mt-2"
+                ref={emailRef}
                 defaultValue={data?.email}
               />
             </div>
@@ -89,6 +130,7 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="phone-number"
                 className="mt-2"
+                ref={phoneRef}
                 defaultValue={data?.phone_number}
               />
             </div>
@@ -121,7 +163,7 @@ const EditPicDialog = ({ data }) => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-2 mt-5">
-            <Button type="submit" className="px-3">
+            <Button type="button" className="px-3" onClick={handleEditPic}>
               Edit
             </Button>
             <DialogClose asChild>

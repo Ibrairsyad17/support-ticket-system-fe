@@ -57,6 +57,25 @@ export const createPIC = createAsyncThunk(
   },
 );
 
+export const updatePIC = createAsyncThunk(
+  "teams/updatePIC",
+  async ({ data, token, id }) => {
+    const axiosInstance = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // try {
+    //   const response = await axiosInstance.put(`/users/update-pic/${id}`, data);
+    //   const userUpdated = response.data.data;
+    //
+    //   const getUserPIC = await getPICById(token, user
+    // }
+  },
+);
+
 export const deleteMultiplePIC = createAsyncThunk(
   "teams/deleteMultiplePIC",
   async ({ ids, token }) => {

@@ -270,7 +270,9 @@ const ticketsSlice = createSlice({
             .includes(searchText) ||
           tickets.conversation_messages.conversations.customers?.twitter_username
             ?.toLowerCase()
-            .includes(searchText),
+            .includes(searchText) ||
+          tickets.assignment_name.toLowerCase().includes(searchText) ||
+          tickets.ticket_id.toLowerCase().includes(searchText),
       );
     },
 
