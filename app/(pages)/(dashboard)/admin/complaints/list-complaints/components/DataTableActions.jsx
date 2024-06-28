@@ -13,7 +13,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
-import { deleteMultipleComplaints } from "@/app/redux/slices/complaintsSlice";
+import {
+  deleteMultipleComplaints,
+  fetchComplaints,
+} from "@/app/redux/slices/complaintsSlice";
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
@@ -36,6 +39,7 @@ const DataTableActions = ({ id, chatID }) => {
       variant: "success",
       description: "Berhasil menghapus data",
     });
+    dispatch(fetchComplaints(session?.token.data.token));
   };
   return (
     <div className="flex justify-end space-x-3">

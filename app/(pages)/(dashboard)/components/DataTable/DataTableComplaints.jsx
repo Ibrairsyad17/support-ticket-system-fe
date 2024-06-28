@@ -28,6 +28,8 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
 import { Label } from "@/components/ui/label";
+import { fetchTickets } from "@/app/redux/slices/ticketsSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const DataTableComplaints = ({ data, refresh }) => {
   const { data: session } = useSession();
@@ -38,6 +40,8 @@ const DataTableComplaints = ({ data, refresh }) => {
   const currentPage = useSelector(selectCurrentPage);
   const itemsPerPage = useSelector(selectItemsPerPage);
   const isLoading = useSelector(Loading);
+
+  const { toast } = useToast();
 
   const complaintsForCurrentPage = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -62,6 +66,11 @@ const DataTableComplaints = ({ data, refresh }) => {
       }),
     );
     dispatch(resetSelectedItems());
+    toast({
+      title: "Berhasil Menghapus",
+      variant: "success",
+    });
+    dispatch(fetchTickets(session?.token.data.token));
   };
 
   return (

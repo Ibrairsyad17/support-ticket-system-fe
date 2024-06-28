@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteMultipleTickets,
+  fetchTickets,
   Loading,
   resetSelectedItems,
   selectAllItems,
@@ -22,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
+import { useToast } from "@/components/ui/use-toast";
 
 const DataTableTickets = ({ data, refresh }) => {
   const { data: session } = useSession();
@@ -32,6 +34,8 @@ const DataTableTickets = ({ data, refresh }) => {
   const currentPage = useSelector((state) => state.tickets.currentPage);
   const itemsPerPage = useSelector((state) => state.tickets.itemsPerPage);
   const getLoading = useSelector(Loading);
+
+  const { toast } = useToast();
 
   const ticketsForCurrentPage = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -47,6 +51,11 @@ const DataTableTickets = ({ data, refresh }) => {
       }),
     );
     dispatch(resetSelectedItems());
+    toast({
+      title: "Berhasil Menghapus",
+      variant: "success",
+    });
+    dispatch(fetchTickets(session?.token.data.token));
   };
 
   const handleSelectAll = (checked) => {
