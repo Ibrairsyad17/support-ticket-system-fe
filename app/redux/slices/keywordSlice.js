@@ -133,8 +133,14 @@ const keywordSlice = createSlice({
   initialState,
   reducers: {
     filteredCategories: (state, action) => {
-      state.keywords = state.keywordsContainer.filter((keyword) =>
-        keyword.name.toLowerCase().includes(action.payload.toLowerCase()),
+      state.keywords = state.keywordsContainer.filter(
+        (keyword) =>
+          keyword.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+          keyword.keywords.filter((keyword) => {
+            return keyword.name
+              .toLowerCase()
+              .includes(action.payload.toLowerCase());
+          }).length > 0,
       );
     },
   },
