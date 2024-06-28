@@ -83,6 +83,14 @@ const TabCreateTicket = ({ id }) => {
     }
   };
 
+  const handleReset = () => {
+    setStatus("ASSIGNED");
+    setPriority("MEDIUM");
+    setRecipient("");
+    nameTicket.current.value = "";
+    descriptionTicket.current.value = "";
+  };
+
   return (
     <>
       <div className="px-6 py-2.5 mt-3 bg-white text-lg font-semibold">
@@ -219,7 +227,9 @@ const TabCreateTicket = ({ id }) => {
           <Input id="file" type="file" />
         </div>
         <div className="grid lg:grid-cols-2 space-x-2">
-          <Button variant="outline">Atur Ulang</Button>
+          <Button type="button" variant="outline" onClick={handleReset}>
+            Atur Ulang
+          </Button>
           <Button type="submit">Buat Tiket</Button>
         </div>
       </form>

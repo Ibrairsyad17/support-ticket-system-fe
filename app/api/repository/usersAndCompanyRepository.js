@@ -125,6 +125,11 @@ export const importPIC = async (data, token) => {
   return response;
 };
 
+export const fetchUserPhoto = async (token, data) => {
+  const res = await PROVIDER_POST(token, "users/image", data);
+  return res;
+};
+
 export const changeCompanyInfo = async (data, token) => {
   const response = await PROVIDER_PATCH(token, "company", data);
   return response;

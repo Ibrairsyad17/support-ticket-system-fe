@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import {
   changeUserInfo,
+  fetchUserPhoto,
   getUserInfo,
 } from "@/app/api/repository/usersAndCompanyRepository";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { changeUserPhoto } from "@/app/api/repository/usersAndCompanyRepository";
+import PhotoProfile from "@/app/(pages)/(dashboard)/admin/profile/components/PhotoProfile";
 
 const UserForm = () => {
   const { data: session } = useSession();
@@ -27,6 +29,7 @@ const UserForm = () => {
     updated_at: "",
     deleted_at: "",
   });
+  const [photo, setPhoto] = React.useState(null);
 
   const fetchUserInfo = async () => {
     const res = await getUserInfo(session?.token.data.token);
@@ -77,6 +80,21 @@ const UserForm = () => {
     numberRef.current.value = userInfo.phone_number;
   };
 
+  const fetchUserPhotoProfile = async () => {
+    const res = await fetchUserPhoto(session?.token.data.token, {
+      url: userInfo.photo_profile,
+    });
+    if (res) {
+      setPhoto(res);
+    }
+  };
+
+  React.useEffect(() => {
+    if (session?.token.data.token) {
+      if (userInfo.photo_profile) fetchUserPhotoProfile();
+    }
+  }, [session?.token.data.token, userInfo.photo_profile]);
+
   return (
     <div className="">
       <h2 className="text-md font-semibold text-gray-900">
@@ -87,10 +105,7 @@ const UserForm = () => {
         <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-5">
           <div className="col-span-full">
             <div className="flex items-center gap-x-5">
-              <Avatar className={"w-20 h-20"}>
-                <AvatarImage src={userInfo.photo_profile} alt="@shadcn" />
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
+              <PhotoProfile data={userInfo.photo_profile} />
               <input
                 type="file"
                 id="fileInput"

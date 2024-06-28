@@ -13,15 +13,33 @@ import { useToast } from "@/components/ui/use-toast";
 const TabCustomerDetails = ({ data }) => {
   const { data: session } = useSession();
   const [additionalInfo, setAdditional] = React.useState("");
+  const [email, setEmail] = React.useState(data.customers?.email);
+  const [instagram, setInstagram] = React.useState(
+    data.customers?.instagram_username,
+  );
+  const [whatsapp, setWhatsapp] = React.useState(
+    data.customers?.whatsapp_number,
+  );
+  const [twitter, setTwitter] = React.useState(
+    data.customers?.twitter_username,
+  );
+  const [disabledInput, setDisabledInput] = React.useState(false);
 
   const { toast } = useToast();
 
   const handleSetAdditionalInfo = async (e) => {
     e.preventDefault();
+
     const res = await setAdditionalInfo(
       session.token.data.token,
       data.customer_id,
-      { additional_info: additionalInfo },
+      {
+        additional_info: additionalInfo,
+        email,
+        instagram_username: instagram,
+        whatsapp_number: whatsapp,
+        twitter_username: twitter,
+      },
     );
     if (res.status === 200) {
       toast({
@@ -55,7 +73,7 @@ const TabCustomerDetails = ({ data }) => {
           <Input
             id="email"
             defaultValue={data === [] ? "" : data.customers?.email}
-            disabled
+            onChange={(e) => setEmail(e.target.value)}
           />
           <span className="text-gray-500 text-sm">Contoh: ads@gmail.com</span>
         </div>
@@ -70,7 +88,8 @@ const TabCustomerDetails = ({ data }) => {
               defaultValue={
                 data === [] ? "" : data.customers?.instagram_username
               }
-              disabled
+              disabled={data.social_media?.platform === "INSTAGRAM"}
+              onChange={(e) => setInstagram(e.target.value)}
               className="focus-visible:ring-0 border-none"
             />
           </div>
@@ -84,7 +103,8 @@ const TabCustomerDetails = ({ data }) => {
             <Input
               id="instagram"
               defaultValue={data === [] ? "" : data.customers?.whatsapp_number}
-              disabled
+              disabled={data.social_media?.platform === "WHATSAPP"}
+              onChange={(e) => setWhatsapp(e.target.value)}
               className="focus-visible:ring-0 border-none"
             />
           </div>
@@ -98,7 +118,8 @@ const TabCustomerDetails = ({ data }) => {
             <Input
               id="twitter"
               defaultValue={data === [] ? "" : data.customers?.twitter_username}
-              disabled
+              disabled={data.social_media?.platform === "TWITTER"}
+              onChange={(e) => setTwitter(e.target.value)}
               className="focus-visible:ring-0 border-none"
             />
           </div>
