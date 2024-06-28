@@ -163,6 +163,7 @@ const teamsSlice = createSlice({
           state.status = "failed";
         } else {
           state.error = false;
+          state.status = "data added";
         }
         state.teams.push(action.payload);
         state.filteredPIC = state.teams;

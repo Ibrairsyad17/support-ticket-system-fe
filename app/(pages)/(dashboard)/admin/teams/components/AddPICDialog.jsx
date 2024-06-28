@@ -30,12 +30,10 @@ import {
   fetchTeams,
   getStatus,
 } from "@/app/redux/slices/teamsSlice";
-import { useToast } from "@/components/ui/use-toast";
 
 const AddPicDialog = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  const { toast } = useToast();
 
   // Selectors
   const picRoles = useSelector(selectAllRoles);
@@ -45,6 +43,7 @@ const AddPicDialog = () => {
   const nameRef = React.createRef(null);
   const emailRef = React.createRef(null);
   const phoneRef = React.createRef(null);
+  const usernameRef = React.createRef(null);
   const [role, setRole] = React.useState(1);
 
   const handleAddPic = (e) => {
@@ -53,22 +52,10 @@ const AddPicDialog = () => {
       name: nameRef.current.value,
       email: emailRef.current.value,
       no_telp: phoneRef.current.value,
+      username: usernameRef.current.value,
       pic_role_id: role,
     };
     dispatch(createPIC({ data, token: session?.token.data.token }));
-    if (getStatusInfo === "failed") {
-      toast({
-        title: "Gagal menambahkan data PIC",
-        description: "Nomor atau email sudah terdaftar",
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: `Berhasil menambahkan data PIC ${data.name}`,
-        description: "Data PIC berhasil ditambahkan",
-        variant: "success",
-      });
-    }
 
     dispatch(fetchTeams(session?.token.data.token));
   };
@@ -89,6 +76,9 @@ const AddPicDialog = () => {
               {getStatusInfo === "failed" &&
                 "Gagal menambahkan data, nomor atau email sudah terdaftar"}
             </span>
+            {getStatusInfo === "data added" && (
+              <span className="text-green-600">Data berhasil ditambahkan</span>
+            )}
           </DialogDescription>
         </DialogHeader>
         <form>
@@ -101,6 +91,16 @@ const AddPicDialog = () => {
                 ref={nameRef}
                 className="mt-2"
                 placeholder="Masukkan nama"
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="name">Username</Label>
+              <Input
+                type="text"
+                id="username"
+                ref={usernameRef}
+                className="mt-2"
+                placeholder="Masukkan username"
               />
             </div>
             <div className="flex-1">
