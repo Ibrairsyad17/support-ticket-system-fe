@@ -29,6 +29,7 @@ export const getUsersPIC = async (token, role) => {
         phone_number
         photo_profile
         pic_roles{
+            id
             role
         }
     }

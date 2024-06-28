@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Dialog,
@@ -21,8 +22,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSession } from "next-auth/react";
+import { selectAllRoles } from "@/app/redux/slices/rolesSlice";
+import { useSelector } from "react-redux";
+import { getStatus } from "@/app/redux/slices/teamsSlice";
 
 const EditPicDialog = ({ data }) => {
+  const { data: session } = useSession();
+
+  // Selectors
+  const picRoles = useSelector(selectAllRoles);
+  const getStatusInfo = useSelector(getStatus);
+
+  // Input Ref
+  const nameRef = React.createRef(data?.name);
+  const emailRef = React.createRef(data?.email);
+  const phoneRef = React.createRef(data?.phone_number);
+  const usernameRef = React.createRef(data?.username);
+  const [role, setRole] = React.useState(data?.pic_roles.id);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -45,7 +62,16 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="name"
                 className="mt-2"
-                value={data?.name}
+                defaultValue={data?.name}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="name">Username</Label>
+              <Input
+                type="text"
+                id="username"
+                className="mt-2"
+                defaultValue={data?.username}
               />
             </div>
             <div className="flex-1">
@@ -54,7 +80,7 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="email"
                 className="mt-2"
-                value={data?.email}
+                defaultValue={data?.email}
               />
             </div>
             <div className="flex-1">
@@ -63,23 +89,31 @@ const EditPicDialog = ({ data }) => {
                 type="text"
                 id="phone-number"
                 className="mt-2"
-                value={data?.phone_number}
+                defaultValue={data?.phone_number}
               />
             </div>
             <div className="flex-1">
               <Label htmlFor="phone-number">Pilih Jenis PIC</Label>
-              <Select>
+              <Select
+                className="mt-2"
+                onValueChange={(value) => {
+                  setRole(Number(value));
+                }}
+              >
                 <SelectTrigger className="mt-2">
-                  <SelectValue placeholder={data?.pic_roles.role} />
+                  <SelectValue
+                    defaultValue={data?.pic_roles.id}
+                    placeholder={data?.pic_roles.role}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Jenis PIC</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                    {picRoles.map((role) => (
+                      <SelectItem key={role.id} value={role.id}>
+                        {role.role}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
