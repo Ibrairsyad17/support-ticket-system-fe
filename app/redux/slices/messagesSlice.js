@@ -72,12 +72,17 @@ export const messagesSlice = createSlice({
       state.filteredMessages = state.searchedItems.filter(
         (messages) =>
           messages.customers?.instagram_username
-            .toLowerCase()
+            ?.toLowerCase()
             .includes(searchText) ||
           messages.customers?.twitter_username
-            .toLowerCase()
+            ?.toLowerCase()
             .includes(searchText) ||
           messages.customers?.whatsapp_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          messages.conversation_messages[
+            messages.conversation_messages.length - 1
+          ].message
             .toLowerCase()
             .includes(searchText),
       );

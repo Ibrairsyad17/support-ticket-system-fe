@@ -53,6 +53,8 @@ const DataTableTickets = ({ data, refresh }) => {
     dispatch(selectAllItems(checked));
   };
 
+  console.log(data);
+
   return (
     <div className="grid grid-cols-1 gap-y-5">
       <div className="flex item-center justify-between">
@@ -114,6 +116,7 @@ const DataTableTickets = ({ data, refresh }) => {
               <p className="col-span-1 text-sm">Aksi</p>
             </li>
             {ticketsForCurrentPage.map((ticket) => {
+              console.log(ticket.id);
               return (
                 <li
                   key={ticket.id}

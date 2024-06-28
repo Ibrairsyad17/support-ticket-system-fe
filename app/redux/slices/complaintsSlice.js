@@ -150,8 +150,14 @@ const complaintsSlice = createSlice({
       const searchText = action.payload.toLowerCase();
       state.filteredComplaintsByPlatform = state.searchedItems.filter(
         (complaint) =>
-          complaint.conversation_messages.conversations.customers.nama_lengkap
-            .toLowerCase()
+          complaint.conversation_messages.conversations.customers.whatsapp_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          complaint.conversation_messages.conversations.customers.twitter_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          complaint.conversation_messages.conversations.customers.instagram_username
+            ?.toLowerCase()
             .includes(searchText) ||
           complaint.assignment_detail.toLowerCase().includes(searchText) ||
           (complaint.conversation_messages.convo_message_category === []

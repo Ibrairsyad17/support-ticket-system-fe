@@ -21,6 +21,7 @@ function ResetPage() {
     };
 
     const res = await forgotPassword(data);
+    console.log(res);
     if (res == 404) {
       toast({
         title: "Email tidak ditemukan",

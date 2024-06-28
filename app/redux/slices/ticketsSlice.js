@@ -239,10 +239,18 @@ const ticketsSlice = createSlice({
     // Search items
     searchItems: (state, action) => {
       const searchText = action.payload.toLowerCase();
-      state.filteredTickets = state.searchedItems.filter((tickets) =>
-        tickets.conversation_messages.conversations.customers.nama_lengkap
-          .toLowerCase()
-          .includes(searchText),
+      state.filteredTickets = state.searchedItems.filter(
+        (tickets) =>
+          tickets.conversation_messages.conversations.customers?.whatsapp_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          tickets.ticket_id.includes(searchText) ||
+          tickets.conversation_messages.conversations.customers?.instagram_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          tickets.conversation_messages.conversations.customers?.twitter_username
+            ?.toLowerCase()
+            .includes(searchText),
       );
     },
 
@@ -251,11 +259,16 @@ const ticketsSlice = createSlice({
       const searchText = action.payload.toLowerCase();
       state.filteredTicketsPic = state.searchedItemsPic.filter(
         (tickets) =>
-          tickets.conversation_messages.conversations.customers.nama_lengkap
-            .toLowerCase()
+          tickets.conversation_messages.conversations.customers?.whatsapp_username
+            ?.toLowerCase()
             .includes(searchText) ||
           tickets.ticket_id.includes(searchText) ||
-          tickets.assignment_name.toLowerCase().includes(searchText),
+          tickets.conversation_messages.conversations.customers?.instagram_username
+            ?.toLowerCase()
+            .includes(searchText) ||
+          tickets.conversation_messages.conversations.customers?.twitter_username
+            ?.toLowerCase()
+            .includes(searchText),
       );
     },
 
