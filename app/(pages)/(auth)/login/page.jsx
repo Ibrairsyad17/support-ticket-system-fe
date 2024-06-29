@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { Suspense } from "react";
 import { UserAuthForm } from "./components/UserAuthForm";
 
 function LoginPage() {
@@ -12,7 +13,18 @@ function LoginPage() {
               Masukan alamat email Anda untuk melanjutkan.
             </p>
           </div>
-          <UserAuthForm />
+          <Suspense
+            fallback={
+              <div className="flex min-h-[100dvh] items-center justify-center bg-background">
+                <div className="space-y-4 text-center">
+                  <div className="h-12 w-12 animate-spin text-primary" />
+                  <p className="text-muted-foreground">Loading...</p>
+                </div>
+              </div>
+            }
+          >
+            <UserAuthForm />
+          </Suspense>
         </div>
       </div>
     </>
