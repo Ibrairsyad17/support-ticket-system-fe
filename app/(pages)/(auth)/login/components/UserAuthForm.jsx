@@ -53,6 +53,13 @@ export function UserAuthForm() {
           </strong>
         </div>
       )}
+      {errorParams === "CredentialsNotFound" && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+          <strong className="font-semibold">
+            Gagal masuk, email anda tidak terdaftar!
+          </strong>
+        </div>
+      )}
       <form>
         <div className="grid gap-2">
           <div className="grid gap-1">

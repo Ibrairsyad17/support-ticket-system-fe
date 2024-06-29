@@ -3,12 +3,16 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   async function middleware(req) {
-    console.log(req.nextauth.token);
+    console.log("nextauthtoken", req.nextauth.token);
     if (
       req.nextauth.token.message ===
       "OTP has been sent to your email or phone number"
     ) {
       return NextResponse.redirect(new URL("/login/phone-number", req.nextUrl));
+    } else if (req.nextauth.token.message === "Credentials not found") {
+      return NextResponse.redirect(
+        new URL("/login?error=CredentialsNotFound", req.nextUrl),
+      );
     } else {
       if (
         req.nextUrl.pathname.startsWith("/pic") &&

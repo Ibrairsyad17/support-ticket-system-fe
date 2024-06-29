@@ -82,8 +82,20 @@ export const authConfig = {
     maxAge: 86400,
   },
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async jwt({ token, account, user }) {
+      if (account?.provider === "google") {
+        const res = await fetch(`${BASE_URL}/auth/google`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${account.id_token}`,
+          },
+        });
+
+        user = await res.json();
+        return { ...token, ...user };
+      } else {
+        return { ...token, ...user };
+      }
     },
     async session(session, token, user) {
       session.user = token;
