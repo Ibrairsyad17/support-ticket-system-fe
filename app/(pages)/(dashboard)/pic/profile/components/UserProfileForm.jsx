@@ -64,8 +64,11 @@ const UserProfileForm = () => {
     e.preventDefault();
     const data = {
       username: usernameRef.current.value,
+      email: emailRef.current.value,
+      no_telp: numberRef.current.value,
     };
     const res = await changeUserInfo(data, session?.token.data.token);
+    console.log(res);
     if (res) {
       toast({
         title: "Nama Pengguna Berhasil Diubah",
@@ -127,17 +130,17 @@ const UserProfileForm = () => {
               <Input defaultValue={userInfo.username} ref={usernameRef}></Input>
             </div>
           </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="pic"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              PIC
-            </label>
-            <div className="mt-2">
-              <Input value="PIC Web" disabled></Input>
-            </div>
-          </div>
+          {/*<div className="sm:col-span-2">*/}
+          {/*  <label*/}
+          {/*    htmlFor="pic"*/}
+          {/*    className="block text-sm font-medium leading-6 text-gray-900"*/}
+          {/*  >*/}
+          {/*    PIC*/}
+          {/*  </label>*/}
+          {/*  <div className="mt-2">*/}
+          {/*    <Input value="PIC Web" disabled></Input>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           <div className="sm:col-span-2">
             <label
               htmlFor="email"

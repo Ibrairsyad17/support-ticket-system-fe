@@ -64,6 +64,8 @@ const UserForm = () => {
     e.preventDefault();
     const data = {
       username: usernameRef.current.value,
+      email: emailRef.current.value,
+      no_telp: numberRef.current.value,
     };
 
     const res = await changeUserInfo(data, session?.token.data.token);
