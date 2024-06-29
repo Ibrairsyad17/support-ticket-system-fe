@@ -11,6 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { changeUserPhoto } from "@/app/api/repository/usersAndCompanyRepository";
 import PhotoProfile from "@/app/(pages)/(dashboard)/admin/profile/components/PhotoProfile";
+import { useToast } from "@/components/ui/use-toast";
 
 const UserForm = () => {
   const { data: session } = useSession();
@@ -29,7 +30,8 @@ const UserForm = () => {
     updated_at: "",
     deleted_at: "",
   });
-  const [photo, setPhoto] = React.useState(null);
+
+  const { toast } = useToast();
 
   const fetchUserInfo = async () => {
     const res = await getUserInfo(session?.token.data.token);
@@ -71,6 +73,11 @@ const UserForm = () => {
     const res = await changeUserInfo(data, session?.token.data.token);
     if (res) {
       fetchUserInfo();
+      toast({
+        title: "Nama Pengguna Berhasil Diubah",
+        variant: "success",
+        description: `Berhasil mengubah nama pengguna ${data.username}`,
+      });
     } else {
       console.log("Failed to update data");
     }
