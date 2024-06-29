@@ -69,7 +69,10 @@ const SelectPic = ({ image, name, id, conversation }) => {
                 <div className="flex space-x-2 items-center">
                   <Avatar className="h-5 w-5">
                     <AvatarFallback>U</AvatarFallback>
-                    <AvatarImage src={pic.photo_profile} alt={pic.name} />
+                    <AvatarImage
+                      src={`${BASE_URL}/${pic.photo_profile}`}
+                      alt={pic.name}
+                    />
                   </Avatar>
                   <span className="text-xs">{pic.name}</span>
                 </div>

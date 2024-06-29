@@ -242,6 +242,7 @@ export const createTicket = async (token, data) => {
   formData.append("status", data.status);
   formData.append("assignment_date", data.assignment_date);
   formData.append("conversation_messages_id", data.conversation_messages_id);
+  formData.append("assignment_file", data.assignment_file);
 
   const response = await PROVIDER_POST_FORM_DATA(token, "assignment", formData);
   return response;

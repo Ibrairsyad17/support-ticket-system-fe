@@ -23,7 +23,7 @@ const TabCustomerDetails = ({ data }) => {
   const [twitter, setTwitter] = React.useState(
     data.customers?.twitter_username,
   );
-  const [disabledInput, setDisabledInput] = React.useState(false);
+  const [fullname, setFullname] = React.useState(data.customers?.nama_lengkap);
 
   const { toast } = useToast();
 
@@ -36,11 +36,13 @@ const TabCustomerDetails = ({ data }) => {
       {
         additional_info: additionalInfo,
         email,
+        nama_lengkap: fullname,
         instagram_username: instagram,
         whatsapp_number: whatsapp,
         twitter_username: twitter,
       },
     );
+    console.log(res);
     if (res.status === 200) {
       toast({
         title: "Berhasil menambahkan informasi tambahan",
@@ -49,6 +51,7 @@ const TabCustomerDetails = ({ data }) => {
     } else {
       toast({
         title: "Gagal menambahkan informasi tambahan",
+        description: "Informasi tambahan tidak boleh kosong",
         variant: "destructive",
       });
     }
@@ -65,7 +68,7 @@ const TabCustomerDetails = ({ data }) => {
           <Input
             id="name"
             defaultValue={data === [] ? "" : data.customers?.nama_lengkap}
-            disabled
+            onChange={(e) => setFullname(e.target.value)}
           />
         </div>
         <div className="flex flex-col space-y-3">

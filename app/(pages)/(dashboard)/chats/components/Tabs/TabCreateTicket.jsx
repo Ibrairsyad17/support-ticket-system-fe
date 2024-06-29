@@ -29,6 +29,7 @@ const TabCreateTicket = ({ id }) => {
   const [recipient, setRecipient] = React.useState("");
   const [pics, setPics] = React.useState([]);
   const [status, setStatus] = React.useState("ASSIGNED");
+  const [file, setFile] = React.useState(null);
 
   const convo_messages_id = useSelector(selectLastChat);
 
@@ -46,6 +47,10 @@ const TabCreateTicket = ({ id }) => {
     if (session?.token.data.token) fetchPics();
   }, [session?.token.data.token]);
 
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -56,6 +61,7 @@ const TabCreateTicket = ({ id }) => {
       status,
       assignment_date: new Date().toISOString(),
       conversation_messages_id: Number(convo_messages_id.id),
+      assignment_file: file,
     };
     const res = await createTicket(session?.token.data.token, data);
     console.log(res);
@@ -224,7 +230,7 @@ const TabCreateTicket = ({ id }) => {
         </div>
         <div className="flex flex-col space-y-3">
           <Label htmlFor="file">File</Label>
-          <Input id="file" type="file" />
+          <Input id="file" type="file" onChange={handleFile} />
         </div>
         <div className="grid lg:grid-cols-2 space-x-2">
           <Button type="button" variant="outline" onClick={handleReset}>

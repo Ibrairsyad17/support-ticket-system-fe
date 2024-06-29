@@ -16,6 +16,7 @@ import {
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
 import CommentInput from "@/app/(pages)/(dashboard)/components/Comment/CommentInput";
 import Link from "next/link";
+import { BASE_URL } from "@/app/utils/constant";
 
 const TicketDetails = ({ ticket }) => {
   return (
@@ -140,7 +141,13 @@ const TicketDetails = ({ ticket }) => {
                 File:
               </p>
               <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2">
-                <Link href={ticket?.assignment_file ?? "/"}>File Lampiran</Link>
+                {ticket?.assignment_file !== null ? (
+                  <Link href={`${BASE_URL}/${ticket?.assignment_file}`}>
+                    <span className="text-blue-500">File Lampiran</span>
+                  </Link>
+                ) : (
+                  "-"
+                )}
               </span>
             </div>
 

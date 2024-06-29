@@ -26,6 +26,7 @@ export const getChatsInfo = async (token, id) => {
           customers{
             instagram_username
             id
+            nama_lengkap
             instagram_id
             platform
             twitter_username

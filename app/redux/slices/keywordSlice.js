@@ -18,7 +18,6 @@ export const fetchCategories = createAsyncThunk(
   async (token) => {
     try {
       const response = await getCategoriesAndKeywords(token);
-      console.log(response.data.data.categories);
       return response.data.data.categories;
     } catch (error) {
       return error.message;

@@ -74,9 +74,8 @@ const UserForm = () => {
     if (res) {
       fetchUserInfo();
       toast({
-        title: "Nama Pengguna Berhasil Diubah",
+        title: "Data Pengguna Berhasil Diubah",
         variant: "success",
-        description: `Berhasil mengubah nama pengguna ${data.username}`,
       });
     } else {
       console.log("Failed to update data");

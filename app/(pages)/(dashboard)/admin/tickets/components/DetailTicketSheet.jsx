@@ -18,6 +18,7 @@ import {
 import Comment from "@/app/(pages)/(dashboard)/components/Comment/Comment";
 import Link from "next/link";
 import SelectPic from "@/app/(pages)/(dashboard)/admin/tickets/components/SelectPIC";
+import { BASE_URL } from "@/app/utils/constant";
 
 const DetailTicketSheet = ({ data }) => {
   return (
@@ -134,7 +135,13 @@ const DetailTicketSheet = ({ data }) => {
                 File:
               </p>
               <span className="px-2 py-1.5 border text-gray-600 rounded-lg pb-2">
-                {/*<Link href={data?.assignment_file}>File Lampiran</Link>*/}
+                {data?.assignment_file !== null ? (
+                  <Link href={`${BASE_URL}/${data?.assignment_file}`}>
+                    <span className="text-blue-500">File Lampiran</span>
+                  </Link>
+                ) : (
+                  "-"
+                )}
               </span>
             </div>
             <h3 className="font-semibold text-gray-900 pt-2 text-left">
