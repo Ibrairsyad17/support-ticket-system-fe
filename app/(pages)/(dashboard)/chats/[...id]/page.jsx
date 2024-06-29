@@ -6,15 +6,23 @@ import InputMessageSection from "@/app/(pages)/(dashboard)/chats/components/Inpu
 import DetailsCustomer from "@/app/(pages)/(dashboard)/chats/components/DetailsCustomer";
 import { useSession } from "next-auth/react";
 import { getChatsInfo } from "@/app/api/repository/customersRepository";
+import { useRouter } from "next/navigation";
 
 const ChatsPage = ({ params: { id } }) => {
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   const [chatsInfo, setChatsInfo] = React.useState({});
 
   const fetchChatsInfo = async () => {
     const response = await getChatsInfo(session?.token.data.token, id[0]);
+    console.log(response);
     if (response) {
+      if (response.data.data.conversations === null) {
+        router.push("/404");
+        return;
+      }
       setChatsInfo(response.data.data.conversations[0]);
     }
   };

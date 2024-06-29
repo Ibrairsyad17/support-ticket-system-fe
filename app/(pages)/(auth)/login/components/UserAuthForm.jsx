@@ -10,13 +10,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { useRef } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { useToast } from "@/components/ui/use-toast";
 
 export function UserAuthForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const email = useRef("");
   const password = useRef("");
+
+  const params = useSearchParams();
+
+  const errorParams = params.get("error");
 
   async function onSubmit() {
     setIsLoading(true);
@@ -41,6 +46,13 @@ export function UserAuthForm() {
 
   return (
     <div className="grid gap-6">
+      {errorParams === "CredentialsSignin" && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+          <strong className="font-semibold">
+            Gagal masuk, periksa kembali email dan kata sandi anda!
+          </strong>
+        </div>
+      )}
       <form>
         <div className="grid gap-2">
           <div className="grid gap-1">
