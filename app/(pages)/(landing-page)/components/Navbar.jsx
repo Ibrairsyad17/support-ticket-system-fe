@@ -51,25 +51,25 @@ export default function Navbar() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link
-            href="#"
+            href="/"
             className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Beranda
           </Link>
           <Link
-            href="#"
+            href="/#integrasi"
             className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Integrasi
           </Link>
           <Link
-            href="#"
+            href="/#fitur"
             className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Fitur
           </Link>
           <Link
-            href="#"
+            href="/#contact"
             className="text-sm font-semibold leading-9 duration-300 transition hover:text-emerald-500 navbarLinks text-gray-900"
           >
             Hubungi Kami

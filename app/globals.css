@@ -109,4 +109,8 @@
   .checkbox:checked + .checkbox-label {
     border-color: #0f172a;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }

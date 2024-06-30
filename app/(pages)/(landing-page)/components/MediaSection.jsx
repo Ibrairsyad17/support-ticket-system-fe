@@ -26,7 +26,7 @@ function MediaSection() {
   };
 
   return (
-    <section className="bg-white">
+    <section className="bg-white" id="integrasi">
       <div className="grid max-w-6xl mx-auto lg:gap-8 lg:py-16 lg:grid-cols-12">
         <motion.div
           className="mr-auto place-self-center lg:col-span-7"

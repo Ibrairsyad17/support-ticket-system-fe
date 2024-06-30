@@ -102,7 +102,7 @@ const SidebarAdmin = () => {
           <div className="px-7 pt-2 mb-2">
             <Link
               className="flex-none text-xl text-green-500 font-semibold "
-              href="/"
+              href="/admin/dashboard"
               aria-label="Brand"
             >
               <Image

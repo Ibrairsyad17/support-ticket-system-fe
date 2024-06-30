@@ -76,7 +76,10 @@ function Features() {
   };
 
   return (
-    <section className="bg-white lg:my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto lg:max-w-6xl w-11/12 place-items-center overflow-hidden">
+    <section
+      id="fitur"
+      className="bg-white lg:my-20 transition duration-300 antialiased grid-cols-1 grid mx-auto lg:max-w-6xl w-11/12 place-items-center overflow-hidden"
+    >
       <div className="max-w-[85rem] px-4 pt-8 mx-auto lg:px-6">
         <motion.div
           className="lg:text-center lg:max-w-5xl mx-auto"

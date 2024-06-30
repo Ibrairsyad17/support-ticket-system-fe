@@ -28,7 +28,10 @@ const Banner = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
   return (
-    <section className="max-w-6xl transition duration-300 antialiased mx-auto overflow-hidden">
+    <section
+      id="contact"
+      className="max-w-6xl transition duration-300 antialiased mx-auto overflow-hidden"
+    >
       <div className="mx-auto">
         <Card className="px-6 border-none shadow-none bg-gradient-to-l from-emerald-100 to-emerald-300 mb-20">
           <CardContent className="px-6 py-0">
