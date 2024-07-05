@@ -2,7 +2,7 @@
 
 This repository contains the source code for my internship project at PT. Adma Digital Solusi. It is a Customer Relationship Management (CRM) website that can connect to third-party social media platforms such as WhatsApp, Instagram, and X to handle customer complaints regarding product services. Additionally, this website can assign customer complaints to various employees within the company to resolve the issues. 
 
-The project is deployed and can be accessed [here](https://www.helptix.my.id/)
+The project is deployed and can be accessed [here](https://www.helptix.adslink.id/)
 
 ## Table of contents
 
@@ -23,7 +23,7 @@ This project is a Customer Relationship Management (CRM) website that can connec
 
 ## Demo
 
-A demo of the website can be accessed [here](https://www.helptix.my.id/)
+A demo of the website can be accessed [here](https://www.helptix.my.id/) or you can see the deployment [here](https://helptix.adslink.id/)
 
 ## Other Documentation
 
