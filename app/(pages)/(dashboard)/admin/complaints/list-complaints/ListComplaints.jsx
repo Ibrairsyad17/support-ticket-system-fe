@@ -1,51 +1,14 @@
 "use client";
-import React, { useRef } from "react";
-import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchComplaints,
-  getStatus,
-  searchItems,
-  selectFilteredComplaintsByDate,
-  selectFilteredComplaintsByPlatform,
-} from "@/app/redux/slices/complaintsSlice";
+import React from "react";
 import { Input } from "@/components/ui/input";
 import FilterData from "@/app/(pages)/(dashboard)/components/DataTable/FilterData";
 import DataTableComplaints from "@/app/(pages)/(dashboard)/components/DataTable/DataTableComplaints";
 import { Button } from "@/components/ui/button";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import useComplaints from "@/hooks/useComplaints";
 
 const ListComplaints = () => {
-  const { data: session } = useSession();
-  const dispatch = useDispatch();
-
-  // Selectors
-  const complaintsByPlatform = useSelector(selectFilteredComplaintsByPlatform);
-  const complaintsByDate = useSelector(selectFilteredComplaintsByDate);
-  const getStatusInfo = useSelector(getStatus);
-
-  const inputRef = useRef(null);
-
-  React.useEffect(() => {
-    if (session?.token.data.token) {
-      if (getStatusInfo === "idle") {
-        dispatch(fetchComplaints(session?.token.data.token));
-      }
-    }
-  }, [session?.token.data.token, getStatusInfo, dispatch]);
-
-  const filteredComplaints = complaintsByPlatform.filter((complaint) =>
-    complaintsByDate.includes(complaint),
-  );
-
-  // Handlers
-  const handleSearch = () => {
-    dispatch(searchItems(inputRef.current.value));
-  };
-
-  const handleRefresh = () => {
-    dispatch(fetchComplaints(session?.token.data.token));
-  };
+  const { filteredComplaints, handleSearch, handleRefresh } = useComplaints();
 
   return (
     <>
@@ -68,8 +31,9 @@ const ListComplaints = () => {
                     type="search"
                     placeholder="Cari data keluhan..."
                     className="w-250px md:w-[100px] lg:w-[400px]"
-                    ref={inputRef}
-                    onChange={handleSearch}
+                    onChange={(e) => {
+                      handleSearch(e.target.value);
+                    }}
                   />
                   <FilterData />
                 </div>

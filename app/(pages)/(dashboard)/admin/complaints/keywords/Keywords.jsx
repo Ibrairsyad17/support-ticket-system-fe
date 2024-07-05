@@ -2,34 +2,12 @@
 import React from "react";
 import { AddCategoryDialog } from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/AddDialog/AddCategoryDialog";
 import Search from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/SeachInput";
-import { useSession } from "next-auth/react";
 import CategoryCard from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/CategoryCard/CategoryCard";
 import CategoryCardSkeleton from "@/app/(pages)/(dashboard)/admin/complaints/keywords/components/CategoryCard/CategoryCardSkeleton";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCategories,
-  getError,
-  getStatus,
-  selectAllKeywords,
-} from "@/app/redux/slices/keywordSlice";
+import useCategories from "@/hooks/useCategories";
 
 const Keywords = () => {
-  const { data: session } = useSession();
-  const [isLoading, setIsLoading] = React.useState(true);
-  const dispatch = useDispatch();
-  const categoriesData = useSelector(selectAllKeywords);
-  const categoriesDataStatus = useSelector(getStatus);
-  const error = useSelector(getError);
-
-  React.useEffect(() => {
-    setIsLoading(true);
-    if (session?.token.data.token) {
-      if (categoriesDataStatus === "idle") {
-        dispatch(fetchCategories(session?.token.data.token));
-      }
-    }
-    setIsLoading(false);
-  }, [session?.token.data.token, categoriesDataStatus, dispatch]);
+  const { categories: categoriesData, isLoading } = useCategories();
 
   return (
     <>

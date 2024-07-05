@@ -5,54 +5,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import {
-  filterComplaintsByDate,
-  filterComplaintsByPlatform,
-} from "@/app/redux/slices/complaintsSlice";
 import { socials } from "@/app/(pages)/(dashboard)/components/data/data";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import useComplaints from "@/hooks/useComplaints";
 
 const FilterData = () => {
-  const dispatch = useDispatch();
-  const [selectedPlatforms, setSelectedPlatforms] = React.useState([]);
-  const [openPopover, setOpenPopover] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(null);
-
-  const handleFilterChange = (event) => {
-    if (event.target.checked) {
-      setSelectedPlatforms([...selectedPlatforms, event.target.value]);
-    } else {
-      setSelectedPlatforms(
-        selectedPlatforms.filter((platform) => platform !== event.target.value),
-      );
-    }
-  };
-
-  React.useEffect(() => {
-    dispatch(filterComplaintsByPlatform(selectedPlatforms));
-  }, [selectedPlatforms, dispatch]);
-
-  // Filter by date
-
-  const handleDateFilterChange = (event) => {
-    if (event.target.checked) {
-      setSelectedDate(event.target.value);
-    } else {
-      setSelectedDate(null);
-    }
-  };
-
-  React.useEffect(() => {
-    dispatch(filterComplaintsByDate(selectedDate));
-  }, [selectedDate, dispatch]);
-
-  // Reset Filter
-  const handleResetFilter = () => {
-    setSelectedPlatforms([]);
-    setSelectedDate(null);
-    setOpenPopover(false);
-  };
+  const {
+    handleFilterChange,
+    handleDateFilterChange,
+    handleResetFilter,
+    openPopover,
+    setOpenPopover,
+  } = useComplaints();
 
   return (
     <Popover open={openPopover} onOpenChange={setOpenPopover}>

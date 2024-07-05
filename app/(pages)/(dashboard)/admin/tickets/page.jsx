@@ -1,44 +1,15 @@
 "use client";
 import React from "react";
-import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchTickets,
-  getStatus,
-  selectFilteredTickets,
-  searchItems,
-} from "@/app/redux/slices/ticketsSlice";
 import DataTableTickets from "@/app/(pages)/(dashboard)/components/DataTable/DataTableTickets";
 import { Input } from "@/components/ui/input";
 import FilterDataTickets from "@/app/(pages)/(dashboard)/components/DataTable/FilterDataTickets";
 import { Button } from "@/components/ui/button";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import useTickets from "@/hooks/useTickets";
 
 const TicketsAdminPage = () => {
-  const { data: session } = useSession();
-  const dispatch = useDispatch();
+  const { filteredTickets, handleSearch, handleRefresh } = useTickets();
 
-  // Selectors
-  const filteredTickets = useSelector(selectFilteredTickets);
-  const getStatusInfo = useSelector(getStatus);
-
-  const inputRef = React.useRef(null);
-
-  React.useEffect(() => {
-    if (session?.token.data.token) {
-      if (getStatusInfo === "idle") {
-        dispatch(fetchTickets(session?.token.data.token));
-      }
-    }
-  }, [session?.token.data.token, getStatusInfo, dispatch]);
-
-  const handleSearch = () => {
-    dispatch(searchItems(inputRef.current.value));
-  };
-
-  const handleRefresh = () => {
-    dispatch(fetchTickets(session?.token.data.token));
-  };
   return (
     <>
       <div className="w-full pt-5 lg:pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 grid grid-cols-1 gap-5">
@@ -60,8 +31,7 @@ const TicketsAdminPage = () => {
                     type="search"
                     placeholder="Cari data keluhan..."
                     className="w-250px md:w-[100px] lg:w-[400px]"
-                    ref={inputRef}
-                    onChange={handleSearch}
+                    onChange={(e) => handleSearch(e.target.value)}
                   />
                 </div>
                 <FilterDataTickets />

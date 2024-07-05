@@ -17,7 +17,7 @@ import {
 import { useSession } from "next-auth/react";
 import { fetchChatById } from "@/app/redux/slices/messagesSlice";
 import { selectSelectedTemplateMessage } from "@/app/redux/slices/templateMessagesSlice";
-import { useSocket } from "@/app/SocketIOProvider";
+import { useSocket } from "@/context/SocketIOProvider";
 
 const InputMessageSection = ({ sessionId, platform, customer, id }) => {
   const { data: session } = useSession();

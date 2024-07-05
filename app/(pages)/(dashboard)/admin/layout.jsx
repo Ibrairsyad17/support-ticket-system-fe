@@ -6,7 +6,7 @@ import SidebarAdmin from "@/app/(pages)/(dashboard)/admin/components/SidebarAdmi
 import { SessionProvider } from "next-auth/react";
 import StoreProvider from "@/app/redux/StoreProvider";
 import { Toaster } from "@/components/ui/toaster";
-import SocketIOProvider from "@/app/SocketIOProvider";
+import SocketIOProvider from "@/context/SocketIOProvider";
 
 const inter = Inter_Tight({ subsets: ["latin"] });
 

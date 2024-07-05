@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TimeAgo from "react-timeago";
+import { BASE_URL } from "@/app/utils/constant";
 
 const NotificationMessages = ({ notifications }) => {
   return (
@@ -13,7 +14,9 @@ const NotificationMessages = ({ notifications }) => {
       {notifications.map((notification, index) => (
         <div key={index} className="flex items-center">
           <Avatar>
-            <AvatarImage src={notification.action_by_accounts.photo_profile} />
+            <AvatarImage
+              src={`${BASE_URL}/${notification.action_by_accounts.photo_profile}`}
+            />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
           <div className="ml-4">

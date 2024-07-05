@@ -10,54 +10,16 @@ import {
   priorities,
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
-import { useDispatch } from "react-redux";
-import { filteredTicketsByPriorityAndStatus } from "@/app/redux/slices/ticketsSlice";
+import useTickets from "@/hooks/useTickets";
 
 const FilterDataTickets = () => {
-  const [openPopover, setOpenPopover] = React.useState(false);
-  const dispatch = useDispatch();
-
-  // Selectors
-  const [selectedPriorities, setSelectedPriorities] = React.useState([]);
-  const [selectedStatuses, setSelectedStatuses] = React.useState([]);
-  const [selectedTime, setSelectedTime] = React.useState([]);
-
-  // Handlers
-  const handlePriorityChange = (e) => {
-    if (e.target.checked) {
-      setSelectedPriorities([...selectedPriorities, e.target.value]);
-    } else {
-      setSelectedPriorities(
-        selectedPriorities.filter((priority) => priority !== e.target.value),
-      );
-    }
-  };
-
-  const handleStatusChange = (e) => {
-    if (e.target.checked) {
-      setSelectedStatuses([...selectedStatuses, e.target.value]);
-    } else {
-      setSelectedStatuses(
-        selectedStatuses.filter((status) => status !== e.target.value),
-      );
-    }
-  };
-
-  const clearFilters = () => {
-    setSelectedPriorities([]);
-    setSelectedStatuses([]);
-    setSelectedTime([]);
-    setOpenPopover(false);
-  };
-
-  React.useEffect(() => {
-    dispatch(
-      filteredTicketsByPriorityAndStatus({
-        priorities: selectedPriorities,
-        statuses: selectedStatuses,
-      }),
-    );
-  }, [selectedPriorities, selectedStatuses, selectedTime, dispatch]);
+  const {
+    openPopover,
+    setOpenPopover,
+    handlePriorityChange,
+    handleStatusChange,
+    clearFilters,
+  } = useTickets();
 
   return (
     <Popover open={openPopover} onOpenChange={setOpenPopover}>

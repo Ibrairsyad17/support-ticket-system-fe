@@ -10,7 +10,7 @@ import {
   postComment,
 } from "@/app/api/repository/commentRepository";
 import TimeAgo from "react-timeago";
-import { useSocket } from "@/app/SocketIOProvider";
+import { useSocket } from "@/context/SocketIOProvider";
 
 const Comment = ({ id, pic, admin }) => {
   const { data: session } = useSession();

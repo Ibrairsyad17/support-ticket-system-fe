@@ -12,66 +12,26 @@ import { Trash } from "lucide-react";
 import { WhatsApp } from "@mui/icons-material";
 import TimeAgo from "react-timeago";
 import DataTableActions from "@/app/(pages)/(dashboard)/admin/complaints/list-complaints/components/DataTableActions";
-import {
-  deleteMultipleComplaints,
-  resetSelectedItems,
-  selectAllItems,
-  selectItem,
-  selectSelectedItems,
-  selectCurrentPage,
-  selectItemsPerPage,
-  setCurrentPage,
-  Loading,
-  fetchComplaints,
-} from "@/app/redux/slices/complaintsSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import useComplaints from "@/hooks/useComplaints";
 
 const DataTableComplaints = ({ data, refresh }) => {
-  const { data: session } = useSession();
-  const dispatch = useDispatch();
-
-  // Selectors
-  const selectedItems = useSelector(selectSelectedItems);
-  const currentPage = useSelector(selectCurrentPage);
-  const itemsPerPage = useSelector(selectItemsPerPage);
-  const isLoading = useSelector(Loading);
-
-  const { toast } = useToast();
-
-  const complaintsForCurrentPage = data.slice(
-    (currentPage - 1) * itemsPerPage,
-    Math.min(currentPage * itemsPerPage, data.length),
-  );
-
-  // Handlers
-
-  const handleSelect = (id) => {
-    dispatch(selectItem(id));
-  };
-
-  const handleSelectAll = (checked) => {
-    dispatch(selectAllItems(checked));
-  };
-
-  const handleMultipleDelete = () => {
-    dispatch(
-      deleteMultipleComplaints({
-        ids: selectedItems,
-        token: session?.token.data.token,
-      }),
-    );
-    dispatch(resetSelectedItems());
-    toast({
-      title: "Berhasil Menghapus",
-      variant: "success",
-    });
-    dispatch(fetchComplaints(session?.token.data.token));
-  };
+  const {
+    handleSelect,
+    handleSelectAll,
+    handleMultipleDelete,
+    handleNextPage,
+    handlePrevPage,
+    complaintsForCurrentPage,
+    getLoading,
+    selectedItems,
+    currentPage,
+    itemsPerPage,
+    disableNext,
+    disablePrev,
+  } = useComplaints();
 
   return (
     <div className="grid grid-cols-1 gap-y-5">
@@ -99,23 +59,15 @@ const DataTableComplaints = ({ data, refresh }) => {
             Halaman ke {currentPage} dari{" "}
             {Math.ceil(data.length / itemsPerPage)}
           </p>
-          <Button
-            onClick={() => dispatch(setCurrentPage(currentPage - 1))}
-            disabled={currentPage === 1}
-            size="icon"
-          >
+          <Button onClick={handlePrevPage} disabled={disablePrev} size="icon">
             <ChevronLeftIcon className="w-4 h-4" />
           </Button>
-          <Button
-            onClick={() => dispatch(setCurrentPage(currentPage + 1))}
-            disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
-            size="icon"
-          >
+          <Button onClick={handleNextPage} disabled={disableNext} size="icon">
             <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
       </div>
-      {isLoading ? (
+      {getLoading ? (
         <DataTableSkeleton />
       ) : (
         <div className="w-full overflow-x-scroll xl:overflow-hidden mb-5">

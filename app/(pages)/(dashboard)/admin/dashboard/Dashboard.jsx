@@ -17,61 +17,25 @@ import ComplaintsChartsAdmin from "@/app/(pages)/(dashboard)/admin/components/Co
 import RecentComplaints from "@/app/(pages)/(dashboard)/admin/components/RecentComplaints";
 import MostKeyword from "@/app/(pages)/(dashboard)/admin/components/MostKeyword";
 import TeamsDataStats from "@/app/(pages)/(dashboard)/admin/components/TeamsDataStats";
-import { useSession } from "next-auth/react";
-import { getKeywords } from "@/app/api/repository/keywordsRepository";
 import StatsCard from "@/app/(pages)/(dashboard)/admin/components/StatsCard";
 import { Instagram, WhatsApp, X } from "@mui/icons-material";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 import LatestComplaintsSkeleton from "@/app/(pages)/(dashboard)/admin/components/LatestComplaintsSkeleton";
 import NotificationPopover from "@/app/(pages)/(dashboard)/admin/components/NotificationPopover";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchComplaints,
-  getStatus,
-  Loading,
-  selectFilteredComplaintsByDate,
-} from "@/app/redux/slices/complaintsSlice";
+import useComplaints from "@/hooks/useComplaints";
+import useCategories from "@/hooks/useCategories";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
-  const [keywords, setKeywords] = React.useState([]);
-
-  const fetchAllKeywords = async () => {
-    const res = await getKeywords(session?.token.data.token);
-    if (res) {
-      const data = res.data.data.keywords;
-      setKeywords(data);
-    }
-  };
-
-  const complaints = useSelector(selectFilteredComplaintsByDate);
-  const getStatusInfo = useSelector(getStatus);
-  const getLoadingInfo = useSelector(Loading);
-
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if (session?.token.data.token) {
-      if (getStatusInfo === "idle") {
-        dispatch(fetchComplaints(session?.token.data.token));
-      }
-      fetchAllKeywords();
-    }
-  }, [session?.token.data.token, dispatch, getStatusInfo]);
-
-  const assignedComplaints = complaints.filter(
-    (complaint) => complaint.status === "ASSIGNED",
-  );
-  const inProgressComplaints = complaints.filter(
-    (complaint) => complaint.status === "IN_PROGRESS",
-  );
-  const doneComplaints = complaints.filter(
-    (complaint) => complaint.status === "DONE",
-  );
-  const checkedComplaints = complaints.filter(
-    (complaint) => complaint.status === "CHECKED",
-  );
+  const {
+    complaintsByDate,
+    getLoading,
+    assignedComplaints,
+    inProgressComplaints,
+    doneComplaints,
+    checkedComplaints,
+  } = useComplaints();
+  const { keywords } = useCategories();
 
   return (
     <>
@@ -92,7 +56,7 @@ const Dashboard = () => {
               </div>
             </div>
           </header>
-          {getLoadingInfo ? (
+          {getLoading ? (
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
             >
@@ -139,13 +103,13 @@ const Dashboard = () => {
             <CardHeader>
               <CardTitle className="text-xl">Data Keluhan</CardTitle>
             </CardHeader>
-            {getLoadingInfo ? (
+            {getLoading ? (
               <div className="flex flex-col space-y-4 w-8/12 mx-auto items-center pt-20">
                 <Loader2 className="animate-spin w-10 h-10 text-gray-600 font-thin" />
                 <p className="text-gray-400 font-normal">Memuat Data</p>
               </div>
             ) : (
-              <ComplaintsChartsAdmin data={complaints} />
+              <ComplaintsChartsAdmin data={complaintsByDate} />
             )}
           </Card>
           {/*Keluhan Terbaru*/}
@@ -157,10 +121,10 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {getLoadingInfo ? (
+              {getLoading ? (
                 <LatestComplaintsSkeleton />
               ) : (
-                <RecentComplaints data={complaints} />
+                <RecentComplaints data={complaintsByDate} />
               )}
             </CardContent>
           </Card>
@@ -174,7 +138,7 @@ const Dashboard = () => {
               <CardTitle className="text-xl">Kata Kunci Terbanyak</CardTitle>
             </CardHeader>
             <CardContent className="pl-2 -mt-4">
-              {getLoadingInfo ? (
+              {getLoading ? (
                 <div className="flex flex-col space-y-4">
                   <div className="inline-flex items-center gap-x-2 py-2.5 pl-4 text-sm font-medium bg-white justify-between text-gray-800 -mt-px">
                     <Skeleton className="h-3.5 w-32 bg-gray-100 rounded-full" />
@@ -204,7 +168,7 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {getLoadingInfo ? (
+              {getLoading ? (
                 <div
                   className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2`}
                 >
@@ -218,7 +182,7 @@ const Dashboard = () => {
                 >
                   <StatsCard
                     value={
-                      complaints.filter(
+                      complaintsByDate.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "INSTAGRAM",
@@ -233,7 +197,7 @@ const Dashboard = () => {
                   />
                   <StatsCard
                     value={
-                      complaints.filter(
+                      complaintsByDate.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "TWITTER",
@@ -248,7 +212,7 @@ const Dashboard = () => {
                   />
                   <StatsCard
                     value={
-                      complaints.filter(
+                      complaintsByDate.filter(
                         (l) =>
                           l.conversation_messages.conversations.social_media
                             .platform === "WHATSAPP",
@@ -277,7 +241,7 @@ const Dashboard = () => {
               List tiket yang telah dibuat.
             </p>
           </div>
-          {getLoadingInfo ? (
+          {getLoading ? (
             <div className={`grid lg:grid-cols-3 col-span-4 gap-3`}>
               <Skeleton className="rounded-xl bg-gray-200 h-24" />
               <Skeleton className="rounded-xl bg-gray-200 h-24" />

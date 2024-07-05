@@ -3,8 +3,7 @@ import React from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { WhatsApp } from "@mui/icons-material";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { useSocketWA } from "@/app/(pages)/(auth)/sync-account/whatsapp/SocketIOWA";
+import { useSocketWA } from "@/context/SocketIOWA";
 import { LoaderCircle } from "lucide-react";
 
 const WhatsappSyncPage = () => {

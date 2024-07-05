@@ -7,60 +7,27 @@ import {
   statuses,
 } from "@/app/(pages)/(dashboard)/components/data/data";
 import TableActions from "@/app/(pages)/(dashboard)/admin/tickets/components/TableActions";
-import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteMultipleTickets,
-  fetchTickets,
-  Loading,
-  resetSelectedItems,
-  selectAllItems,
-  selectItem,
-  selectSelectedItems,
-  setCurrentPage,
-} from "@/app/redux/slices/ticketsSlice";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import DataTableSkeleton from "@/app/(pages)/(dashboard)/components/DataTable/DataTableSkeleton";
-import { useToast } from "@/components/ui/use-toast";
+import useTickets from "@/hooks/useTickets";
 
 const DataTableTickets = ({ data, refresh }) => {
-  const { data: session } = useSession();
-  const dispatch = useDispatch();
-
-  // Selectors
-  const selectedItems = useSelector(selectSelectedItems);
-  const currentPage = useSelector((state) => state.tickets.currentPage);
-  const itemsPerPage = useSelector((state) => state.tickets.itemsPerPage);
-  const getLoading = useSelector(Loading);
-
-  const { toast } = useToast();
-
-  const ticketsForCurrentPage = data.slice(
-    (currentPage - 1) * itemsPerPage,
-    Math.min(currentPage * itemsPerPage, data.length),
-  );
-
-  // Handlers
-  const handleDeleteMultiple = () => {
-    dispatch(
-      deleteMultipleTickets({
-        ids: selectedItems,
-        token: session?.token.data.token,
-      }),
-    );
-    dispatch(resetSelectedItems());
-    toast({
-      title: "Berhasil Menghapus",
-      variant: "success",
-    });
-    dispatch(fetchTickets(session?.token.data.token));
-  };
-
-  const handleSelectAll = (checked) => {
-    dispatch(selectAllItems(checked));
-  };
+  const {
+    selectedItems,
+    currentPage,
+    itemsPerPage,
+    getLoading,
+    disableNext,
+    disablePrev,
+    ticketsForCurrentPage,
+    handleNextPage,
+    handlePrevPage,
+    handleSelect,
+    handleDeleteMultiple,
+    handleSelectAll,
+  } = useTickets();
 
   return (
     <div className="grid grid-cols-1 gap-y-5">
@@ -85,18 +52,10 @@ const DataTableTickets = ({ data, refresh }) => {
             Halaman ke {currentPage} dari{" "}
             {Math.ceil(data.length / itemsPerPage)}
           </p>
-          <Button
-            onClick={() => dispatch(setCurrentPage(currentPage - 1))}
-            disabled={currentPage === 1}
-            size="icon"
-          >
+          <Button onClick={handlePrevPage} disabled={disablePrev} size="icon">
             <ChevronLeftIcon className="w-4 h-4" />
           </Button>
-          <Button
-            onClick={() => dispatch(setCurrentPage(currentPage + 1))}
-            disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
-            size="icon"
-          >
+          <Button onClick={handleNextPage} disabled={disableNext} size="icon">
             <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
@@ -132,7 +91,7 @@ const DataTableTickets = ({ data, refresh }) => {
                     <Checkbox
                       className="mt-0.5"
                       checked={selectedItems.includes(Number(ticket.id))}
-                      onCheckedChange={() => dispatch(selectItem(ticket.id))}
+                      onCheckedChange={() => handleSelect(ticket.id)}
                     />
                     <p className=" text-sm">{ticket.ticket_id}</p>
                   </div>
